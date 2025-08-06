@@ -1,0 +1,176 @@
+{
+  "MENUITEMS": {
+    "MENU": {
+      "TEXT": "Меню"
+    },
+    "DASHBOARD": {
+      "LIST": {
+        "DASHBOARD": "Панель"
+      }
+    },
+    "PAGES": {
+      "TEXT": "Страницы"
+    },
+    "INVOICEMANAGEMENT": {
+      "TEXT": "Управление счетами",
+      "LIST": {
+        "INVOICE": "Счет",
+        "ADDINVOICE": "Добавить счет",
+        "INVOICEDETAILS": "Детали счета",
+        "PAYMENTS": "Платежи",
+        "TAXES": "Налоги",
+        "PRODUCTS": "Продукты",
+        "PRODUCTLIST": "Список продуктов",
+        "ADDPRODUCT": "Добавить продукт",
+        "REPORT": "Отчет",
+        "PAYMENTSUMMARY": "Сводка платежей",
+        "SALEREPORT": "Отчет о продажах",
+        "EXPENCESREPORT": "Отчет о расходах",
+        "USERS": "Пользователи",
+        "TRANSACTION": "Транзакция",
+        "TRANSACTIONLIST": "Список транзакций",
+        "NEWTRANSACTION": "Новая транзакция"
+      }
+    },
+    "AUTH": {
+      "TEXT": "Аутентификация",
+      "LIST": {
+        "SIGNIN": "Войти",
+        "SIGNUP": "Регистрация",
+        "PASSWORDRESET": "Сброс пароля",
+        "LOCKSCREEN": "Экран блокировки"
+      }
+    },
+    "COMPONENTS": {
+      "TEXT": "КОМПОНЕНТЫ"
+    },
+    "OVERVIEW": {
+      "TEXT": "Обзор"
+    },
+    "BOOTSTRAPUI": {
+      "TEXT": "Начальный пользовательский интерфейс",
+      "LIST": {
+        "ALERTS": "Оповещения",
+        "BADGES": "Значки",
+        "BUTTONS": "Кнопки",
+        "COLORS": "Цвета",
+        "CARDS": "Карты",
+        "CAROUSEL": "Карусель",
+        "DROPDOWNS": "Выпадающие списки",
+        "GRID": "Сетка",
+        "IMAGES": "Изображений",
+        "TABS": "Вкладки",
+        "ACCORDION&COLLAPSE": "Аккордеон и свернуть",
+        "MODALS": "Модальные",
+        "OFFCANVAS": "Offcanvas",
+        "PLACEHOLDERS": "Заполнители",
+        "PROGRESS": "Прогресс",
+        "NOTIFICATIONS": "Уведомления",
+        "MEDIAOBJECT": "Медиа объект",
+        "EMBEDVIDEO": "Встроенное видео",
+        "TYPOGRAPHY": "Типография",
+        "LISTS": "Списки",
+        "GENERAL": "Общий",
+        "UTILITIES": "Утилиты"
+      }
+    },
+    "ADVANCEUI": {
+      "TEXT": "Расширенный пользовательский интерфейс",
+      "LIST": {
+        "SWEETALERT": "Сладкие оповещения",
+        "NESTABLELIST": "Вложенный список",
+        "SCROLLBAR": "Полоса прокрутки",
+        "SWIPERSLIDER": "Слайдер Swiper",
+        "RATTINGS": "Рейтинги",
+        "HIGHLIGHT": "Выделять",
+        "SCROLLSPY": "ПрокруткаШпион"
+      }
+    },
+    "FORMS": {
+      "TEXT": "Формы",
+      "LIST": {
+        "BASICELEMENTS": "Основные элементы",
+        "FORMSELECT": "Выбор формы",
+        "CHECKBOXS&RADIOS": "Флажки и радио",
+        "PICKERS": "Сборщики",
+        "INPUTMASKS": "Маска формы",
+        "ADVANCED": "Расширенная форма",
+        "RANGESLIDER": "Ползунок диапазона",
+        "VALIDATION": "Проверка формы",
+        "WIZARD": "Мастер форм",
+        "EDITORS": "Редакторы форм",
+        "FILEUPLOADS": "Загрузка файла формы",
+        "FORMLAYOUTS": "Макеты форм",
+        "FORMWIZARD": "Мастер форм",
+        "TOMSELECT": "Том Селект"
+      }
+    },
+    "TABLES": {
+      "TEXT": "Столы",
+      "LIST": {
+        "BASICTABLES": "Основные таблицы",
+        "GRIDJS": "Сетка Js",
+        "LISTJS": "Список Js"
+      }
+    },
+    "CHARTS": {
+      "TEXT": "Апексчарты",
+      "LIST": {
+        "LINE": "линия",
+        "AREA": "Область",
+        "COLUMN": "Столбец",
+        "BAR": "Бар",
+        "MIXED": "Смешанный",
+        "TIMELINE": "График",
+        "CANDLESTICK": "Подсвечник",
+        "BOXPLOT": "Блочная диаграмма",
+        "BUBBLE": "Пузырь",
+        "SCATTER": "Разброс",
+        "HEATMAP": "Тепловая карта",
+        "TREEMAP": "Древовидная карта",
+        "PIE": "пирог",
+        "RADIALBAR": "Радиальная полоса",
+        "RADAR": "Радар",
+        "POLARAREA": "Поларареа"
+      }
+    },
+    "ICONS": {
+      "TEXT": "Иконки",
+      "LIST": {
+        "REMIX": "Ремикс",
+        "BOXICONS": "Боксиконы",
+        "MATERIALDESIGN": "Материальный дизайн",
+        "BOOTSTRAP": "Начальная загрузка",
+        "LINEAWESOME": "Линия Круто"
+      }
+    },
+    "MAPS": {
+      "TEXT": "Карты",
+      "LIST": {
+        "GOOGLE": "Google",
+        "VECTOR": "Вектор",
+        "LEAFLET": "Листовка"
+      }
+    },
+    "MULTILEVEL": {
+      "TEXT": "Многоуровневый",
+      "LIST": {
+        "LEVEL1": {
+          "1": "Уровень  1.1",
+          "2": "Уровень  1.2",
+          "LEVEL2": {
+            "1": "Уровень  2.1",
+            "2": "Уровень  2.2",
+            "LEVEL3": {
+              "1": "Уровень  3.1",
+              "2": "Уровень  3.2"
+            }
+          }
+        }
+      }
+    },
+    "MORE":{
+      "TEXT": "Больше"
+    }
+  }
+}

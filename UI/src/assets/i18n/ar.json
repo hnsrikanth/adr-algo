@@ -1,0 +1,177 @@
+{
+  "MENUITEMS": {
+    "MENU": {
+      "TEXT": "القائمة"
+    },
+    "DASHBOARD": {
+      "LIST": {
+        "DASHBOARD": "لوحة التحكم"
+      }
+    },
+    "PAGES": {
+      "TEXT": "الصفحات"
+    },
+    "INVOICEMANAGEMENT": {
+      "TEXT": "إدارة الفواتير",
+      "LIST": {
+        "INVOICE": "فاتورة",
+        "ADDINVOICE": "إضافة فاتورة",
+        "INVOICEDETAILS": "تفاصيل الفاتورة",
+        "PAYMENTS": "المدفوعات",
+        "TAXES": "الضرائب",
+        "PRODUCTS": "المنتجات",
+        "PRODUCTLIST": "قائمة المنتجات",
+        "ADDPRODUCT": "إضافة منتج",
+        "REPORT": "تقرير",
+        "PAYMENTSUMMARY": "ملخص المدفوعات",
+        "SALEREPORT": "تقرير المبيعات",
+        "EXPENCESREPORT": "تقرير المصاريف",
+        "USERS": "المستخدمون",
+        "TRANSACTION": "المعاملة",
+        "TRANSACTIONLIST": "قائمة المعاملات",
+        "NEWTRANSACTION": "معاملة جديدة"
+      }
+    },
+    "AUTH": {
+      "TEXT": "المصادقة",
+      "LIST": {
+        "SIGNIN": "تسجيل الدخول",
+        "SIGNUP": "إنشاء حساب",
+        "PASSWORDRESET": "إعادة تعيين كلمة المرور",
+        "LOCKSCREEN": "قفل الشاشة"
+      }
+    },
+    "COMPONENTS": {
+      "TEXT": "عناصر"
+    },
+    "OVERVIEW": {
+      "TEXT": "ملخص"
+    },
+    "BOOTSTRAPUI": {
+      "TEXT": "Bootstrap UI",
+      "LIST": {
+        "ALERTS": "تنبيهات",
+        "BADGES": "شارات",
+        "BUTTONS": "أزرار",
+        "COLORS": "الألوان",
+        "CARDS": "البطاقات",
+        "CAROUSEL": "دائري",
+        "DROPDOWNS": "هبوط قطرة",
+        "GRID": "شبكة",
+        "IMAGES": "الصور",
+        "TABS": "نوافذ التبويب",
+        "ACCORDION&COLLAPSE": "Accordian & Collapse",
+        "MODALS": "الوسائط",
+        "OFFCANVAS": "فكان",
+        "PLACEHOLDERS": "العناصر النائبة",
+        "PROGRESS": "تقدم",
+        "NOTIFICATIONS": "إشعارات",
+        "MEDIAOBJECT": "كائن الوسائط",
+        "EMBEDVIDEO": "تضمين الفيديو",
+        "TYPOGRAPHY": "الطباعة",
+        "LISTS": "القوائم",
+        "GENERAL": "عام",
+        "UTILITIES": "خدمات"
+      }
+    },
+    "ADVANCEUI": {
+      "TEXT": "واجهة المستخدم المتقدمة",
+      "LIST": {
+        "SWEETALERTS": "تنبيهات حلوة",
+        "NESTABLELIST": "قائمة عش",
+        "SCROLLBAR": "شريط التمرير",
+        "SWIPERSLIDER": "سويبر سلايدر",
+        "RATTINGS": "التقييمات",
+        "HIGHLIGHT": "تسليط الضوء",
+        "SCROLLSPY": "ScrollSpy"
+      }
+    },
+    "FORMS": {
+      "TEXT": "نماذج",
+      "LIST": {
+        "BASICELEMENTS": "العناصر الأساسية",
+        "FORMSELECT": "حدد النموذج",
+        "CHECKBOXS&RADIOS": "مربعات الاختيار وأجهزة ",
+        "PICKERS": "جامعي",
+        "INPUTMASKS": "أقنعة الإدخال",
+        "ADVANCED": "متقدم",
+        "RANGESLIDER": "نطاق المنزلق",
+        "VALIDATION": "تصديق",
+        "WIZARD": "ساحر",
+        "EDITORS": "المحررين",
+        "FILEUPLOADS": "تحميلات الملف",
+        "FORMLAYOUTS": "تخطيطات النموذج",
+         "FORMWIZARD": "معالج النماذج",
+        "TOMSELECT": "توم سيليكت"
+      }
+    },
+    "TABLES": {
+      "TEXT": "الجداول",
+      "LIST": {
+        "BASICTABLES": "الجداول الأساسية",
+        "GRIDJS": "شبكة شبيبة",
+        "LISTJS": "قائمة شبيبة",
+        "DATATABLES": "جداول البيانات"
+      }
+    },
+    "CHARTS": {
+      "TEXT": "أبكسشارتس",
+      "LIST": {
+        "LINE": "خط",
+        "AREA": "منطقة",
+        "COLUMN": "عمود",
+        "BAR": "حاجِز",
+        "MIXED": "مختلط",
+        "TIMELINE": "الجدول الزمني",
+        "CANDLSTICK": "شمعدان",
+        "BOXPLOT": "مربع مؤامرة",
+        "BUBBLE": "فقاعة",
+        "SCATTER": "مبعثر",
+        "HEATMAP": "خريطة الحرارة",
+        "TREEMAP": "مخطط",
+        "PIE": "فطيرة",
+        "RADIALBAR": "شعاعي",
+        "RADAR": "رادار",
+        "POLARAREA": "المنطقة القطبية"
+      }
+    },
+    "ICONS": {
+      "TEXT": "أيقونات",
+      "LIST": {
+        "REMIX": "ريمكس",
+        "BOXICONS": "بوكسيكونس",
+        "MATERIALDESIGN": "تصميم المواد",
+        "BOOTSTRAP": "التمهيد",
+         "LINEAWESOME": "لاين أوسم"
+      }
+    },
+    "MAPS": {
+      "TEXT": "خرائط",
+      "LIST": {
+        "GOOGLE": "جوجل",
+        "VECTOR": "المتجه",
+        "LEAFLET": "منشور"
+      }
+    },
+    "MULTILEVEL": {
+      "TEXT": "متعدد المستويات",
+      "LIST": {
+        "LEVEL1": {
+          "1": "المستوى 1.1",
+          "2": "المستوى 1.2",
+          "LEVEL2": {
+            "1": "المستوى 2.1",
+            "2": "المستوى 2.2",
+            "LEVEL3": {
+              "1": "المستوى 3.1",
+              "2": "المستوى 3.2"
+            }
+          }
+        }
+      }
+    },
+    "MORE":{
+      "TEXT": "أكثر"
+    }
+  }
+}

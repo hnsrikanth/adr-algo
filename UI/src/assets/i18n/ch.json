@@ -1,0 +1,176 @@
+{
+  "MENUITEMS": {
+    "MENU": {
+      "TEXT": "菜单"
+    },
+    "DASHBOARD": {
+      "LIST": {
+        "DASHBOARD": "仪表盘"
+      }
+    },
+    "PAGES": {
+      "TEXT": "页面"
+    },
+    "INVOICEMANAGEMENT": {
+      "TEXT": "发票管理",
+      "LIST": {
+        "INVOICE": "发票",
+        "ADDINVOICE": "添加发票",
+        "INVOICEDETAILS": "发票详情",
+        "PAYMENTS": "付款",
+        "TAXES": "税务",
+        "PRODUCTS": "产品",
+        "PRODUCTLIST": "产品列表",
+        "ADDPRODUCT": "添加产品",
+        "REPORT": "报告",
+        "PAYMENTSUMMARY": "付款摘要",
+        "SALEREPORT": "销售报告",
+        "EXPENCESREPORT": "费用报告",
+        "USERS": "用户",
+        "TRANSACTION": "交易",
+        "TRANSACTIONLIST": "交易列表",
+        "NEWTRANSACTION": "新交易"
+      }
+    },
+    "AUTH": {
+      "TEXT": "身份验证",
+      "LIST": {
+        "SIGNIN": "登录",
+        "SIGNUP": "注册",
+        "PASSWORDRESET": "重置密码",
+        "LOCKSCREEN": "锁屏"
+      }
+    },
+    "COMPONENTS": {
+      "TEXT": "成分"
+    },
+    "OVERVIEW": {
+      "TEXT": "概述"
+    },
+    "BOOTSTRAPUI": {
+      "TEXT": "引导用户界面",
+      "LIST": {
+        "ALERTS": "警报",
+        "BADGES": "徽章",
+        "BUTTONS": "纽扣",
+        "COLORS": "颜色",
+        "CARDS": "牌",
+        "CAROUSEL": "旋转木马",
+        "DROPDOWNS": "下拉菜单",
+        "GRID": "网格",
+        "IMAGES": "图片",
+        "TABS": "选项卡",
+        "ACCORDION&COLLAPSE": "手风琴与崩溃",
+        "MODALS": "模态",
+        "OFFCANVAS": "帆布",
+        "PLACEHOLDERS": "占位符",
+        "PROGRESS": "进步",
+        "NOTIFICATION": "通知",
+        "MEDIAOBJECT": "媒体对象",
+        "EMBEDVIDEO": "嵌入视频",
+        "TYPOGRAPHY": "排版",
+        "LISTS": "列表",
+        "GENERAL": "一般的",
+        "UTILITIES": "公用事业"
+      }
+    },
+    "ADVANCEUI": {
+      "TEXT": "高级用户界面",
+      "LIST": {
+        "SWEETALERT": "甜蜜警报",
+        "NESTABLELIST": "可嵌套列表",
+        "SCROLLBAR": "滚动条",
+        "SWIPERSLIDER": "滑动条",
+        "RATTINGS": "收视率",
+        "HIGHLIGHT": "强调",
+        "SCROLLSPY": "滚动间谍"
+      }
+    },
+    "FORMS": {
+      "TEXT": "形式",
+      "LIST": {
+        "BASICELEMENTS": "基本要素",
+        "FORMSELECT": "表单选择",
+        "CHECKBOXS&RADIOS": "复选框和收音机",
+        "PICKERS": "采摘机",
+        "INPUTMASKS": "表格掩码",
+        "ADVANCED": "高级表格",
+        "RANGESLIDER": "范围滑块",
+        "VALIDATION": "表单验证",
+        "WIZARD": "表单向导",
+        "EDITORS": "表单编辑器",
+        "FILEUPLOADS": "表单文件上传",
+        "FORMLAYOUTS": "表单布局",
+        "FORMWIZARD": "表单向导",
+        "TOMSELECT": "汤姆选择"
+      }
+    },
+    "TABLES": {
+      "TEXT": "表",
+      "LIST": {
+        "BASICTABLES": "基本表",
+        "GRIDJS": "网格JS",
+        "LISTJS": "清单Js"
+      }
+    },
+    "CHARTS": {
+      "TEXT": "顶点图表",
+      "LIST": {
+        "LINE": "线",
+        "AREA": "区域",
+        "COLUMN": "柱子",
+        "BAR": "酒吧",
+        "MIXED": "混合的",
+        "TIMELINE": "时间线",
+        "CANDLESTICK": "烛台",
+        "BOXPLOT": "箱形图",
+        "BUBBLE": "气泡",
+        "SCATTER": "分散",
+        "HEATMAP": "热图",
+        "TREEMAP": "树形图",
+        "PIE": "馅饼",
+        "RADIALBAR": "径向杆",
+        "RADAR": "雷达",
+        "POLARAREA": "极地"
+      }
+    },
+    "ICONS": {
+      "TEXT": "图标",
+      "LIST": {
+        "REMIX": "混音",
+        "BOXICONS": "方框图标",
+        "MATERIALDESIGN": "材料设计",
+        "BOOTSTRAP": "引导程序",
+        "LINEAWESOME": "线条超赞"
+      }
+    },
+    "MAPS": {
+      "TEXT": "地图",
+      "LIST": {
+        "GOOGLE": "谷歌",
+        "VECTOR": "向量",
+        "LEAFLET": "传单"
+      }
+    },
+    "MULTILEVEL": {
+      "TEXT": "多层次",
+      "LIST": {
+        "LEVEL1": {
+          "1": "1.1级",
+          "2": "1.2级",
+          "LEVEL2": {
+            "1": "2.1级",
+            "2": "2.2级",
+            "LEVEL3": {
+              "1": "3.1级",
+              "2": "3.2级"
+            }
+          }
+        }
+      }
+    },
+    "MORE": {
+      "TEXT": "更多"
+    }
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "MENUITEMS": {
+    "MENU": {
+      "TEXT": "Menü"
+    },
+    "DASHBOARD": {
+      "LIST": {
+        "DASHBOARD": "Armaturenbrett"
+      }
+    },
+    "PAGES": {
+      "TEXT": "Seiten"
+    },
+    "INVOICEMANAGEMENT": {
+      "TEXT": "Rechnungsverwaltung",
+      "LIST": {
+        "INVOICE": "Rechnung",
+        "ADDINVOICE": "Rechnung hinzufügen",
+        "INVOICEDETAILS": "Rechnungsdetails",
+        "PAYMENTS": "Zahlungen",
+        "TAXES": "Steuern",
+        "PRODUCTS": "Produkte",
+        "PRODUCTLIST": "Produktliste",
+        "ADDPRODUCT": "Produkte hinzufügen",
+        "REPORT": "Bericht",
+        "PAYMENTSUMMARY": "Zahlungsübersicht",
+        "SALEREPORT": "Verkaufsbericht",
+        "EXPENCESREPORT": "Ausgabenbericht",
+        "USERS": "Benutzer",
+        "TRANSACTION": "Transaktion",
+        "TRANSACTIONLIST": "Transaktionsliste",
+        "NEWTRANSACTION": "Neue Transaktion"
+      }
+    },
+    "AUTH": {
+      "TEXT": "Authentifizierung",
+      "LIST": {
+        "SIGNIN": "Anmelden",
+        "SIGNUP": "Registrieren",
+        "PASSWORDRESET": "Passwort zurücksetzen",
+        "LOCKSCREEN": "Bildschirm sperren"
+      }
+    },
+    "COMPONENTS": {
+      "TEXT": "KOMPONENTEN"
+    },
+    "OVERVIEW": {
+      "TEXT": "Überblick"
+    },
+    "BOOTSTRAPUI": {
+      "TEXT": "Bootstrap-Benutzeroberfläche",
+      "LIST": {
+        "ALERTS": "Warnungen",
+        "BADGES": "Abzeichen",
+        "BUTTONS": "Tasten",
+        "COLORS": "Farben",
+        "CARDS": "Karten",
+        "CAROUSEL": "Karussell",
+        "DROPDOWNS": "Dropdowns",
+        "GRID": "Netz",
+        "IMAGES": "Bilder",
+        "TABS": "Registerkarten",
+        "ACCORDION&COLLAPSE": "Akkordeon & Zusammenbruch",
+        "MODALS": "Modale",
+        "OFFCANVAS": "Leinwand",
+        "PLACEHOLDERS": "Platzhalter",
+        "PROGRESS": "Fortschritt",
+        "NOTIFICATIONS": "Benachrichtigungen",
+        "MEDIAOBJECT": "Medienobjekt",
+        "EMBEDVIDEO": "Video einbetten",
+        "TYPOGRAPHY": "Typografie",
+        "LISTS": "Listen",
+        "GENERAL": "Allgemein",
+        "UTILITIES": "Dienstprogramme"
+      }
+    },
+    "ADVANCEUI": {
+      "TEXT": "Erweiterte Benutzeroberfläche",
+      "LIST": {
+        "SWEETALERT": "Süße Warnungen",
+        "NESTABLELIST": "Verschachtelbare Liste",
+        "SCROLLBAR": "Scrollleiste",
+        "SWIPERSLIDER": "Swiper-Schieberegler",
+        "RATTINGS": "Bewertungen",
+        "HIGHLIGHT": "Markieren",
+        "SCROLLSPY": "ScrollSpy"
+      }
+    },
+    "FORMS": {
+      "TEXT": "Formen",
+      "LIST": {
+        "BASICELEMENTS": "Grundelemente",
+        "FORMSELECT": "Formular auswählen",
+        "CHECKBOXS&RADIOS": "Kontrollkästchen & Radios",
+        "PICKERS": "Pflücker",
+        "INPUTMASKS": "Formmaske",
+        "ADVANCED": "Formular erweitert",
+        "RANGESLIDER": "Range-Schieberegler",
+        "VALIDATION": "Formularvalidierung",
+        "WIZARD": "Formzauberer",
+        "EDITORS": "Formular-Editoren",
+        "FILEUPLOADS": "Hochladen von Formulardateien",
+        "FORMLAYOUTS": "Formularlayouts",
+        "FORMWIZARD": "Formularassistent",
+        "TOMSELECT": "Tom auswählen"
+      }
+    },
+    "TABLES": {
+      "TEXT": "Tische",
+      "LIST": {
+        "BASICTABLES": "Grundlegende Tabellen",
+        "GRIDJS": "Gitter Js",
+        "LISTJS": "Liste Js"
+      }
+    },
+    "CHARTS": {
+      "TEXT": "Apexcharts",
+      "LIST": {
+        "LINE": "Linie",
+        "AREA": "Bereich",
+        "COLUMN": "Spalte",
+        "BAR": "Bar",
+        "MIXED": "Gemischt",
+        "TIMELINE": "Zeitleiste",
+        "CANDLESTICK": "Leuchter",
+        "BOXPLOT": "Box-Plot",
+        "BUBBLE": "Blase",
+        "SCATTER": "Streuen",
+        "HEATMAP": "Heatmap",
+        "TREEMAP": "Baumkarte",
+        "PIE": "Kuchen",
+        "RADIALBAR": "Radialbar",
+        "RADAR": "Radar",
+        "POLARAREA": "Polargebiet"
+      }
+    },
+    "ICONS": {
+      "TEXT": "Symbole",
+      "LIST": {
+        "REMIX": "Remix",
+        "BOXICONS": "Boxicons",
+        "MATERIALDESIGN": "Material Design",
+        "BOOTSTRAP": "Bootstrap",
+        "LINEAWESOME": "Linie Erstaunlich"
+      }
+    },
+    "MAPS": {
+      "TEXT": "Karten",
+      "LIST": {
+        "GOOGLE": "Google",
+        "VECTOR": "Vektor",
+        "LEAFLET": "Flugblatt"
+      }
+    },
+    "MULTILEVEL": {
+      "TEXT": "Mehrstufig",
+      "LIST": {
+        "LEVEL1": {
+          "1": "Stufe 1.1",
+          "2": "Stufe 1.2",
+          "LEVEL2": {
+            "1": "Stufe 2.1",
+            "2": "Stufe 2.2",
+            "LEVEL3": {
+              "1": "Stufe 3.1",
+              "2": "Stufe 3.2"
+            }
+          }
+        }
+      }
+    },
+    "MORE": {
+      "TEXT": "Mehr"
+    }
+  }
+}

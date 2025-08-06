@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-xl-3">
+        <div class="card">
+            <div class="card-header border-0 align-items-center d-flex">
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <ng-select [items]="symbols" bindLabel="name" bindValue="id" [(ngModel)]="selectedSymbols"
+                            [multiple]="false" [closeOnSelect]="true" clearable="false" placeholder="Positions">
+                            <!-- <ng-template ng-option-tmp let-item="item">
+                                <div class="d-flex justify-content-between align-items-center" style="font-size: 12px;">
+                                    <span>{{ item.name }}</span>
+                                    <button type="button" class="btn btn-sm btn-primary ms-2"
+                                        (click)="addSymbolToWatchlist(item)">
+                                        <i class="las la-plus-circle"></i>
+                                    </button>
+                                </div>
+                            </ng-template> -->
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-9">
+        <!-- <accordion>
+            <ng-container *ngFor="let symbol of yAxisSymbols; let i = index">
+                <accordion-group class="accordion-item" [isOpen]="dPlusOpen[i]"
+                    (isOpenChange)="onAccordionToggle($event, symbol, i)">
+
+                    <h2 accordion-heading class="accordion-header" [id]="'accordionwithplusExample' + i">
+                        <button class="accordion-button" type="button" [ngClass]="{ collapsed: !dPlusOpen[i] }">
+                            <span
+                                style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                <strong>{{ symbol }}</strong>
+                                <span *ngIf="!symbolHasEventsToday?.get(symbol)"
+                                    style="color: rgb(122, 119, 119); font-size: 12px;">
+                                    (no event match)
+                                </span>
+                            </span>
+                        </button>
+                        <div class="strategy-summary ps-4 py-1">
+                            <ng-container *ngFor="let pattern of patternsImage">
+                                <ng-container *ngIf="pattern.symbol === symbol">
+                                    <div class="d-flex align-items-center gap-1 mb-1" style="font-size: 10px;">
+                                        <img [src]="pattern.image" width="20" height="20"
+                                            [attr.title]="'Time: ' + pattern.time + '\nStrategy: ' + pattern.strategyName + '\nAccuracy: ' + pattern.accuracy + '%'" />
+                                        <span class="pill-text">
+                                            {{ pattern.strategyName }} | {{ pattern.accuracy }}% | {{ pattern.time }}
+                                        </span>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </h2>
+
+                    <div [id]="'accor_plusExamplecollapse' + i" class="accordion-collapse collapse"
+                        [class.show]="dPlusOpen[i]">
+                        <div class="accordion-body">
+                            <div *ngIf="symbolHasEventsToday?.get(symbol)" [id]="'chart-container-' + i"
+                                class="chart-wrapper">
+                                <apx-chart *ngIf="chartOptionsList[i]" [id]="'apexchart-' + i"
+                                    [series]="chartOptionsList[i].series" [chart]="chartOptionsList[i].chart"
+                                    [xaxis]="chartOptionsList[i].xaxis" [yaxis]="chartOptionsList[i].yaxis"
+                                    [title]="chartOptionsList[i].title" [tooltip]="chartOptionsList[i].tooltip"
+                                    [plotOptions]="chartOptionsList[i].plotOptions"
+                                    [dataLabels]="chartOptionsList[i].dataLabels" [stroke]="chartOptionsList[i].stroke"
+                                    [markers]="chartOptionsList[i].markers">
+                                </apx-chart>
+                            </div>
+                        </div>
+                    </div>
+                </accordion-group>
+            </ng-container>
+        </accordion> -->
+    </div>
+</div>

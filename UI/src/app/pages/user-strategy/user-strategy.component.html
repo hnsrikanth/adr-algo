@@ -1,0 +1,169 @@
+<!-- Start Breadcrumbs -->
+<!-- <app-page-title title="User Strategies" [breadcrumbItems]="breadCrumbItems"></app-page-title> -->
+<!-- End Breadcrumbs -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <div class="d-flex flex-wrap justify-content-center align-items-center">
+                        <div *ngFor="let item of patterns" class="me-3" style="text-align: center;">
+                            <img [src]="item.image" width="70" [alt]="item.name"
+                                style="margin-left: 60px;margin-right: 60px;" class="img-fluid rounded-top" />
+                            <p style="font-size: 12px;" class="mb-2">{{ item.name }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <button type="button" class="btn btn-primary" (click)="openModal(grid)">
+                    Subscribe to Strategy
+                </button>
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-gridjs">
+                        <thead>
+                            <tr class="gridjs-tr">
+                                <th class="gridjs-th" style="width: 150px;">
+                                    <div class="gridjs-th-content"></div>
+                                </th>
+                                <th class="gridjs-th" style="width: 150px;">
+                                    <div class="gridjs-th-content">Strategy</div>
+                                </th>
+                                <th class="gridjs-th" style="width: 250px; text-align: center;" colspan="2">
+                                    <div class="gridjs-th-content">Symbol</div>
+                                </th>
+                                <th class="gridjs-th" style="width: 250px;">
+                                    <div class="gridjs-th-content">Actions</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="gridjs-tr" *ngFor="let data of userStrategies">
+                                <td data-column-id="name" class="gridjs-td">
+                                    <div style="text-align: center;">
+                                        <img [src]="data.strategyImage" alt="{{ data.strategyName }}"
+                                            style="width: 80px; height: 80px;" />
+                                    </div>
+                                </td>
+                                <td data-column-id="name" class="gridjs-td">
+                                    <div>
+                                        {{ data.strategyName }}
+                                    </div>
+                                </td>
+                                <td data-column-id="symbols" class="gridjs-td" colspan="2">
+                                    <span class="badge badge-label bg-info" *ngFor="let symbol of data.symbols" style="margin: 5px;">
+                                        <i class="mdi mdi-circle-medium"></i>
+                                        {{ symbol.symbolCode  }}
+                                        <a style="margin-left: 15px; font-size: 15px; color: red;"
+                                            (click)="deleteUserStrategySymbol(symbol.userStrategySymbolId)">
+                                            <i class="las la-times-circle"></i>
+                                        </a>
+                                    </span>
+                                    <a style="font-size: 20px; float: right;"
+                                        (click)="openModal(gridStrategy, data.strategyId)">
+                                        <i class="las la-plus-circle"></i>
+                                    </a>
+                                </td>
+                                <td data-column-id="actions" class="gridjs-td">
+                                    <a style="font-size: 20px;" (click)="deleteUserStrategy(data.userStrategyId)">
+                                        <i class="las la-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #grid let-modal>
+    <div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalgridLabel">
+                    Add Subscribe to Strategy
+                </h5>
+                <button type="button" class="btn-close" (click)="modal.close('Close click')"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="userStrategyForm" (ngSubmit)="onSubmit()">
+                    <div class="row g-3">
+                        <div class="col-lg-12">
+                            <div>
+                                <select class="form-select mb-3" aria-label="Default select example" id="strategyId"
+                                    formControlName="strategyId">
+                                    <option selected>Select a Strategy</option>
+                                    <option *ngFor="let strategy of strategies" [value]="strategy.id">
+                                        {{ strategy.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-12">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button" class="btn btn-light"
+                                    (click)="modal.close('Close click')">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #gridStrategy let-modal>
+    <div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalgridLabel">Add Symbols to {{ dynamicTitle }}</h5>
+                <button type="button" class="btn-close" (click)="modal.close('Close click')"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addUserStrategySymbolForm" (ngSubmit)="onUserStrategySymbolSubmit()">
+                    <div class="row g-3">
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+
+                                <ng-select [items]="symbols" bindLabel="name" bindValue="id"
+                                    [(ngModel)]="selectedSymbols" formControlName="symbols" [multiple]="true"
+                                    [closeOnSelect]="false" clearable="false" placeholder="Select symbols">
+                                    <!-- <ng-option *ngFor="let symbol of symbols" [value]="symbol.id"
+                                        [disabled]="existingSymbols.includes(symbol.id)">
+                                        {{ symbol.name }}
+                                    </ng-option> -->
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button" class="btn btn-light"
+                                    (click)="modal.close('Close click')">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
