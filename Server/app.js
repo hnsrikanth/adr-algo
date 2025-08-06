@@ -6,14 +6,10 @@ const http = require("http");
 const bodyParser = require("body-parser");
 const path = require('path');
 
-const { setupTicker } = require('./marketData/ticker');
 const registerRoutes = require('./commonRoutes');
 
 const app = express();
 const server = http.createServer(app);
-
-// Import the screener start function
-const { start: startScreener } = require('./marketData/screener');
 
 // Serve static files from the 'public' directory
 // app.use(express.static('public'));
@@ -37,11 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 // Register all routes
 registerRoutes(app);
 
-// Setup ticker
-// setupTicker(server);
-
 const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {
 	server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-	// startScreener(); // Start the screener process
 });
