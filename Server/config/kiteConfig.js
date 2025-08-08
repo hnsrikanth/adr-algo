@@ -1,8 +1,8 @@
-const MasterBrokerTokens = require('../models/masterBrokerTokens');
+const UserBrokerCredentials = require('../models/userBrokerCredentials');
 
 async function getTokens() {
     try {
-        const result = await MasterBrokerTokens.findAll(); // Returns an array of instances
+        const result = await UserBrokerCredentials.findAll(); // Returns an array of instances
         if (!result || result.length === 0) {
             console.warn("No tokens found in the database.");
             return null;
