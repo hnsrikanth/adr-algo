@@ -1,27 +1,43 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss'
 })
 export class SettingsComponent {
+
+  showMarketProtection = false; // default hidden
+
+  onOrderTypeChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.showMarketProtection = (value === 'Market Protection');
+  }
 
   readonly step = 75;
   readonly max = 1800;
 
   // Bull trade values
   bullQuantity = 75;
+  bullQuantityRow = 75;
   // Bear trade values
   bearQuantity = 75;
+  bearQuantityRow = 75;
 
   increaseBull() {
     if (this.bullQuantity + this.step <= this.max) {
       this.bullQuantity += this.step;
+    }
+  }
+
+  increaseBullRow() {
+    if (this.bullQuantityRow + this.step <= this.max) {
+      this.bullQuantityRow += this.step;
     }
   }
 
@@ -31,9 +47,21 @@ export class SettingsComponent {
     }
   }
 
+  decreaseBullRow() {
+    if (this.bullQuantityRow > this.step) {
+      this.bullQuantityRow -= this.step;
+    }
+  }
+
   increaseBear() {
     if (this.bearQuantity + this.step <= this.max) {
       this.bearQuantity += this.step;
+    }
+  }
+
+  increaseBearRow() {
+    if (this.bearQuantityRow + this.step <= this.max) {
+      this.bearQuantityRow += this.step;
     }
   }
 
@@ -43,164 +71,273 @@ export class SettingsComponent {
     }
   }
 
-  // Bull trade values
-  bullQuantity2 = 75;
-  // Bear trade values
-  bearQuantity2 = 75;
-
-  increaseBull2() {
-    if (this.bullQuantity2 + this.step <= this.max) {
-      this.bullQuantity2 += this.step;
-    }
-  }
-
-  decreaseBull2() {
-    if (this.bullQuantity2 > this.step) {
-      this.bullQuantity2 -= this.step;
-    }
-  }
-
-  increaseBear2() {
-    if (this.bearQuantity2 + this.step <= this.max) {
-      this.bearQuantity2 += this.step;
-    }
-  }
-
-  decreaseBear2() {
-    if (this.bearQuantity2 > this.step) {
-      this.bearQuantity2 -= this.step;
-    }
-  }
-
-  // Bull trade values
-  bullQuantity3 = 75;
-  // Bear trade values
-  bearQuantity3 = 75;
-
-  increaseBull3() {
-    if (this.bullQuantity3 + this.step <= this.max) {
-      this.bullQuantity3 += this.step;
-    }
-  }
-
-  decreaseBull3() {
-    if (this.bullQuantity3 > this.step) {
-      this.bullQuantity3 -= this.step;
-    }
-  }
-
-  increaseBear3() {
-    if (this.bearQuantity3 + this.step <= this.max) {
-      this.bearQuantity3 += this.step;
-    }
-  }
-
-  decreaseBear3() {
-    if (this.bearQuantity3 > this.step) {
-      this.bearQuantity3 -= this.step;
+  decreaseBearRow() {
+    if (this.bearQuantityRow > this.step) {
+      this.bearQuantityRow -= this.step;
     }
   }
 
   // BULL trade
-  @Input() bullIsBuy: boolean = false; // false = Sell, true = Buy
-  @Output() bullChanged = new EventEmitter<boolean>();
+  bullIsBuy = false;
 
   toggleBull() {
     this.bullIsBuy = !this.bullIsBuy;
-    this.bullChanged.emit(this.bullIsBuy);
   }
 
-  @Input() bullIsCE: boolean = false; // false = PE, true = CE
-  @Output() bullChangedCE = new EventEmitter<boolean>();
+  bullIsBuyRow = false;
+
+  toggleBullRow() {
+    this.bullIsBuyRow = !this.bullIsBuyRow;
+  }
+
+  bullIsCE = false;
 
   toggleBullCE() {
     this.bullIsCE = !this.bullIsCE;
-    this.bullChangedCE.emit(this.bullIsCE);
+  }
+
+  bullIsCERow = false;
+
+  toggleBullCERow() {
+    this.bullIsCERow = !this.bullIsCERow;
   }
 
   // BEAR trade
-  @Input() bearIsBuy: boolean = false;
-  @Output() bearChanged = new EventEmitter<boolean>();
+  bearIsBuy = false;
 
   toggleBear() {
     this.bearIsBuy = !this.bearIsBuy;
-    this.bearChanged.emit(this.bearIsBuy);
   }
 
-  @Input() bearIsCE: boolean = false;
-  @Output() bearChangedCE = new EventEmitter<boolean>();
+  bearIsBuyRow = false;
+
+  toggleBearRow() {
+    this.bearIsBuyRow = !this.bearIsBuyRow;
+  }
+
+  bearIsCE = false;
 
   toggleBearCE() {
     this.bearIsCE = !this.bearIsCE;
-    this.bearChangedCE.emit(this.bearIsCE);
   }
 
-    // BULL trade 2
-  @Input() bullIsBuy2: boolean = false; // false = Sell, true = Buy
-  @Output() bullChanged2 = new EventEmitter<boolean>();
+  bearIsCERow = false;
 
-  toggleBull2() {
-    this.bullIsBuy2 = !this.bullIsBuy2;
-    this.bullChanged2.emit(this.bullIsBuy2);
+  toggleBearCERow() {
+    this.bearIsCERow = !this.bearIsCERow;
   }
 
-  @Input() bullIsCE2: boolean = false; // false = PE, true = CE
-  @Output() bullChangedCE2 = new EventEmitter<boolean>();
+  // Trade 2 values
 
-  toggleBullCE2() {
-    this.bullIsCE2 = !this.bullIsCE2;
-    this.bullChangedCE2.emit(this.bullIsCE2);
+  // Bull trade values
+  bullQuantityTrade2 = 75;
+  bullQuantityRowTrade2 = 75;
+  // Bear trade values
+  bearQuantityTrade2 = 75;
+  bearQuantityRowTrade2 = 75;
+
+  increaseBullTrade2() {
+    if (this.bullQuantityTrade2 + this.step <= this.max) {
+      this.bullQuantityTrade2 += this.step;
+    }
   }
 
-  // BEAR trade 2
-  @Input() bearIsBuy2: boolean = false;
-  @Output() bearChanged2 = new EventEmitter<boolean>();
-
-  toggleBear2() {
-    this.bearIsBuy2 = !this.bearIsBuy2;
-    this.bearChanged2.emit(this.bearIsBuy2);
+  increaseBullRowTrade2() {
+    if (this.bullQuantityRowTrade2 + this.step <= this.max) {
+      this.bullQuantityRowTrade2 += this.step;
+    }
   }
 
-  @Input() bearIsCE2: boolean = false;
-  @Output() bearChangedCE2 = new EventEmitter<boolean>();
-
-  toggleBearCE2() {
-    this.bearIsCE2 = !this.bearIsCE2;
-    this.bearChangedCE2.emit(this.bearIsCE2);
+  decreaseBullTrade2() {
+    if (this.bullQuantityTrade2 > this.step) {
+      this.bullQuantityTrade2 -= this.step;
+    }
   }
 
-  // BULL trade 3
-  @Input() bullIsBuy3: boolean = false; // false = Sell, true = Buy
-  @Output() bullChanged3 = new EventEmitter<boolean>();
-
-  toggleBull3() {
-    this.bullIsBuy3 = !this.bullIsBuy3;
-    this.bullChanged3.emit(this.bullIsBuy3);
+  decreaseBullRowTrade2() {
+    if (this.bullQuantityRowTrade2 > this.step) {
+      this.bullQuantityRowTrade2 -= this.step;
+    }
   }
 
-  @Input() bullIsCE3: boolean = false; // false = PE, true = CE
-  @Output() bullChangedCE3 = new EventEmitter<boolean>();
-
-  toggleBullCE3() {
-    this.bullIsCE3 = !this.bullIsCE3;
-    this.bullChangedCE3.emit(this.bullIsCE3);
+  increaseBearTrade2() {
+    if (this.bearQuantityTrade2 + this.step <= this.max) {
+      this.bearQuantityTrade2 += this.step;
+    }
   }
 
-  // BEAR trade 3
-  @Input() bearIsBuy3: boolean = false;
-  @Output() bearChanged3 = new EventEmitter<boolean>();
-
-  toggleBear3() {
-    this.bearIsBuy3 = !this.bearIsBuy3;
-    this.bearChanged3.emit(this.bearIsBuy3);
+  increaseBearRowTrade2() {
+    if (this.bearQuantityRowTrade2 + this.step <= this.max) {
+      this.bearQuantityRowTrade2 += this.step;
+    }
   }
 
-  @Input() bearIsCE3: boolean = false;
-  @Output() bearChangedCE3 = new EventEmitter<boolean>();
-
-  toggleBearCE3() {
-    this.bearIsCE3 = !this.bearIsCE3;
-    this.bearChangedCE3.emit(this.bearIsCE3);
+  decreaseBearTrade2() {
+    if (this.bearQuantityTrade2 > this.step) {
+      this.bearQuantityTrade2 -= this.step;
+    }
   }
 
+  decreaseBearRowTrade2() {
+    if (this.bearQuantityRowTrade2 > this.step) {
+      this.bearQuantityRowTrade2 -= this.step;
+    }
+  }
+
+  // BULL trade
+  bullIsBuyTrade2 = false;
+
+  toggleBullTrade2() {
+    this.bullIsBuyTrade2 = !this.bullIsBuyTrade2;
+  }
+
+  bullIsBuyRowTrade2 = false;
+
+  toggleBullRowTrade2() {
+    this.bullIsBuyRowTrade2 = !this.bullIsBuyRowTrade2;
+  }
+
+  bullIsCETrade2 = false;
+
+  toggleBullCETrade2() {
+    this.bullIsCETrade2 = !this.bullIsCETrade2;
+  }
+
+  bullIsCERowTrade2 = false;
+
+  toggleBullCERowTrade2() {
+    this.bullIsCERowTrade2 = !this.bullIsCERowTrade2;
+  }
+
+  // BEAR trade
+  bearIsBuyTrade2 = false;
+
+  toggleBearTrade2() {
+    this.bearIsBuyTrade2 = !this.bearIsBuyTrade2;
+  }
+
+  bearIsBuyRowTrade2 = false;
+
+  toggleBearRowTrade2() {
+    this.bearIsBuyRowTrade2 = !this.bearIsBuyRowTrade2;
+  }
+
+  bearIsCETrade2 = false;
+
+  toggleBearCETrade2() {
+    this.bearIsCETrade2 = !this.bearIsCETrade2;
+  }
+
+  bearIsCERowTrade2 = false;
+
+  toggleBearCERowTrade2() {
+    this.bearIsCERowTrade2 = !this.bearIsCERowTrade2;
+  }
+
+  // Trade 3 values
+
+  // Bull trade values
+  bullQuantityTrade3 = 75;
+  bullQuantityRowTrade3 = 75;
+  // Bear trade values
+  bearQuantityTrade3 = 75;
+  bearQuantityRowTrade3 = 75;
+
+  increaseBullTrade3() {
+    if (this.bullQuantityTrade3 + this.step <= this.max) {
+      this.bullQuantityTrade3 += this.step;
+    }
+  }
+
+  increaseBullRowTrade3() {
+    if (this.bullQuantityRowTrade3 + this.step <= this.max) {
+      this.bullQuantityRowTrade3 += this.step;
+    }
+  }
+
+  decreaseBullTrade3() {
+    if (this.bullQuantityTrade3 > this.step) {
+      this.bullQuantityTrade3 -= this.step;
+    }
+  }
+
+  decreaseBullRowTrade3() {
+    if (this.bullQuantityRowTrade3 > this.step) {
+      this.bullQuantityRowTrade3 -= this.step;
+    }
+  }
+
+  increaseBearTrade3() {
+    if (this.bearQuantityTrade3 + this.step <= this.max) {
+      this.bearQuantityTrade3 += this.step;
+    }
+  }
+
+  increaseBearRowTrade3() {
+    if (this.bearQuantityRowTrade3 + this.step <= this.max) {
+      this.bearQuantityRowTrade3 += this.step;
+    }
+  }
+
+  decreaseBearTrade3() {
+    if (this.bearQuantityTrade3 > this.step) {
+      this.bearQuantityTrade3 -= this.step;
+    }
+  }
+
+  decreaseBearRowTrade3() {
+    if (this.bearQuantityRowTrade3 > this.step) {
+      this.bearQuantityRowTrade3 -= this.step;
+    }
+  }
+
+  // BULL trade
+  bullIsBuyTrade3 = false;
+
+  toggleBullTrade3() {
+    this.bullIsBuyTrade3 = !this.bullIsBuyTrade3;
+  }
+
+  bullIsBuyRowTrade3 = false;
+
+  toggleBullRowTrade3() {
+    this.bullIsBuyRowTrade3 = !this.bullIsBuyRowTrade3;
+  }
+
+  bullIsCETrade3 = false;
+
+  toggleBullCETrade3() {
+    this.bullIsCETrade3 = !this.bullIsCETrade3;
+  }
+
+  bullIsCERowTrade3 = false;
+
+  toggleBullCERowTrade3() {
+    this.bullIsCERowTrade3 = !this.bullIsCERowTrade3;
+  }
+
+  // BEAR trade
+  bearIsBuyTrade3 = false;
+
+  toggleBearTrade3() {
+    this.bearIsBuyTrade3 = !this.bearIsBuyTrade3;
+  }
+
+  bearIsBuyRowTrade3 = false;
+
+  toggleBearRowTrade3() {
+    this.bearIsBuyRowTrade3 = !this.bearIsBuyRowTrade3;
+  }
+
+  bearIsCETrade3 = false;
+
+  toggleBearCETrade3() {
+    this.bearIsCETrade3 = !this.bearIsCETrade3;
+  }
+
+  bearIsCERowTrade3 = false;
+
+  toggleBearCERowTrade3() {
+    this.bearIsCERowTrade3 = !this.bearIsCERowTrade3;
+  }
 }

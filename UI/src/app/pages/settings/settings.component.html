@@ -10,7 +10,7 @@
               class="form-control bg-light border-0"
               id="nifty"
               placeholder="Invoice No"
-              value="NIFTY"
+              value="NIFTY" readonly
             />
           </div>
           <div class="col-lg-2 col-sm-6">
@@ -46,6 +46,7 @@
                 name="orderType"
                 id="market"
                 value="Market"
+                (change)="onOrderTypeChange($event)"
               />
               <label class="form-check-label" for="market">Market</label>
             </div>
@@ -56,13 +57,14 @@
                 name="orderType"
                 id="marketProtetion"
                 value="Market Protection"
+                (change)="onOrderTypeChange($event)"
               />
               <label class="form-check-label" for="marketProtetion"
                 >Market Protection</label
               >
             </div>
           </div>
-          <div class="col-lg-2 col-sm-6">
+          <div class="col-lg-2 col-sm-6" *ngIf="showMarketProtection">
             <div>
               <label for="totalamountInput">Market Protection %</label>
               <div class="input-light">
@@ -96,7 +98,7 @@
         </div>
       </div>
       <div class="card-body p-4 border-top border-top-dashed">
-        <h4 class="fw-bold mb-4">Risk Management</h4>
+        <h6 class="fw-bold mb-4">Risk Management</h6>
         <div class="row g-3">
           <div class="col-lg-2 col-sm-6">
             <label for="stoplossTrade">Stoploss for Base Trade</label>
@@ -167,27 +169,26 @@
         </div>
       </div>
       <div class="card-body p-4 border-top border-top-dashed">
-        <h4 class="fw-bold mb-4">Trade Settings</h4>
+        <h6 class="fw-bold mb-4">Trade Settings</h6>
         <div class="row">
           <div class="col-lg-6">
-            <h5 class="fw-bold mb-3">Bull Trades</h5>
+            <h6 class="fw-bold mb-3">Bull Trades</h6>
             <h6 class="fw-bold mb-3">Base Trade</h6>
+
             <div class="p-3 mb-3 border rounded bg-light">
               <div class="row g-2 align-items-end">
                 <div class="col">
                   <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2"
-                      >B/S</label
-                    >
-                    <div
-                      class="toggle-switch"
-                      [class.buy]="bullIsBuy"
-                      [class.sell]="!bullIsBuy"
+                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
+
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsBuy ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
                       (click)="toggleBull()"
                     >
-                      <div class="slider"></div>
-                      <span class="label">{{ bullIsBuy ? "B" : "S" }}</span>
-                    </div>
+                      {{ bullIsBuy ? 'B' : 'S' }}
+                    </button>
                   </div>
                 </div>
 
@@ -200,7 +201,7 @@
                     <option>ITM +3</option>
                     <option>ITM +2</option>
                     <option>ITM +1</option>
-                    <option>ATM +0</option>
+                    <option>ATM 0</option>
                     <option>OTM +1</option>
                     <option>OTM +2</option>
                     <option>OTM +3</option>
@@ -234,15 +235,16 @@
                   </div>
                 </div>
                 <div class="col">
-                  <label class="text-muted fw-semibold">CE/PE</label>
-                  <div
-                    class="toggle-switch"
-                    [class.ce]="bullIsCE"
-                    [class.pe]="!bullIsCE"
-                    (click)="toggleBullCE()"
-                  >
-                    <div class="slider"></div>
-                    <span class="label">{{ bullIsCE ? "CE" : "PE" }}</span>
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsCE ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullCE()"
+                    >
+                      {{ bullIsCE ? 'CE' : 'PE' }}
+                    </button>
                   </div>
                 </div>
                 <div class="col">
@@ -257,30 +259,105 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="col-lg-6">
-            <h5 class="fw-bold mb-3">Bear Trades</h5>
-            <h6 class="fw-bold mb-3">Base Trade</h6>
             <div class="p-3 mb-3 border rounded bg-light">
               <div class="row g-2 align-items-end">
                 <div class="col">
                   <div class="col bs-switch-container">
-                    <div class="col bs-toggle-container">
-                      <label class="text-muted fw-semibold d-block mb-2"
-                        >B/S</label
-                      >
-                      <div
-                        class="toggle-switch"
-                        [class.buy]="bearIsBuy"
-                        [class.sell]="!bearIsBuy"
-                        (click)="toggleBear()"
-                      >
-                        <div class="slider"></div>
-                        <span class="label">{{ bearIsBuy ? "B" : "S" }}</span>
-                      </div>
-                    </div>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsBuyRow ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullRow()"
+                    >
+                      {{ bullIsBuyRow ? 'B' : 'S' }}
+                    </button>
                   </div>
+                </div>
+
+                <div class="col">
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM 0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBullRow()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bullQuantityRow }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBullRow()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsCERow ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullCERow()"
+                    >
+                      {{ bullIsCERow ? 'CE' : 'PE' }}
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
+                    <select class="form-control bg-white border">
+                      <option>Expiry</option>
+                      <option value="14/08/2025">14/08/2025</option>
+                      <option value="21/08/2025">21/08/2025</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <h6 class="fw-bold mb-3">Bear Trades</h6>
+            <h6 class="fw-bold mb-3">Base Trade</h6>
+
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsBuy ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBear()"
+                    >
+                      {{ bearIsBuy ? 'B' : 'S' }}
+                    </button>
+                  </div>
+
                 </div>
 
                 <div class="col">
@@ -292,7 +369,7 @@
                     <option>ITM +3</option>
                     <option>ITM +2</option>
                     <option>ITM +1</option>
-                    <option>ATM +0</option>
+                    <option>ATM 0</option>
                     <option>OTM +1</option>
                     <option>OTM +2</option>
                     <option>OTM +3</option>
@@ -326,20 +403,100 @@
                   </div>
                 </div>
                 <div class="col">
-                  <label class="text-muted fw-semibold">CE/PE</label>
-                  <div
-                    class="toggle-switch"
-                    [class.ce]="bearIsCE"
-                    [class.pe]="!bearIsCE"
-                    (click)="toggleBearCE()"
-                  >
-                    <div class="slider"></div>
-                    <span class="label">{{ bearIsCE ? "CE" : "PE" }}</span>
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsCE ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearCE()"
+                    >
+                      {{ bearIsCE ? 'CE' : 'PE' }}
+                    </button>
                   </div>
                 </div>
                 <div class="col">
                   <div>
                     <label for="expiry" class="form-label">Expiry</label>
+                    <select class="form-control bg-white border">
+                      <option>Expiry</option>
+                      <option value="14/08/2025">14/08/2025</option>
+                      <option value="21/08/2025">21/08/2025</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsBuyRow ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearRow()"
+                    >
+                      {{ bearIsBuyRow ? 'B' : 'S' }}
+                    </button>
+                  </div>
+
+                </div>
+
+                <div class="col">
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM 0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBearRow()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bearQuantityRow }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBearRow()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsCERow ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearCERow()"
+                    >
+                      {{ bearIsCERow ? 'CE' : 'PE' }}
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
                     <select class="form-control bg-white border">
                       <option>Expiry</option>
                       <option value="14/08/2025">14/08/2025</option>
@@ -355,22 +512,21 @@
         <div class="row">
           <div class="col-lg-6">
             <h6 class="fw-bold mb-3">Trade 2</h6>
+
             <div class="p-3 mb-3 border rounded bg-light">
               <div class="row g-2 align-items-end">
                 <div class="col">
                   <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2"
-                      >B/S</label
+                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
+
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsBuyTrade2 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullTrade2()"
                     >
-                    <div
-                      class="toggle-switch"
-                      [class.buy]="bullIsBuy2"
-                      [class.sell]="!bullIsBuy2"
-                      (click)="toggleBull2()"
-                    >
-                      <div class="slider"></div>
-                      <span class="label">{{ bullIsBuy2 ? "B" : "S" }}</span>
-                    </div>
+                      {{ bullIsBuyTrade2 ? 'B' : 'S' }}
+                    </button>
                   </div>
                 </div>
 
@@ -383,7 +539,7 @@
                     <option>ITM +3</option>
                     <option>ITM +2</option>
                     <option>ITM +1</option>
-                    <option>ATM +0</option>
+                    <option>ATM 0</option>
                     <option>OTM +1</option>
                     <option>OTM +2</option>
                     <option>OTM +3</option>
@@ -398,7 +554,7 @@
                     <button
                       type="button"
                       class="minus"
-                      (click)="decreaseBull2()"
+                      (click)="decreaseBullTrade2()"
                     >
                       –
                     </button>
@@ -406,26 +562,27 @@
                       type="number"
                       class="product-quantity"
                       id="quantity1"
-                      value="{{ bullQuantity2 }}"
+                      value="{{ bullQuantityTrade2 }}"
                       min="0"
                       max="100"
                       readonly
                     />
-                    <button type="button" class="plus" (click)="increaseBull2()">
+                    <button type="button" class="plus" (click)="increaseBullTrade2()">
                       +
                     </button>
                   </div>
                 </div>
                 <div class="col">
-                  <label class="text-muted fw-semibold">CE/PE</label>
-                  <div
-                    class="toggle-switch"
-                    [class.ce]="bullIsCE2"
-                    [class.pe]="!bullIsCE2"
-                    (click)="toggleBullCE2()"
-                  >
-                    <div class="slider"></div>
-                    <span class="label">{{ bullIsCE2 ? "CE" : "PE" }}</span>
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsCETrade2 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullCETrade2()"
+                    >
+                      {{ bullIsCETrade2 ? 'CE' : 'PE' }}
+                    </button>
                   </div>
                 </div>
                 <div class="col">
@@ -440,29 +597,104 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="col-lg-6">
-            <h6 class="fw-bold mb-3">Trade 2</h6>
             <div class="p-3 mb-3 border rounded bg-light">
               <div class="row g-2 align-items-end">
                 <div class="col">
                   <div class="col bs-switch-container">
-                    <div class="col bs-toggle-container">
-                      <label class="text-muted fw-semibold d-block mb-2"
-                        >B/S</label
-                      >
-                      <div
-                        class="toggle-switch"
-                        [class.buy]="bearIsBuy2"
-                        [class.sell]="!bearIsBuy2"
-                        (click)="toggleBear2()"
-                      >
-                        <div class="slider"></div>
-                        <span class="label">{{ bearIsBuy2 ? "B" : "S" }}</span>
-                      </div>
-                    </div>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsBuyRowTrade2 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullRowTrade2()"
+                    >
+                      {{ bullIsBuyRowTrade2 ? 'B' : 'S' }}
+                    </button>
                   </div>
+                </div>
+
+                <div class="col">
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM 0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBullRowTrade2()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bullQuantityRowTrade2 }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBullRowTrade2()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsCERowTrade2 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullCERowTrade2()"
+                    >
+                      {{ bullIsCERowTrade2 ? 'CE' : 'PE' }}
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
+                    <select class="form-control bg-white border">
+                      <option>Expiry</option>
+                      <option value="14/08/2025">14/08/2025</option>
+                      <option value="21/08/2025">21/08/2025</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <h6 class="fw-bold mb-3">Trade 2</h6>
+
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsBuyTrade2 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearTrade2()"
+                    >
+                      {{ bearIsBuyTrade2 ? 'B' : 'S' }}
+                    </button>
+                  </div>
+
                 </div>
 
                 <div class="col">
@@ -474,7 +706,7 @@
                     <option>ITM +3</option>
                     <option>ITM +2</option>
                     <option>ITM +1</option>
-                    <option>ATM +0</option>
+                    <option>ATM 0</option>
                     <option>OTM +1</option>
                     <option>OTM +2</option>
                     <option>OTM +3</option>
@@ -489,7 +721,7 @@
                     <button
                       type="button"
                       class="minus"
-                      (click)="decreaseBear2()"
+                      (click)="decreaseBearTrade2()"
                     >
                       –
                     </button>
@@ -497,31 +729,111 @@
                       type="number"
                       class="product-quantity"
                       id="quantity1"
-                      value="{{ bearQuantity2 }}"
+                      value="{{ bearQuantityTrade2 }}"
                       min="0"
                       max="100"
                       readonly
                     />
-                    <button type="button" class="plus" (click)="increaseBear2()">
+                    <button type="button" class="plus" (click)="increaseBearTrade2()">
                       +
                     </button>
                   </div>
                 </div>
                 <div class="col">
-                  <label class="text-muted fw-semibold">CE/PE</label>
-                  <div
-                    class="toggle-switch"
-                    [class.ce]="bearIsCE2"
-                    [class.pe]="!bearIsCE2"
-                    (click)="toggleBearCE2()"
-                  >
-                    <div class="slider"></div>
-                    <span class="label">{{ bearIsCE2 ? "CE" : "PE" }}</span>
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsCETrade2 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearCETrade2()"
+                    >
+                      {{ bearIsCETrade2 ? 'CE' : 'PE' }}
+                    </button>
                   </div>
                 </div>
                 <div class="col">
                   <div>
                     <label for="expiry" class="form-label">Expiry</label>
+                    <select class="form-control bg-white border">
+                      <option>Expiry</option>
+                      <option value="14/08/2025">14/08/2025</option>
+                      <option value="21/08/2025">21/08/2025</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsBuyRowTrade2 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearRowTrade2()"
+                    >
+                      {{ bearIsBuyRowTrade2 ? 'B' : 'S' }}
+                    </button>
+                  </div>
+
+                </div>
+
+                <div class="col">
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM 0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBearRowTrade2()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bearQuantityRowTrade2 }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBearRowTrade2()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsCERowTrade2 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearCERowTrade2()"
+                    >
+                      {{ bearIsCERowTrade2 ? 'CE' : 'PE' }}
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
                     <select class="form-control bg-white border">
                       <option>Expiry</option>
                       <option value="14/08/2025">14/08/2025</option>
@@ -537,22 +849,21 @@
         <div class="row">
           <div class="col-lg-6">
             <h6 class="fw-bold mb-3">Trade 3</h6>
+
             <div class="p-3 mb-3 border rounded bg-light">
               <div class="row g-2 align-items-end">
                 <div class="col">
                   <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2"
-                      >B/S</label
+                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
+
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsBuyTrade3 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullTrade3()"
                     >
-                    <div
-                      class="toggle-switch"
-                      [class.buy]="bullIsBuy3"
-                      [class.sell]="!bullIsBuy3"
-                      (click)="toggleBull3()"
-                    >
-                      <div class="slider"></div>
-                      <span class="label">{{ bullIsBuy3 ? "B" : "S" }}</span>
-                    </div>
+                      {{ bullIsBuyTrade3 ? 'B' : 'S' }}
+                    </button>
                   </div>
                 </div>
 
@@ -565,7 +876,7 @@
                     <option>ITM +3</option>
                     <option>ITM +2</option>
                     <option>ITM +1</option>
-                    <option>ATM +0</option>
+                    <option>ATM 0</option>
                     <option>OTM +1</option>
                     <option>OTM +2</option>
                     <option>OTM +3</option>
@@ -580,7 +891,7 @@
                     <button
                       type="button"
                       class="minus"
-                      (click)="decreaseBull3()"
+                      (click)="decreaseBullTrade3()"
                     >
                       –
                     </button>
@@ -588,26 +899,27 @@
                       type="number"
                       class="product-quantity"
                       id="quantity1"
-                      value="{{ bullQuantity3 }}"
+                      value="{{ bullQuantityTrade3 }}"
                       min="0"
                       max="100"
                       readonly
                     />
-                    <button type="button" class="plus" (click)="increaseBull3()">
+                    <button type="button" class="plus" (click)="increaseBullTrade3()">
                       +
                     </button>
                   </div>
                 </div>
                 <div class="col">
-                  <label class="text-muted fw-semibold">CE/PE</label>
-                  <div
-                    class="toggle-switch"
-                    [class.ce]="bullIsCE3"
-                    [class.pe]="!bullIsCE3"
-                    (click)="toggleBullCE3()"
-                  >
-                    <div class="slider"></div>
-                    <span class="label">{{ bullIsCE3 ? "CE" : "PE" }}</span>
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsCETrade3 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullCETrade3()"
+                    >
+                      {{ bullIsCETrade3 ? 'CE' : 'PE' }}
+                    </button>
                   </div>
                 </div>
                 <div class="col">
@@ -622,29 +934,104 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="col-lg-6">
-            <h6 class="fw-bold mb-3">Trade 3</h6>
             <div class="p-3 mb-3 border rounded bg-light">
               <div class="row g-2 align-items-end">
                 <div class="col">
                   <div class="col bs-switch-container">
-                    <div class="col bs-toggle-container">
-                      <label class="text-muted fw-semibold d-block mb-2"
-                        >B/S</label
-                      >
-                      <div
-                        class="toggle-switch"
-                        [class.buy]="bearIsBuy3"
-                        [class.sell]="!bearIsBuy3"
-                        (click)="toggleBear3()"
-                      >
-                        <div class="slider"></div>
-                        <span class="label">{{ bearIsBuy3 ? "B" : "S" }}</span>
-                      </div>
-                    </div>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsBuyRowTrade3 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullRowTrade3()"
+                    >
+                      {{ bullIsBuyRowTrade3 ? 'B' : 'S' }}
+                    </button>
                   </div>
+                </div>
+
+                <div class="col">
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM 0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBullRowTrade3()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bullQuantityRowTrade3 }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBullRowTrade3()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bullIsCERowTrade3 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBullCERowTrade3()"
+                    >
+                      {{ bullIsCERowTrade3 ? 'CE' : 'PE' }}
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
+                    <select class="form-control bg-white border">
+                      <option>Expiry</option>
+                      <option value="14/08/2025">14/08/2025</option>
+                      <option value="21/08/2025">21/08/2025</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <h6 class="fw-bold mb-3">Trade 3</h6>
+
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsBuyTrade3 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearTrade3()"
+                    >
+                      {{ bearIsBuyTrade3 ? 'B' : 'S' }}
+                    </button>
+                  </div>
+
                 </div>
 
                 <div class="col">
@@ -656,7 +1043,7 @@
                     <option>ITM +3</option>
                     <option>ITM +2</option>
                     <option>ITM +1</option>
-                    <option>ATM +0</option>
+                    <option>ATM 0</option>
                     <option>OTM +1</option>
                     <option>OTM +2</option>
                     <option>OTM +3</option>
@@ -671,7 +1058,7 @@
                     <button
                       type="button"
                       class="minus"
-                      (click)="decreaseBear3()"
+                      (click)="decreaseBearTrade3()"
                     >
                       –
                     </button>
@@ -679,31 +1066,111 @@
                       type="number"
                       class="product-quantity"
                       id="quantity1"
-                      value="{{ bearQuantity3 }}"
+                      value="{{ bearQuantityTrade3 }}"
                       min="0"
                       max="100"
                       readonly
                     />
-                    <button type="button" class="plus" (click)="increaseBear3()">
+                    <button type="button" class="plus" (click)="increaseBearTrade3()">
                       +
                     </button>
                   </div>
                 </div>
                 <div class="col">
-                  <label class="text-muted fw-semibold">CE/PE</label>
-                  <div
-                    class="toggle-switch"
-                    [class.ce]="bearIsCE3"
-                    [class.pe]="!bearIsCE3"
-                    (click)="toggleBearCE3()"
-                  >
-                    <div class="slider"></div>
-                    <span class="label">{{ bearIsCE3 ? "CE" : "PE" }}</span>
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsCETrade3 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearCETrade3()"
+                    >
+                      {{ bearIsCETrade3 ? 'CE' : 'PE' }}
+                    </button>
                   </div>
                 </div>
                 <div class="col">
                   <div>
                     <label for="expiry" class="form-label">Expiry</label>
+                    <select class="form-control bg-white border">
+                      <option>Expiry</option>
+                      <option value="14/08/2025">14/08/2025</option>
+                      <option value="21/08/2025">21/08/2025</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsBuyRowTrade3 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearRowTrade3()"
+                    >
+                      {{ bearIsBuyRowTrade3 ? 'B' : 'S' }}
+                    </button>
+                  </div>
+
+                </div>
+
+                <div class="col">
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM 0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBearRowTrade3()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bearQuantityRowTrade3 }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBearRowTrade3()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <button
+                      type="button"
+                      class="btn rounded-pill"
+                      [ngClass]="bearIsCERowTrade3 ? 'btn rounded-pill btn-primary' : 'btn rounded-pill btn-danger'"
+                      (click)="toggleBearCERowTrade3()"
+                    >
+                      {{ bearIsCERowTrade3 ? 'CE' : 'PE' }}
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
                     <select class="form-control bg-white border">
                       <option>Expiry</option>
                       <option value="14/08/2025">14/08/2025</option>
