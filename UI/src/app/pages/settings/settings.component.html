@@ -1,1 +1,727 @@
-<p>settings works!</p>
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-body p-4">
+        <div class="row g-3">
+          <div class="col-lg-2 col-sm-6">
+            <label for="nifty">Instrument</label>
+            <input
+              type="text"
+              class="form-control bg-light border-0"
+              id="nifty"
+              placeholder="Invoice No"
+              value="NIFTY"
+            />
+          </div>
+          <div class="col-lg-2 col-sm-6">
+            <label class="d-block mb-2">Product</label>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="productType"
+                id="intraday"
+                value="Intraday"
+              />
+              <label class="form-check-label" for="intraday">Intraday</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="productType"
+                id="margin"
+                value="Margin"
+              />
+              <label class="form-check-label" for="margin">Margin</label>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-sm-6">
+            <label class="d-block mb-2">Order Type</label>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="orderType"
+                id="market"
+                value="Market"
+              />
+              <label class="form-check-label" for="market">Market</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="orderType"
+                id="marketProtetion"
+                value="Market Protection"
+              />
+              <label class="form-check-label" for="marketProtetion"
+                >Market Protection</label
+              >
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6">
+            <div>
+              <label for="totalamountInput">Market Protection %</label>
+              <div class="input-light">
+                <select
+                  class="form-control bg-light border-0"
+                  data-choices
+                  data-choices-search-false
+                  id="choices-payment-status"
+                  required
+                >
+                  <option value="">Select Percentage</option>
+                  <option value="1 %">1 %</option>
+                  <option value="2 %">2 %</option>
+                  <option value="3 %">3 %</option>
+                  <option value="4 %">4 %</option>
+                  <option value="5 %">5 %</option>
+                  <option value="6 %">6 %</option>
+                  <option value="7 %">7 %</option>
+                  <option value="8 %">8 %</option>
+                  <option value="9 %">9 %</option>
+                  <option value="10 %">10 %</option>
+                  <option value="11 %">11 %</option>
+                  <option value="12 %">12 %</option>
+                  <option value="13 %">13 %</option>
+                  <option value="14 %">14 %</option>
+                  <option value="15 %">15 %</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-4 border-top border-top-dashed">
+        <h4 class="fw-bold mb-4">Risk Management</h4>
+        <div class="row g-3">
+          <div class="col-lg-2 col-sm-6">
+            <label for="stoplossTrade">Stoploss for Base Trade</label>
+            <input
+              type="number"
+              class="form-control bg-light border-0"
+              id="stoplossTrade"
+              name="stoplossTrade"
+              placeholder="Points/ % of points"
+            />
+          </div>
+          <div class="col-lg-2 col-sm-6">
+            <div>
+              <label for="dayTarget">Day Target</label>
+              <input
+                type="number"
+                class="form-control bg-light border-0"
+                id="dayTarget"
+                name="dayTarget"
+              />
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6">
+            <label for="dayLoss">Day Loss</label>
+            <input
+              type="number"
+              class="form-control bg-light border-0"
+              id="dayLoss"
+              name="dayLoss"
+            />
+          </div>
+          <div class="col-lg-2 col-sm-6">
+            <div>
+              <label for="trailingMTM">Trailing MTM from</label>
+              <input
+                type="number"
+                class="form-control bg-light border-0"
+                id="trailingMTM"
+                name="trailingMTM"
+              />
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6">
+            <div>
+              <label for="trailMTM">Trail MTM Increment</label>
+              <input
+                type="number"
+                class="form-control bg-light border-0"
+                id="trailMTM"
+                name="trailMTM"
+              />
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6">
+            <div>
+              <label for="profitProtect">Profit Protect</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control bg-light border-0"
+                  id="profitProtect"
+                  name="profitProtect"
+                />
+                <span class="input-group-text">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-4 border-top border-top-dashed">
+        <h4 class="fw-bold mb-4">Trade Settings</h4>
+        <div class="row">
+          <div class="col-lg-6">
+            <h5 class="fw-bold mb-3">Bull Trades</h5>
+            <h6 class="fw-bold mb-3">Base Trade</h6>
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2"
+                      >B/S</label
+                    >
+                    <div
+                      class="toggle-switch"
+                      [class.buy]="bullIsBuy"
+                      [class.sell]="!bullIsBuy"
+                      (click)="toggleBull()"
+                    >
+                      <div class="slider"></div>
+                      <span class="label">{{ bullIsBuy ? "B" : "S" }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label class="text-muted fw-semibold">Strike</label>
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM +0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">Quantity</label>
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBull()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bullQuantity }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBull()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">CE/PE</label>
+                  <div
+                    class="toggle-switch"
+                    [class.ce]="bullIsCE"
+                    [class.pe]="!bullIsCE"
+                    (click)="toggleBullCE()"
+                  >
+                    <div class="slider"></div>
+                    <span class="label">{{ bullIsCE ? "CE" : "PE" }}</span>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
+                    <label for="expiry" class="form-label">Expiry</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="expiry"
+                      name="expiry"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <h5 class="fw-bold mb-3">Bear Trades</h5>
+            <h6 class="fw-bold mb-3">Base Trade</h6>
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <div class="col bs-toggle-container">
+                      <label class="text-muted fw-semibold d-block mb-2"
+                        >B/S</label
+                      >
+                      <div
+                        class="toggle-switch"
+                        [class.buy]="bearIsBuy"
+                        [class.sell]="!bearIsBuy"
+                        (click)="toggleBear()"
+                      >
+                        <div class="slider"></div>
+                        <span class="label">{{ bearIsBuy ? "B" : "S" }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label class="text-muted fw-semibold">Strike</label>
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM +0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">Quantity</label>
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBear()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bearQuantity }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBear()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">CE/PE</label>
+                  <div
+                    class="toggle-switch"
+                    [class.ce]="bearIsCE"
+                    [class.pe]="!bearIsCE"
+                    (click)="toggleBearCE()"
+                  >
+                    <div class="slider"></div>
+                    <span class="label">{{ bearIsCE ? "CE" : "PE" }}</span>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
+                    <label for="expiry" class="form-label">Expiry</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="expiry"
+                      name="expiry"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <h6 class="fw-bold mb-3">Trade 2</h6>
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2"
+                      >B/S</label
+                    >
+                    <div
+                      class="toggle-switch"
+                      [class.buy]="bullIsBuy2"
+                      [class.sell]="!bullIsBuy2"
+                      (click)="toggleBull2()"
+                    >
+                      <div class="slider"></div>
+                      <span class="label">{{ bullIsBuy2 ? "B" : "S" }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label class="text-muted fw-semibold">Strike</label>
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM +0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">Quantity</label>
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBull2()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bullQuantity2 }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBull2()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">CE/PE</label>
+                  <div
+                    class="toggle-switch"
+                    [class.ce]="bullIsCE2"
+                    [class.pe]="!bullIsCE2"
+                    (click)="toggleBullCE2()"
+                  >
+                    <div class="slider"></div>
+                    <span class="label">{{ bullIsCE2 ? "CE" : "PE" }}</span>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
+                    <label for="expiry" class="form-label">Expiry</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="expiry"
+                      name="expiry"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <h6 class="fw-bold mb-3">Trade 2</h6>
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <div class="col bs-toggle-container">
+                      <label class="text-muted fw-semibold d-block mb-2"
+                        >B/S</label
+                      >
+                      <div
+                        class="toggle-switch"
+                        [class.buy]="bearIsBuy2"
+                        [class.sell]="!bearIsBuy2"
+                        (click)="toggleBear2()"
+                      >
+                        <div class="slider"></div>
+                        <span class="label">{{ bearIsBuy2 ? "B" : "S" }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label class="text-muted fw-semibold">Strike</label>
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM +0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">Quantity</label>
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBear2()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bearQuantity2 }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBear2()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">CE/PE</label>
+                  <div
+                    class="toggle-switch"
+                    [class.ce]="bearIsCE2"
+                    [class.pe]="!bearIsCE2"
+                    (click)="toggleBearCE2()"
+                  >
+                    <div class="slider"></div>
+                    <span class="label">{{ bearIsCE2 ? "CE" : "PE" }}</span>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
+                    <label for="expiry" class="form-label">Expiry</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="expiry"
+                      name="expiry"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <h6 class="fw-bold mb-3">Trade 3</h6>
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <label class="text-muted fw-semibold d-block mb-2"
+                      >B/S</label
+                    >
+                    <div
+                      class="toggle-switch"
+                      [class.buy]="bullIsBuy3"
+                      [class.sell]="!bullIsBuy3"
+                      (click)="toggleBull3()"
+                    >
+                      <div class="slider"></div>
+                      <span class="label">{{ bullIsBuy3 ? "B" : "S" }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label class="text-muted fw-semibold">Strike</label>
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM +0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">Quantity</label>
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBull3()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bullQuantity3 }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBull3()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">CE/PE</label>
+                  <div
+                    class="toggle-switch"
+                    [class.ce]="bullIsCE3"
+                    [class.pe]="!bullIsCE3"
+                    (click)="toggleBullCE3()"
+                  >
+                    <div class="slider"></div>
+                    <span class="label">{{ bullIsCE3 ? "CE" : "PE" }}</span>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
+                    <label for="expiry" class="form-label">Expiry</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="expiry"
+                      name="expiry"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <h6 class="fw-bold mb-3">Trade 3</h6>
+            <div class="p-3 mb-3 border rounded bg-light">
+              <div class="row g-2 align-items-end">
+                <div class="col">
+                  <div class="col bs-switch-container">
+                    <div class="col bs-toggle-container">
+                      <label class="text-muted fw-semibold d-block mb-2"
+                        >B/S</label
+                      >
+                      <div
+                        class="toggle-switch"
+                        [class.buy]="bearIsBuy3"
+                        [class.sell]="!bearIsBuy3"
+                        (click)="toggleBear3()"
+                      >
+                        <div class="slider"></div>
+                        <span class="label">{{ bearIsBuy3 ? "B" : "S" }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label class="text-muted fw-semibold">Strike</label>
+                  <select class="form-control bg-white border">
+                    <option>ITM +6</option>
+                    <option>ITM +5</option>
+                    <option>ITM +4</option>
+                    <option>ITM +3</option>
+                    <option>ITM +2</option>
+                    <option>ITM +1</option>
+                    <option>ATM +0</option>
+                    <option>OTM +1</option>
+                    <option>OTM +2</option>
+                    <option>OTM +3</option>
+                    <option>OTM +4</option>
+                    <option>OTM +5</option>
+                    <option>OTM +6</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">Quantity</label>
+                  <div class="input-step">
+                    <button
+                      type="button"
+                      class="minus"
+                      (click)="decreaseBear3()"
+                    >
+                      –
+                    </button>
+                    <input
+                      type="number"
+                      class="product-quantity"
+                      id="quantity1"
+                      value="{{ bearQuantity3 }}"
+                      min="0"
+                      max="100"
+                      readonly
+                    />
+                    <button type="button" class="plus" (click)="increaseBear3()">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="col">
+                  <label class="text-muted fw-semibold">CE/PE</label>
+                  <div
+                    class="toggle-switch"
+                    [class.ce]="bearIsCE3"
+                    [class.pe]="!bearIsCE3"
+                    (click)="toggleBearCE3()"
+                  >
+                    <div class="slider"></div>
+                    <span class="label">{{ bearIsCE3 ? "CE" : "PE" }}</span>
+                  </div>
+                </div>
+                <div class="col">
+                  <div>
+                    <label for="expiry" class="form-label">Expiry</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="expiry"
+                      name="expiry"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

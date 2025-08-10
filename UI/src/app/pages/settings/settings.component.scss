@@ -1,0 +1,83 @@
+.trade-section {
+  h5 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .trade-card {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+    margin-bottom: 1rem;
+  }
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  select,
+  button {
+    height: 38px;
+  }
+}
+
+.toggle-switch {
+  position: relative;
+  width: 80px;
+  height: 36px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+
+  &.buy {
+    background-color: #28a745; // Green
+    .slider {
+      left: calc(100% - 32px);
+    }
+  }
+
+  &.sell {
+    background-color: #dc3545; // Red
+    .slider {
+      left: 4px;
+    }
+  }
+
+  &.ce {
+    background-color: #28a745; // Green for CE
+    .slider {
+      left: calc(100% - 32px);
+    }
+  }
+
+  &.pe {
+    background-color: #dc3545; // Red for PE
+    .slider {
+      left: 4px;
+    }
+  }
+
+  .slider {
+    position: absolute;
+    top: 8px;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    transition: left 0.3s ease;
+  }
+
+  .label {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    z-index: 1;
+  }
+}
+
