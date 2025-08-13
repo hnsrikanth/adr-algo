@@ -48,11 +48,25 @@ async function getLast14WorkingDaysData() {
       false // continuous
     );
 
+    // return {
+    //   from: fromDate,
+    //   to: toDate,
+    //   data: historicalData
+    // };
     return {
-      from: fromDate,
-      to: toDate,
-      data: historicalData
+      status: "success",
+      data: {
+        candles: historicalData.map(c => [
+          c.date,
+          c.open,
+          c.high,
+          c.low,
+          c.close,
+          c.volume
+        ])
+      }
     };
+
   } catch (err) {
     throw new Error(`Error fetching historical data: ${err.message}`);
   }

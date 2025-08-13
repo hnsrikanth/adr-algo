@@ -15,7 +15,7 @@ const initDB = async () => {
     await sequelize.authenticate();
     console.log('SQLite DB connected.');
 
-    await sequelize.sync({ alter: true });
+    // await sequelize.sync({ alter: true });
     console.log('Tables synced with SQLite database.');
   } catch (err) {
     console.error('DB Init Error:', err);

@@ -278,7 +278,7 @@ export class HorizontalTopbarComponent {
 
 		if (action === 'login' && type === 'login' && status === 'success' && requestToken) {
 			const broker = 'Zerodha'; // Adjust this value as needed
-      const user = 'Kite';
+      		const user = 'Kite';
 			this.isLoading = true;
 			this.successMessage = null;
 			this.errorMessage = null;
