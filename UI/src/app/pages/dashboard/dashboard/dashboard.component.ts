@@ -1,20 +1,26 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgModule } from '@angular/core';
 import { NgApexchartsModule, ChartComponent } from 'ng-apexcharts';
 import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import moment from 'moment';
 
 @Component({
-	selector: 'app-dashboard',
-	standalone: true,
-	imports: [NgApexchartsModule],
-	templateUrl: './dashboard.component.html',
-	styleUrl: './dashboard.component.scss'
+  selector: 'app-dashboard',
+  standalone: true,
+  imports: [NgApexchartsModule, CommonModule, FormsModule],
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss'
 })
 
 export class DashboardComponent implements OnInit {
 
   basicCandlestickChart: any;
   @ViewChild("basicCandlestickChart") chart!: ChartComponent;
+
+  // ADR High and Low values for HTML binding
+  adrHigh: number = 0;
+  adrLow: number = 0;
 
   constructor(private http: HttpClient) {}
 
@@ -33,6 +39,17 @@ export class DashboardComponent implements OnInit {
         type: "candlestick",
         height: 350,
         toolbar: { show: false },
+        animations: {
+          enabled: false
+        }
+      },
+      plotOptions: {
+        candlestick: {
+          colors: {
+            upward: '#4407f8ff', // White for bullish candles
+            downward: '#000000' // Black for bearish candles
+          }
+        }
       },
       title: {
         text: "NIFTY 14 Days Candle",
@@ -62,20 +79,36 @@ export class DashboardComponent implements OnInit {
             const candleData = candlesRaw
               .filter(c => c && c.length >= 5)
               .map(c => ({
-                x: new Date(c[0]).toLocaleDateString('en-GB'),
+                x: new Date(c[0]).toLocaleDateString('en-GB', {
+                  day: '2-digit',
+                  month: 'short'
+                }),
                 y: [c[1], c[2], c[3], c[4]] // Open, High, Low, Close
               }));
 
             // Get the last 14 candles
-            const last14 = candleData.slice(-15);
+            const last14 = candleData.slice(-14);
 
             // Highs are at index 1, Lows at index 2 in OHLC
             const highAdr = last14.map((c) => c.y[1]);
             const lowAdr = last14.map((c) => c.y[2]);
 
             // Calculate averages
-            const avgHigh = highAdr.reduce((a, b) => a + b, 0) / highAdr.length;
-            const avgLow = lowAdr.reduce((a, b) => a + b, 0) / lowAdr.length;
+            let sumHigh = 0;
+            let sumLow = 0;
+
+            for (let i = 0; i < highAdr.length; i++) {
+              sumHigh += highAdr[i];
+              sumLow += lowAdr[i];
+            }
+
+            const avgHigh = sumHigh / 14; // or highAdr.length if dynamic
+            const avgLow = sumLow / 14;
+
+
+            // Assign to variables for HTML display
+            this.adrHigh = avgHigh;
+            this.adrLow = avgLow;
 
             // Update candlestick chart with ADR lines
             this.basicCandlestickChart.series = [
@@ -88,23 +121,23 @@ export class DashboardComponent implements OnInit {
               yaxis: [
                 {
                   y: avgHigh,
-                  borderColor: "#000000",
+                  borderColor: "#14bb2aff",
                   strokeDashArray: 0,
                   borderWidth: 2,
                   label: {
-                    borderColor: "#000000",
-                    style: { color: "#fff", background: "#000000" },
+                    borderColor: "#14bb2aff",
+                    style: { color: "#fff", background: "#14bb2aff" },
                     text: `ADR High (${avgHigh.toFixed(2)})`
                   }
                 },
                 {
                   y: avgLow,
-                  borderColor: "#000000",
+                  borderColor: "#f11010ff",
                   strokeDashArray: 0,
                   borderWidth: 2,
                   label: {
-                    borderColor: "#000000",
-                    style: { color: "#fff", background: "#000000" },
+                    borderColor: "#f11010ff",
+                    style: { color: "#fff", background: "#f11010ff" },
                     text: `ADR Low (${avgLow.toFixed(2)})`
                   }
                 }

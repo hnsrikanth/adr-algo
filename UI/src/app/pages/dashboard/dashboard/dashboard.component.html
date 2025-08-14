@@ -2,7 +2,20 @@
   <div class="col-xl-6">
       <div class="card">
         <div class="card-header">
-            <h4 class="card-title mb-0">14 Days ADR Chart</h4>
+            <h4 class="card-title mb-0">
+              14 Days ADR Chart
+              <!-- Vertical line separator -->
+              <span class="mx-1 border-end" style="height: 30px; display: inline-block;"></span>
+
+              <small class="fw-bold text-primary">
+                ADR High: {{ adrHigh | number:'1.2-2' }}
+              </small>
+
+              <small class="fw-bold text-danger ms-2">
+                ADR Low: {{ adrLow | number:'1.2-2' }}
+              </small>
+
+            </h4>
         </div><!-- end card header -->
 
         <div class="card-body">

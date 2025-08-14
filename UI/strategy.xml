@@ -20,7 +20,7 @@
     <instrument>Trading instrument (e.g., NIFTY, BANKNIFTY)</instrument>
     <productType>Product type (e.g., MIS, NRML)</productType>
     <orderType>Order type (e.g., MARKET, LIMIT)</orderType>
-    
+
     <riskManagement>
         <stoplossBaseTrade>Stoploss for Base Trade</stoplossBaseTrade>
         <percentOfPoints>% of points</percentOfPoints>
