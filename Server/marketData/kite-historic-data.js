@@ -1,6 +1,6 @@
 // kite-historic-data.js
-const { KiteConnect } = require("kiteconnect");
-const kiteConfig = require("../config/kiteConfig"); // your existing config loader
+const axios = require("axios");
+const kiteConfig = require("../config/kiteConfig"); // your config loader
 const moment = require("moment-business-days");
 
 // Configure NSE holidays (update yearly)
@@ -9,66 +9,50 @@ const NSE_HOLIDAYS = [
   "2025-08-15", "2025-10-02", "2025-11-04", "2025-12-25"
 ];
 
-moment.updateLocale('en', {
+moment.updateLocale("en", {
   holidays: NSE_HOLIDAYS,
-  holidayFormat: 'YYYY-MM-DD'
+  holidayFormat: "YYYY-MM-DD",
 });
 
 async function getLast14WorkingDaysData() {
   const config = await kiteConfig.getConfig();
 
-  const kc = new KiteConnect({
-    api_key: config.apiKey,
-    access_token: config.accessToken // Must already be valid
-  });
-
-  // Find the last 14 working days (excludes weekends & holidays)
+  // Find the last 14 working days (excluding weekends & holidays)
   let workingDays = [];
   let date = moment();
 
-  while (workingDays.length < 14) {
+  while (workingDays.length < 15) {
     if (date.isBusinessDay()) {
       workingDays.unshift(date.format("YYYY-MM-DD"));
     }
     date = date.subtract(1, "days");
   }
 
-  const fromDate = workingDays[0];
-  const toDate = workingDays[workingDays.length - 1];
+  const fromDate = `${workingDays[0]}+09:15:00`;
+  const toDate = `${workingDays[workingDays.length - 1]}+15:30:00`;
 
-  // NIFTY 50 Instrument token (Index)
-  const instrumentToken = "256265"; // Check if correct for your market segment
+  // Replace with your actual instrument token
+  const instrumentToken = "2939649"; // example token
+
+  // Build URL exactly like Postman test
+  const url = `https://api.kite.trade/instruments/historical/${instrumentToken}/day?from=${fromDate}&to=${toDate}`;
 
   try {
-    const historicalData = await kc.getHistoricalData(
-      instrumentToken,
-      "day",
-      fromDate,
-      toDate,
-      false // continuous
-    );
+    const response = await axios.get(url, {
+      headers: {
+        "X-Kite-Version": "3",
+        "Authorization": `token ${config.apiKey}:${config.accessToken}`
+      }
+    });
 
-    // return {
-    //   from: fromDate,
-    //   to: toDate,
-    //   data: historicalData
-    // };
     return {
       status: "success",
       data: {
-        candles: historicalData.map(c => [
-          c.date,
-          c.open,
-          c.high,
-          c.low,
-          c.close,
-          c.volume
-        ])
+        candles: response.data.data.candles
       }
     };
-
   } catch (err) {
-    throw new Error(`Error fetching historical data: ${err.message}`);
+    throw new Error(`Error fetching historical data: ${err.response?.data?.message || err.message}`);
   }
 }
 
