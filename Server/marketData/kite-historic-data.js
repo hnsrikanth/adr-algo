@@ -32,7 +32,7 @@ async function getLast14WorkingDaysData() {
   const toDate = `${workingDays[workingDays.length - 1]}+15:30:00`;
 
   // Replace with your actual instrument token
-  const instrumentToken = "2939649"; // example token
+  const instrumentToken = "256265"; // example token
 
   // Build URL exactly like Postman test
   const url = `https://api.kite.trade/instruments/historical/${instrumentToken}/day?from=${fromDate}&to=${toDate}`;
