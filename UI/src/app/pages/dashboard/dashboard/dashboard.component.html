@@ -1,49 +1,108 @@
 <div class="row">
   <div class="col-xl-6">
-      <div class="card">
-        <div class="card-header">
-            <h4 class="card-title mb-0">
-              14 Days ADR Chart
-              <!-- Vertical line separator -->
-              <span class="mx-1 border-end" style="height: 30px; display: inline-block;"></span>
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0">
+          14 Days ADR Chart
+          <span
+            class="mx-1 border-end"
+            style="height: 30px; display: inline-block"
+          ></span>
 
-              <small class="fw-bold text-primary">
-                ADR High: {{ adrHigh | number:'1.2-2' }}
-              </small>
+          <small class="fw-bold text-primary">
+            ADR High: {{ adrHigh | number : "1.2-2" }}
+          </small>
 
-              <small class="fw-bold text-danger ms-2">
-                ADR Low: {{ adrLow | number:'1.2-2' }}
-              </small>
+          <small class="fw-bold text-danger ms-2">
+            ADR Low: {{ adrLow | number : "1.2-2" }}
+          </small>
+        </h4>
+      </div>
 
-            </h4>
-        </div><!-- end card header -->
-
-        <div class="card-body">
-            <apx-chart
-                [series]="basicCandlestickChart.series"
-                [chart]="basicCandlestickChart.chart"
-                [xaxis]="basicCandlestickChart.xaxis"
-                [yaxis]="basicCandlestickChart.yaxis"
-                [title]="basicCandlestickChart.title"
-                [plotOptions]="basicCandlestickChart.plotOptions"
-                [annotations]="basicCandlestickChart.annotations"
-                dir="ltr"></apx-chart>
-        </div><!-- end card-body -->
-    </div><!-- end card -->
+      <div class="card-body">
+        <apx-chart
+          [series]="basicCandlestickChart.series"
+          [chart]="basicCandlestickChart.chart"
+          [xaxis]="basicCandlestickChart.xaxis"
+          [yaxis]="basicCandlestickChart.yaxis"
+          [title]="basicCandlestickChart.title"
+          [plotOptions]="basicCandlestickChart.plotOptions"
+          [annotations]="basicCandlestickChart.annotations"
+          [stroke]="basicCandlestickChart.stroke"
+          [fill]="basicCandlestickChart.fill"
+          dir="ltr"
+        ></apx-chart>
+      </div>
+    </div>
   </div>
 
   <div class="col-xl-6">
-      <div class="card">
-          <div class="card-header border-0 align-items-center d-flex">
-              <div class="col-lg-6">
-                  <div class="mb-3">
-                      <!-- <ng-select [items]="symbols" bindLabel="name" bindValue="id" [(ngModel)]="selectedSymbols"
-                          [multiple]="false" [closeOnSelect]="true" clearable="false" placeholder="Positions">
-                      </ng-select> -->
-                      <label for="Positions">Positions</label>
-                  </div>
-              </div>
+    <div class="card">
+      <div class="card-header border-0 align-items-center d-flex">
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <label for="Positions">Positions</label>
           </div>
+        </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0">
+          Watchlist
+        </h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="table-responsive table-card">
+              <table class="table table-nowrap align-middle mb-0">
+                <tbody>
+                  <tr
+                    *ngFor="let stock of stocks"
+                    [class.positive]="stock.change > 0"
+                    [class.negative]="stock.change < 0"
+                    style="font-size: 12px"
+                  >
+                    <td>{{ stock.symbol }}</td>
+                    <td>
+                      {{
+                        isNaN(stock.change) ? "--" : stock.change.toFixed(2) + "%"
+                      }}
+                    </td>
+                    <td>
+                      {{
+                        isNaN(stock.price) ? "--" : (stock.price | number : "1.2-2")
+                      }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <button type="button" class="btn btn-primary mb-3">Start Bear Call Spread</button>
+            <button type="button" class="btn btn-info mb-3">Start Bull Put Spread</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0">
+          Order History
+        </h4>
+      </div>
+      <div class="card-body">
+      </div>
+    </div>
   </div>
 </div>

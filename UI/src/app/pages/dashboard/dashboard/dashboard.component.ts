@@ -3,6 +3,8 @@ import { NgApexchartsModule, ChartComponent } from 'ng-apexcharts';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { WatchlistService } from '../../../core/services/watchlist.service';
+import { TickService } from '../../../core/services/tick.service';
 import moment from 'moment';
 
 @Component({
@@ -22,11 +24,49 @@ export class DashboardComponent implements OnInit {
   adrHigh: number = 0;
   adrLow: number = 0;
 
-  constructor(private http: HttpClient) {}
+  // Ticks Data - Watchlist
+	ticks: any[] = [];
+	stocks: any[] = [];
+
+  private apiUrl = 'http://localhost:3000/api/user-watchlists';
+
+  // Helper function to check NaN
+	isNaN(value: any): boolean {
+		return Number.isNaN(value);
+	}
+
+  constructor(
+    private http: HttpClient,
+    private watchlistService: WatchlistService,
+    private tickService: TickService,
+  ) {}
 
   ngOnInit(): void {
     this._basicCandlestickChart();
     this.loadNiftyCandles();
+
+    // Watchlist
+
+    // Fetch the watchlist
+		this.watchlistService.getWatchlist().subscribe((watchlist) => {
+      console.log("✅ Watchlist fetched:", watchlist);
+			// Populate the stocks array
+			this.stocks = watchlist.map((item: any) => ({
+				id: item.id,
+				name: item.name,
+				symbol: item.symbol,
+				instrumentToken: item.instrumentToken,
+				price: NaN,
+				change: NaN,
+			}));
+
+      console.log("✅ Stocks initialized:", this.stocks);
+			// Now subscribe to live tick data
+			this.tickService.getTicks().subscribe((ticks) => {
+        console.log("📡 Tick data received:", ticks);
+				this.updateStockPrices(ticks);
+			});
+		});
   }
 
   /** Initialize empty chart config */
@@ -43,13 +83,24 @@ export class DashboardComponent implements OnInit {
           enabled: false
         }
       },
+      fill: {
+        opacity: 1
+      },
       plotOptions: {
         candlestick: {
           colors: {
-            upward: '#4407f8ff', // White for bullish candles
+            upward: '#ffffff', // White for bullish candles
             downward: '#000000' // Black for bearish candles
+          },
+          wick: {
+            useFillColor: true // wicks use same color
           }
         }
+      },
+      stroke: {
+        show: true,
+        width: 1,               // thickness of the border
+        colors: ['#000000'],    // black border for both up & down candles
       },
       title: {
         text: "NIFTY 14 Days Candle",
@@ -156,4 +207,21 @@ export class DashboardComponent implements OnInit {
         }
       });
   }
+
+  // Watchlist
+  updateStockPrices(ticks: any[]): void {
+    console.log("🔄 Updating stock prices with ticks:", ticks);
+		ticks.forEach((tick) => {
+			// Ensure the instrument tokens are of the same type for comparison
+			const stock = this.stocks.find(
+				(s) => String(s.instrumentToken) === String(tick.instrument_token)
+			);
+
+			if (stock) {
+				console.log('binding stock:', stock);
+				stock.price = tick.last_price || 'NA';
+				stock.change = tick.change * 100 || 'NA'; // Convert to percentage if needed
+			}
+		});
+	}
 }

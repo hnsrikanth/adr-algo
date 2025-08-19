@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const path = require('path');
 
 const registerRoutes = require('./commonRoutes');
+const { setupTicker } = require('./marketData/ticker');
 
 const app = express();
 const server = http.createServer(app);
@@ -32,6 +33,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Register all routes
 registerRoutes(app);
+
+// Setup ticker
+setupTicker(server);
 
 const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {
