@@ -1,0 +1,144 @@
+{
+  "globalSettings": {
+    "stoplossBaseTrade": 0.5,
+    "percentOfPoints": 2,
+    "dayTarget": 10000,
+    "dayLoss": 5000,
+    "trailingMTM": 2000,
+    "profitProtectPercent": 50
+  },
+  "strategies": {
+    "BearCallSpread": {
+      "trade1": {
+        "mainPosition": {
+          "Buy/Sell": "Sell",
+          "Strike": "ATM",
+          "Qty": 50,
+          "CE/PE": "CE",
+          "Expiry": "current week"
+        },
+        "hedgePosition": {
+          "Buy/Sell": "Buy",
+          "Strike": "OTM+1",
+          "Qty": 50,
+          "CE/PE": "CE",
+          "Expiry": "current week"
+        }
+      },
+      "trade2": {
+        "mainPosition": {
+          "Buy/Sell": "Sell",
+          "Strike": "ATM",
+          "Qty": 50,
+          "CE/PE": "CE",
+          "Expiry": "Week+1"
+        },
+        "hedgePosition": {
+          "Buy/Sell": "Buy",
+          "Strike": "OTM+1",
+          "Qty": 50,
+          "CE/PE": "CE",
+          "Expiry": "Week+1"
+        }
+      },
+      "trade3": {
+        "mainPosition": {
+          "Buy/Sell": "Sell",
+          "Strike": "ATM",
+          "Qty": 50,
+          "CE/PE": "CE",
+          "Expiry": "current week"
+        },
+        "hedgePosition": {
+          "Buy/Sell": "Buy",
+          "Strike": "OTM+1",
+          "Qty": 50,
+          "CE/PE": "CE",
+          "Expiry": "current week"
+        }
+      },
+      "trade4": {
+        "mainPosition": {
+          "Buy/Sell": "Sell",
+          "Strike": "ATM",
+          "Qty": 50,
+          "CE/PE": "CE",
+          "Expiry": "Week+1"
+        },
+        "hedgePosition": {
+          "Buy/Sell": "Buy",
+          "Strike": "OTM+1",
+          "Qty": 50,
+          "CE/PE": "CE",
+          "Expiry": "Week+1"
+        }
+      }
+    },
+    "BullPutSpread": {
+      "trade1": {
+        "mainPosition": {
+          "Buy/Sell": "Sell",
+          "Strike": "ATM",
+          "Qty": 50,
+          "CE/PE": "PE",
+          "Expiry": "current week"
+        },
+        "hedgePosition": {
+          "Buy/Sell": "Buy",
+          "Strike": "ITM+1",
+          "Qty": 50,
+          "CE/PE": "PE",
+          "Expiry": "current week"
+        }
+      },
+      "trade2": {
+        "mainPosition": {
+          "Buy/Sell": "Sell",
+          "Strike": "ATM",
+          "Qty": 50,
+          "CE/PE": "PE",
+          "Expiry": "Week+1"
+        },
+        "hedgePosition": {
+          "Buy/Sell": "Buy",
+          "Strike": "ITM+1",
+          "Qty": 50,
+          "CE/PE": "PE",
+          "Expiry": "Week+1"
+        }
+      },
+      "trade3": {
+        "mainPosition": {
+          "Buy/Sell": "Sell",
+          "Strike": "ATM",
+          "Qty": 50,
+          "CE/PE": "PE",
+          "Expiry": "current week"
+        },
+        "hedgePosition": {
+          "Buy/Sell": "Buy",
+          "Strike": "ITM+1",
+          "Qty": 50,
+          "CE/PE": "PE",
+          "Expiry": "current week"
+        }
+      },
+      "trade4": {
+        "mainPosition": {
+          "Buy/Sell": "Sell",
+          "Strike": "ATM",
+          "Qty": 50,
+          "CE/PE": "PE",
+          "Expiry": "Week+1"
+        },
+        "hedgePosition": {
+          "Buy/Sell": "Buy",
+          "Strike": "ITM+1",
+          "Qty": 50,
+          "CE/PE": "PE",
+          "Expiry": "Week+1"
+        }
+      }
+    }
+  }
+}
