@@ -5,6 +5,8 @@ const kiteRoutes = require("./routes/kiteRoutes");
 const niftyCandlesRoutes = require('./routes/nifty-candles');
 const watchlistRoutes = require('./routes/watchlistRoutes');
 const adrLogsRoutes = require('./routes/adrLogsRoutes');
+const sessionRoutes = require('./routes/settingRoutes');
+
 
 const registerRoutes = (app) => {
   app.use('/api', kiteConnectRoutes);
@@ -13,6 +15,7 @@ const registerRoutes = (app) => {
   app.use('/api', niftyCandlesRoutes);
   app.use('/api', watchlistRoutes);
   app.use('/api', adrLogsRoutes);
+  app.use('/api', sessionRoutes);
 };
 
 module.exports = registerRoutes;

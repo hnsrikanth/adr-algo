@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   // ADR High and Low values for HTML binding
   adrHigh: number = 0;
   adrLow: number = 0;
+  adrRange: number = 0;
 
   // Ticks Data - Watchlist
 	ticks: any[] = [];
@@ -89,8 +90,8 @@ export class DashboardComponent implements OnInit {
       plotOptions: {
         candlestick: {
           colors: {
-            upward: '#ffffff', // White for bullish candles
-            downward: '#000000' // Black for bearish candles
+            upward: '#28ca38ff', // White for bullish candles
+            downward: '#f61515ff' // Black for bearish candles
           },
           wick: {
             useFillColor: true // wicks use same color
@@ -160,6 +161,7 @@ export class DashboardComponent implements OnInit {
             // Assign to variables for HTML display
             this.adrHigh = avgHigh;
             this.adrLow = avgLow;
+            this.adrRange = avgHigh - avgLow;
 
             // Update candlestick chart with ADR lines
             this.basicCandlestickChart.series = [
@@ -172,23 +174,23 @@ export class DashboardComponent implements OnInit {
               yaxis: [
                 {
                   y: avgHigh,
-                  borderColor: "#14bb2aff",
+                  borderColor: "#060606dd",
                   strokeDashArray: 0,
                   borderWidth: 2,
                   label: {
-                    borderColor: "#14bb2aff",
-                    style: { color: "#fff", background: "#14bb2aff" },
+                    borderColor: "#060606dd",
+                    style: { color: "#fff", background: "#060606dd" },
                     text: `ADR High (${avgHigh.toFixed(2)})`
                   }
                 },
                 {
                   y: avgLow,
-                  borderColor: "#f11010ff",
+                  borderColor: "#060606dd",
                   strokeDashArray: 0,
                   borderWidth: 2,
                   label: {
-                    borderColor: "#f11010ff",
-                    style: { color: "#fff", background: "#f11010ff" },
+                    borderColor: "#060606dd",
+                    style: { color: "#fff", background: "#060606dd" },
                     text: `ADR Low (${avgLow.toFixed(2)})`
                   }
                 }

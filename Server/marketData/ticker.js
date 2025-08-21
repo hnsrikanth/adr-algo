@@ -34,7 +34,7 @@ const setupTicker = async (server) => {
     });
 
     ticker.on("ticks", (ticks) => {
-        console.log("Ticks Data", ticks);
+        // console.log("Ticks Data", ticks);
         wss.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
                 client.send(JSON.stringify(ticks));

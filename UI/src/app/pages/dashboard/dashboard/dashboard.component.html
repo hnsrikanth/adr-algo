@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-header">
         <h4 class="card-title mb-0">
-          14 Days ADR Chart
+          14 Days ADR
           <span
             class="mx-1 border-end"
             style="height: 30px; display: inline-block"
@@ -15,6 +15,10 @@
 
           <small class="fw-bold text-danger ms-2">
             ADR Low: {{ adrLow | number : "1.2-2" }}
+          </small>
+
+          <small class="fw-bold text-secondary ms-2">
+            (Range: {{ adrRange | number : "1.2-2" }})
           </small>
         </h4>
       </div>
@@ -53,9 +57,7 @@
   <div class="col-xl-6">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title mb-0">
-          Watchlist
-        </h4>
+        <h4 class="card-title mb-0">Watchlist</h4>
       </div>
       <div class="card-body">
         <div class="row">
@@ -72,12 +74,16 @@
                     <td>{{ stock.symbol }}</td>
                     <td>
                       {{
-                        isNaN(stock.change) ? "--" : stock.change.toFixed(2) + "%"
+                        isNaN(stock.change)
+                          ? "--"
+                          : stock.change.toFixed(2) + "%"
                       }}
                     </td>
                     <td>
                       {{
-                        isNaN(stock.price) ? "--" : (stock.price | number : "1.2-2")
+                        isNaN(stock.price)
+                          ? "--"
+                          : (stock.price | number : "1.2-2")
                       }}
                     </td>
                   </tr>
@@ -86,8 +92,12 @@
             </div>
           </div>
           <div class="col-md-8">
-            <button type="button" class="btn btn-primary mb-3">Start Bear Call Spread</button>
-            <button type="button" class="btn btn-info mb-3">Start Bull Put Spread</button>
+            <button type="button" class="btn btn-primary mb-3">
+              Start Bear Call Spread
+            </button>
+            <button type="button" class="btn btn-danger mb-3">
+              Start Bull Put Spread
+            </button>
           </div>
         </div>
       </div>
@@ -97,12 +107,9 @@
   <div class="col-xl-6">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title mb-0">
-          Order History
-        </h4>
+        <h4 class="card-title mb-0">Order History</h4>
       </div>
-      <div class="card-body">
-      </div>
+      <div class="card-body"></div>
     </div>
   </div>
 </div>
