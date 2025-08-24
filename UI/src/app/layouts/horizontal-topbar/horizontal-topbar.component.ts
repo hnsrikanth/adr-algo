@@ -32,6 +32,8 @@ export class HorizontalTopbarComponent {
 	successMessage: string | null = null;
 	errorMessage: string | null = null;
 
+  hasTodayToken: boolean = false; // ✅ flag to show tick or cross
+
 	constructor(private router: Router, public translate: TranslateService, private authService: AuthenticationService, private http: HttpClient) {
 		translate.setDefaultLang('en');
 	}
@@ -51,6 +53,7 @@ export class HorizontalTopbarComponent {
 
 		// Check Kite callback on initialization
 		this.checkKiteCallback();
+    this.checkAccessTokenFromDB(); // ✅ check DB when component loads
 	}
 
 	isAdmin(): boolean {
@@ -264,7 +267,7 @@ export class HorizontalTopbarComponent {
 	 * it retrieves the request token from the URL parameters and generates an access token.
 	 */
 
-  	loginToKiteAccount() {
+  loginToKiteAccount() {
 		// Redirect to Kite login page through backend API
 		window.location.href = 'http://localhost:3000/api/login';
 	}
@@ -278,7 +281,7 @@ export class HorizontalTopbarComponent {
 
 		if (action === 'login' && type === 'login' && status === 'success' && requestToken) {
 			const broker = 'Zerodha'; // Adjust this value as needed
-      		const user = 'Kite';
+      const user = 'Kite';
 			this.isLoading = true;
 			this.successMessage = null;
 			this.errorMessage = null;
@@ -294,7 +297,9 @@ export class HorizontalTopbarComponent {
 					next: (response: any) => {
 						this.isLoading = false;
 						this.successMessage = 'Access token generated successfully!';
-						console.log(response);
+						console.log('Access token response:', response);
+
+            this.checkAccessTokenFromDB(); // refresh token status after saving
 					},
 					error: (error) => {
 						this.isLoading = false;
@@ -304,4 +309,32 @@ export class HorizontalTopbarComponent {
 				});
 		}
 	}
+
+   checkAccessTokenFromDB() {
+    this.http.get<any[]>('http://localhost:3000/api/master-broker-tokens').subscribe({
+      next: (tokens) => {
+        if (tokens && tokens.length > 0) {
+          const latestToken = tokens[tokens.length - 1];
+          const tokenDate = new Date(latestToken.createdAt);
+
+          // Get today's date in UTC
+          const now = new Date();
+          const isSameUTCDate =
+            tokenDate.getUTCFullYear() === now.getUTCFullYear() &&
+            tokenDate.getUTCMonth() === now.getUTCMonth() &&
+            tokenDate.getUTCDate() === now.getUTCDate();
+
+          this.hasTodayToken = isSameUTCDate;
+        } else {
+          this.hasTodayToken = false;
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching tokens', error);
+        this.hasTodayToken = false;
+      },
+    });
+  }
+
+
 }

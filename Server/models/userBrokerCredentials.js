@@ -9,7 +9,7 @@ const UserBrokerCredentials = sequelize.define('UserBrokerCredentials', {
 	RequestToken: { type: DataTypes.STRING, allowNull: true },
 	AccessToken: { type: DataTypes.STRING, allowNull: true },
 }, {
-	timestamps: false,
+	timestamps: true,
 	indexes: [
         {
             unique: true,

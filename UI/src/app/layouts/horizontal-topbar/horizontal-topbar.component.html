@@ -156,7 +156,8 @@
                   </button>
 
                   <!-- Tick Icon (Shown on Success) -->
-                  <i *ngIf="successMessage" class="ri-check-line fs-24 text-success"></i>
+                  <i *ngIf="hasTodayToken" class="ri-check-line fs-24 text-primary"></i>
+                  <i *ngIf="!hasTodayToken" class="ri-close-line fs-24 text-danger"></i>
 
                   <!-- Loading Spinner (Optional) -->
                   <div *ngIf="errorMessage" class="spinner-border text-success" role="status" style="width: 1rem; height: 1rem;">

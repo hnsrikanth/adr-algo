@@ -2,29 +2,30 @@
   "globalSettings": {
     "instrument": "NIFTY",
     "product": "Intraday",
-    "orderType": "Market",
-    "marketProtection": true,
+    "orderType": "Market Protection",
+    "marketProtection": "15 %",
     "stoplossBaseTrade": 0.5,
     "percentOfPoints": 2,
     "dayTarget": 10000,
     "dayLoss": 5000,
     "trailingMTM": 2000,
+    "trailMTM": 2000,
     "profitProtectPercent": 50
   },
   "strategies": {
     "BearCallSpread": {
       "trade1": {
         "mainPosition": {
-          "Buy/Sell": "Buy",
+          "Buy/Sell": "Sell",
           "Strike": "ITM+4",
-          "Qty": 1250,
+          "Qty": 300,
           "CE/PE": "PE",
           "Expiry": "Week+1"
         },
         "hedgePosition": {
           "Buy/Sell": "Buy",
           "Strike": "ITM+5",
-          "Qty": 1175,
+          "Qty": 225,
           "CE/PE": "PE",
           "Expiry": "Week+1"
         }
@@ -33,14 +34,14 @@
         "mainPosition": {
           "Buy/Sell": "Sell",
           "Strike": "ITM+6",
-          "Qty": 1100,
+          "Qty": 300,
           "CE/PE": "CE",
           "Expiry": "current week"
         },
         "hedgePosition": {
           "Buy/Sell": "Sell",
           "Strike": "OTM+6",
-          "Qty": 1025,
+          "Qty": 375,
           "CE/PE": "CE",
           "Expiry": "current week"
         }
@@ -49,14 +50,14 @@
         "mainPosition": {
           "Buy/Sell": "Buy",
           "Strike": "OTM+5",
-          "Qty": 950,
+          "Qty": 450,
           "CE/PE": "CE",
           "Expiry": "current week"
         },
         "hedgePosition": {
           "Buy/Sell": "Sell",
           "Strike": "OTM+4",
-          "Qty": 875,
+          "Qty": 525,
           "CE/PE": "PE",
           "Expiry": "Week+1"
         }
@@ -65,16 +66,32 @@
         "mainPosition": {
           "Buy/Sell": "Sell",
           "Strike": "OTM+3",
-          "Qty": 800,
+          "Qty": 600,
           "CE/PE": "PE",
           "Expiry": "current week"
         },
         "hedgePosition": {
           "Buy/Sell": "Buy",
           "Strike": "OTM+2",
-          "Qty": 725,
+          "Qty": 675,
           "CE/PE": "CE",
           "Expiry": "Week+1"
+        }
+      },
+      "trade5": {
+        "mainPosition": {
+          "Buy/Sell": "Sell",
+          "Strike": "ITM+5",
+          "Qty": 75,
+          "CE/PE": "PE",
+          "Expiry": "Week+1"
+        },
+        "hedgePosition": {
+          "Buy/Sell": "Buy",
+          "Strike": "OTM+3",
+          "Qty": 75,
+          "CE/PE": "CE",
+          "Expiry": "current week"
         }
       }
     },
@@ -83,15 +100,15 @@
         "mainPosition": {
           "Buy/Sell": "Sell",
           "Strike": "ITM+6",
-          "Qty": 125,
-          "CE/PE": "CE",
+          "Qty": 750,
+          "CE/PE": "PE",
           "Expiry": "current week"
         },
         "hedgePosition": {
           "Buy/Sell": "Sell",
           "Strike": "ITM+5",
-          "Qty": 200,
-          "CE/PE": "CE",
+          "Qty": 825,
+          "CE/PE": "PE",
           "Expiry": "current week"
         }
       },
@@ -99,14 +116,14 @@
         "mainPosition": {
           "Buy/Sell": "Buy",
           "Strike": "ITM+4",
-          "Qty": 275,
+          "Qty": 900,
           "CE/PE": "PE",
           "Expiry": "Week+1"
         },
         "hedgePosition": {
           "Buy/Sell": "Buy",
           "Strike": "ITM+3",
-          "Qty": 350,
+          "Qty": 975,
           "CE/PE": "PE",
           "Expiry": "Week+1"
         }
@@ -115,14 +132,14 @@
         "mainPosition": {
           "Buy/Sell": "Sell",
           "Strike": "ITM+2",
-          "Qty": 425,
+          "Qty": 1050,
           "CE/PE": "PE",
           "Expiry": "Week+1"
         },
         "hedgePosition": {
           "Buy/Sell": "Buy",
           "Strike": "ITM+1",
-          "Qty": 500,
+          "Qty": 1125,
           "CE/PE": "CE",
           "Expiry": "current week"
         }
@@ -131,16 +148,32 @@
         "mainPosition": {
           "Buy/Sell": "Buy",
           "Strike": "ATM",
-          "Qty": 575,
+          "Qty": 1200,
           "CE/PE": "CE",
           "Expiry": "Week+1"
         },
         "hedgePosition": {
           "Buy/Sell": "Sell",
           "Strike": "OTM+1",
-          "Qty": 650,
+          "Qty": 1275,
           "CE/PE": "PE",
           "Expiry": "current week"
+        }
+      },
+      "trade5": {
+        "mainPosition": {
+          "Buy/Sell": "Sell",
+          "Strike": "OTM+5",
+          "Qty": 150,
+          "CE/PE": "CE",
+          "Expiry": "current week"
+        },
+        "hedgePosition": {
+          "Buy/Sell": "Buy",
+          "Strike": "ITM+2",
+          "Qty": 225,
+          "CE/PE": "CE",
+          "Expiry": "Week+1"
         }
       }
     }

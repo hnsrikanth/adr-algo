@@ -1,1129 +1,403 @@
 <div class="row">
-  <div class="col-xl-12">
-    <div class="card">
-      <div class="card-body p-4">
-        <div class="row g-3">
-          <div class="col-lg-2 col-sm-6">
-            <label for="nifty">Instrument</label>
-            <input type="text" class="form-control bg-light border-0" name="instrument" id="nifty" placeholder="Invoice No" value="NIFTY" readonly [(ngModel)]="strategyData.instrument" />
-          </div>
-          <div class="col-lg-2 col-sm-6">
-            <label class="d-block mb-2">Product</label>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="product" id="intraday" value="Intraday" [(ngModel)]="strategyData.product" />
-              <label class="form-check-label" for="intraday">Intraday</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="product" id="margin" value="Margin" [(ngModel)]="strategyData.product" />
-              <label class="form-check-label" for="margin">Margin</label>
-            </div>
-          </div>
+	<div class="col-xl-12">
+		<div class="card">
+			<div class="card-body p-4">
+				<div class="row g-3">
+					<div class="col-lg-2 col-sm-6">
+						<label for="nifty">Instrument</label>
+						<input type="text" class="form-control bg-light border-0" name="instrument" id="nifty" placeholder="Invoice No" value="NIFTY" readonly [(ngModel)]="strategyData.instrument" />
+					</div>
+					<div class="col-lg-2 col-sm-6">
+						<label class="d-block mb-2">Product</label>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="product" id="intraday" value="Intraday" [(ngModel)]="strategyData.product" />
+							<label class="form-check-label" for="intraday">Intraday</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="product" id="margin" value="Margin" [(ngModel)]="strategyData.product" />
+							<label class="form-check-label" for="margin">Margin</label>
+						</div>
+					</div>
 
-          <div class="col-lg-3 col-sm-6">
-            <label class="d-block mb-2">Order Type</label>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="orderType" id="market" value="Market" (change)="onOrderTypeChange($event)" [(ngModel)]="strategyData.orderType" />
-              <label class="form-check-label" for="market">Market</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="orderType" id="marketProtetion" value="Market Protection" (change)="onOrderTypeChange($event)" [(ngModel)]="strategyData.orderType" />
-              <label class="form-check-label" for="marketProtetion" >Market Protection</label>
-            </div>
-          </div>
-          <div class="col-lg-2 col-sm-6" *ngIf="showMarketProtection">
-            <div>
-              <label for="totalamountInput">Market Protection %</label>
-              <div class="input-light">
-                <select class="form-control bg-light border-0" data-choices data-choices-search-false id="choices-payment-status" required [(ngModel)]="strategyData.marketProtection" >
-                  <option value="">Select Percentage</option>
-                  <option value="1 %">1 %</option>
-                  <option value="2 %">2 %</option>
-                  <option value="3 %">3 %</option>
-                  <option value="4 %">4 %</option>
-                  <option value="5 %">5 %</option>
-                  <option value="6 %">6 %</option>
-                  <option value="7 %">7 %</option>
-                  <option value="8 %">8 %</option>
-                  <option value="9 %">9 %</option>
-                  <option value="10 %">10 %</option>
-                  <option value="11 %">11 %</option>
-                  <option value="12 %">12 %</option>
-                  <option value="13 %">13 %</option>
-                  <option value="14 %">14 %</option>
-                  <option value="15 %">15 %</option>
-                </select>
-              </div>
-            </div>
-          </div>
+					<div class="col-lg-3 col-sm-6">
+						<label class="d-block mb-2">Order Type</label>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="orderType" id="market" value="Market" (change)="onOrderTypeChange($event)" [(ngModel)]="strategyData.orderType" />
+							<label class="form-check-label" for="market">Market</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="orderType" id="marketProtetion" value="Market Protection" (change)="onOrderTypeChange($event)" [(ngModel)]="strategyData.orderType" />
+							<label class="form-check-label" for="marketProtetion" >Market Protection</label>
+						</div>
+					</div>
+					<div class="col-lg-2 col-sm-6" *ngIf="showMarketProtection">
+						<div>
+							<label for="totalamountInput">Market Protection %</label>
+							<div class="input-light">
+								<select class="form-control bg-light border-0" data-choices data-choices-search-false id="choices-payment-status" required [(ngModel)]="strategyData.marketProtection" >
+									<option value="">Select Percentage</option>
+									<option value="1 %">1 %</option>
+									<option value="2 %">2 %</option>
+									<option value="3 %">3 %</option>
+									<option value="4 %">4 %</option>
+									<option value="5 %">5 %</option>
+									<option value="6 %">6 %</option>
+									<option value="7 %">7 %</option>
+									<option value="8 %">8 %</option>
+									<option value="9 %">9 %</option>
+									<option value="10 %">10 %</option>
+									<option value="11 %">11 %</option>
+									<option value="12 %">12 %</option>
+									<option value="13 %">13 %</option>
+									<option value="14 %">14 %</option>
+									<option value="15 %">15 %</option>
+								</select>
+							</div>
+						</div>
+					</div>
 
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-primary mt-3" (click)="onAddStrategy()">
-              Add Strategy
-            </button>
-          </div>
-        </div>
+					<div class="d-flex justify-content-end">
+						<button type="button" class="btn btn-primary mt-3" (click)="onAddStrategy()">
+							Add Strategy
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="card-body p-4 border-top border-top-dashed">
+				<h6 class="fw-bold mb-4">Risk Management</h6>
+				<div class="row g-3">
+					<div class="col-lg-2 col-sm-6">
+						<label for="stoplossBaseTrade">Stoploss for Base Trade</label>
+						<input type="number" class="form-control bg-light border-0" id="stoplossBaseTrade" name="stoplossBaseTrade" [(ngModel)]="strategyData.stoplossBaseTrade" />
+					</div>
+					<div class="col-lg-2 col-sm-6">
+						<div>
+							<label for="dayTarget">Day Target</label>
+							<input type="number" class="form-control bg-light border-0" id="dayTarget" name="dayTarget" [(ngModel)]="strategyData.dayTarget" />
+						</div>
+					</div>
+					<div class="col-lg-2 col-sm-6">
+						<label for="dayLoss">Day Loss</label>
+						<input type="number" class="form-control bg-light border-0" id="dayLoss" name="dayLoss" [(ngModel)]="strategyData.dayLoss" />
+					</div>
+					<div class="col-lg-2 col-sm-6">
+						<div>
+							<label for="trailingMTM">Trailing MTM from</label>
+							<input type="number" class="form-control bg-light border-0" id="trailingMTM" name="trailingMTM" [(ngModel)]="strategyData.trailingMTM" />
+						</div>
+					</div>
+					<div class="col-lg-2 col-sm-6">
+						<div>
+							<label for="trailMTM">Trail MTM Increment</label>
+							<input type="number" class="form-control bg-light border-0" id="trailMTM" name="trailMTM" [(ngModel)]="strategyData.trailMTM" />
+						</div>
+					</div>
+					<div class="col-lg-2 col-sm-6">
+						<div>
+							<label for="profitProtect">Profit Protect</label>
+							<div class="input-group">
+								<input type="number" class="form-control bg-light border-0" id="profitProtect" name="profitProtect" [(ngModel)]="strategyData.profitProtectPercent" />
+								<span class="input-group-text">%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-      </div>
-      <div class="card-body p-4 border-top border-top-dashed">
-        <h6 class="fw-bold mb-4">Risk Management</h6>
-        <div class="row g-3">
-          <div class="col-lg-2 col-sm-6">
-            <label for="stoplossBaseTrade">Stoploss for Base Trade</label>
-            <input type="number" class="form-control bg-light border-0" id="stoplossBaseTrade" name="stoplossBaseTrade" [(ngModel)]="strategyData.stoplossBaseTrade" />
-          </div>
-          <div class="col-lg-2 col-sm-6">
-            <div>
-              <label for="dayTarget">Day Target</label>
-              <input type="number" class="form-control bg-light border-0" id="dayTarget" name="dayTarget" [(ngModel)]="strategyData.dayTarget" />
-            </div>
-          </div>
-          <div class="col-lg-2 col-sm-6">
-            <label for="dayLoss">Day Loss</label>
-            <input type="number" class="form-control bg-light border-0" id="dayLoss" name="dayLoss" [(ngModel)]="strategyData.dayLoss" />
-          </div>
-          <div class="col-lg-2 col-sm-6">
-            <div>
-              <label for="trailingMTM">Trailing MTM from</label>
-              <input type="number" class="form-control bg-light border-0" id="trailingMTM" name="trailingMTM" [(ngModel)]="strategyData.trailingMTM" />
-            </div>
-          </div>
-          <div class="col-lg-2 col-sm-6">
-            <div>
-              <label for="trailMTM">Trail MTM Increment</label>
-              <input type="number" class="form-control bg-light border-0" id="trailMTM" name="trailMTM" [(ngModel)]="strategyData.trailMTM" />
-            </div>
-          </div>
-          <div class="col-lg-2 col-sm-6">
-            <div>
-              <label for="profitProtect">Profit Protect</label>
-              <div class="input-group">
-                <input type="number" class="form-control bg-light border-0" id="profitProtect" name="profitProtect" [(ngModel)]="strategyData.profitProtectPercent" />
-                <span class="input-group-text">%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body p-4 border-top border-top-dashed">
-        <h6 class="fw-bold mb-4">Trade Settings</h6>
-        <div class="row">
-          <!-- Bull Trade -->
-          <div class="col-lg-6">
-            <h6 class="fw-bold mb-3">Bull Trades</h6>
-            <h6 class="fw-bold mb-3">Base Trade</h6>
+			<!-- Bear Trades -->
+			<div class="card-body p-4 border-top border-top-dashed">
+				<h6 class="fw-bold mb-4">Trade Settings</h6>
+				<div class="row">
+					<!-- Bull Trades -->
+					<div class="col-lg-6">
+						<h6 class="fw-bold mb-3">Bull Trades</h6>
+						<div class="position-relative border rounded p-3 mb-3" *ngFor="let trade of bullTrades; let i = index">
+							<span class="position-absolute top-0 start-5 translate-middle-y px-2 bg-light fw-bold">
+								{{ trade.name }}
+							</span>
+							<span class="position-absolute top-0 end-0 translate-middle-y px-2 me-3">
+								<button *ngIf="i === bullTrades.length - 1 && bullTrades.length > 1"
+									type="button" 
+									class="btn btn-sm btn-danger" 
+									(click)="removeBullTrade(i)">
+									Remove
+								</button>
+							</span>
 
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesMain['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBull()">
-                      {{ strategyBullTradesMain['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
+							<!-- Main Position -->
+							<div class="p-3 mb-3 border rounded bg-light">
+								<div class="row g-2 align-items-end">
+									<div class="col">
+										<div class="col bs-switch-container">
+											<label class="text-muted fw-semibold d-block mb-2">B/S</label>
+											<button type="button" class="btn rounded-pill" 
+											[ngClass]="trade.mainPosition['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
+											(click)="toggleBuySell(trade.mainPosition)">
+												{{ trade.mainPosition['Buy/Sell'] }}
+											</button>
+										</div>
+									</div>
+									<div class="col">
+										<label class="text-muted fw-semibold">Strike</label>
+										<select class="form-control bg-white border" [(ngModel)]="trade.mainPosition.Strike">
+											<option value="ITM+6">ITM +6</option>
+											<option value="ITM+5">ITM +5</option>
+											<option value="ITM+4">ITM +4</option>
+											<option value="ITM+3">ITM +3</option>
+											<option value="ITM+2">ITM +2</option>
+											<option value="ITM+1">ITM +1</option>
+											<option value="ATM">ATM</option>
+											<option value="OTM+1">OTM +1</option>
+											<option value="OTM+2">OTM +2</option>
+											<option value="OTM+3">OTM +3</option>
+											<option value="OTM+4">OTM +4</option>
+											<option value="OTM+5">OTM +5</option>
+											<option value="OTM+6">OTM +6</option>
+										</select>
+									</div>
+									<div class="col">
+										<label class="text-muted fw-semibold">Quantity</label>
+										<div class="input-step">
+											<button type="button" class="minus" (click)="decreaseQty(trade.mainPosition)"> – </button>
+											<input type="number" class="product-quantity" id="quantity1" value="{{ step }}" min="0" max="max" readonly 
+											[(ngModel)]="trade.mainPosition.Qty" />
+											<button type="button" class="plus" (click)="increaseQty(trade.mainPosition)"> + </button>
+										</div>
+									</div>
+									<div class="col">
+										<div class="col bs-switch-container">
+											<label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+											<button type="button" class="btn rounded-pill"
+											[ngClass]="trade.mainPosition['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
+											(click)="toggleCEPE(trade.mainPosition)">
+												{{ trade.mainPosition['CE/PE'] }}
+											</button>
+										</div>
+									</div>
+									<div class="col">
+										<div>
+											<label for="expiry" class="form-label">Expiry</label>
+											<select class="form-control bg-white border" [(ngModel)]="trade.mainPosition.Expiry">
+												<option value="current week">current week</option>
+												<option value="Week+1">Week+1</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Hedge Position -->
+							<div class="p-3 mb-3 border rounded bg-light">
+								<div class="row g-2 align-items-end">
+									<div class="col">
+										<div class="col bs-switch-container">
+											<label class="text-muted fw-semibold d-block mb-2">B/S</label>
+											<button type="button" class="btn rounded-pill"
+											[ngClass]="trade.hedgePosition['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
+											(click)="toggleBuySell(trade.hedgePosition)">
+												{{ trade.hedgePosition['Buy/Sell'] }}
+											</button>
+										</div>
+									</div>
+									<div class="col">
+										<label class="text-muted fw-semibold">Strike</label>
+										<select class="form-control bg-white border"
+										[(ngModel)]="trade.hedgePosition.Strike">
+											<option value="ITM+6">ITM +6</option>
+											<option value="ITM+5">ITM +5</option>
+											<option value="ITM+4">ITM +4</option>
+											<option value="ITM+3">ITM +3</option>
+											<option value="ITM+2">ITM +2</option>
+											<option value="ITM+1">ITM +1</option>
+											<option value="ATM">ATM</option>
+											<option value="OTM+1">OTM +1</option>
+											<option value="OTM+2">OTM +2</option>
+											<option value="OTM+3">OTM +3</option>
+											<option value="OTM+4">OTM +4</option>
+											<option value="OTM+5">OTM +5</option>
+											<option value="OTM+6">OTM +6</option>
+										</select>
+									</div>
+									<div class="col">
+										<label class="text-muted fw-semibold">Quantity</label>
+										<div class="input-step">
+											<button type="button" class="minus" (click)="decreaseQty(trade.hedgePosition)">–</button>
+											<input type="number" class="product-quantity" min="0" [max]="max" readonly [(ngModel)]="trade.hedgePosition.Qty" />
+											<button type="button" class="plus" (click)="increaseQty(trade.hedgePosition)">+</button>
+										</div>
+									</div>
+									<div class="col">
+										<div class="col bs-switch-container">
+											<label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+											<button type="button" class="btn rounded-pill"
+											[ngClass]="trade.hedgePosition['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
+											(click)="toggleCEPE(trade.hedgePosition)">
+												{{ trade.hedgePosition['CE/PE'] }}
+											</button>
+										</div>
+									</div>
+									<div class="col">
+										<div>
+											<label for="expiry" class="form-label">Expiry</label>
+											<select class="form-control bg-white border"
+											[(ngModel)]="trade.hedgePosition.Expiry">
+												<option value="current week">current week</option>
+												<option value="Week+1">Week+1</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button class="btn btn-sm btn-success" (click)="addBullTrade()">+ Add Bull Trade</button>
+					</div>
 
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesMain.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBull()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBullTradesMain.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBull()"> + </button>
-                  </div>
+					<!-- Bear Trade -->
+					<div class="col-lg-6">
+						<h6 class="fw-bold mb-3">Bear Trades</h6>
+						<div class="position-relative border rounded p-3 mb-3" *ngFor="let trade of bearTrades; let i = index">
+							<span class="position-absolute top-0 start-5 translate-middle-y px-2 bg-light fw-bold">
+								{{ trade.name }}
+							</span>
+							<span class="position-absolute top-0 end-0 translate-middle-y px-2 me-3">
+								<button *ngIf="i === bearTrades.length - 1 && bearTrades.length > 1"
+									type="button" 
+									class="btn btn-sm btn-danger" 
+									(click)="removeBearTrade(i)">
+									Remove
+								</button>
+							</span>
 
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesMain['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBull()">
-                      {{ strategyBullTradesMain['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesMain.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesHedge['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBullRow()">
-                      {{ strategyBullTradesHedge['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
+							<!-- Main Position -->
+							<div class="p-3 mb-3 border rounded bg-light">
+								<div class="row g-2 align-items-end">
+									<div class="col">
+										<div class="col bs-switch-container">
+											<label class="text-muted fw-semibold d-block mb-2">B/S</label>
+											<button type="button" class="btn rounded-pill"
+											[ngClass]="trade.mainPosition['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
+											(click)="toggleBuySell(trade.mainPosition)">
+												{{ trade.mainPosition['Buy/Sell'] }}
+											</button>
+										</div>
+									</div>
+									<div class="col">
+										<label class="text-muted fw-semibold">Strike</label>
+										<select class="form-control bg-white border"
+										[(ngModel)]="trade.mainPosition.Strike">
+											<option value="ITM+6">ITM +6</option>
+											<option value="ITM+5">ITM +5</option>
+											<option value="ITM+4">ITM +4</option>
+											<option value="ITM+3">ITM +3</option>
+											<option value="ITM+2">ITM +2</option>
+											<option value="ITM+1">ITM +1</option>
+											<option value="ATM">ATM</option>
+											<option value="OTM+1">OTM +1</option>
+											<option value="OTM+2">OTM +2</option>
+											<option value="OTM+3">OTM +3</option>
+											<option value="OTM+4">OTM +4</option>
+											<option value="OTM+5">OTM +5</option>
+											<option value="OTM+6">OTM +6</option>
+										</select>
+									</div>
+									<div class="col">
+										<label class="text-muted fw-semibold">Quantity</label>
+										<div class="input-step">
+											<button type="button" class="minus" (click)="decreaseQty(trade.mainPosition)">–</button>
+											<input type="number" class="product-quantity" min="0" [max]="max" readonly [(ngModel)]="trade.mainPosition.Qty" />
+											<button type="button" class="plus" (click)="increaseQty(trade.mainPosition)">+</button>
+										</div>
+									</div>
+									<div class="col">
+										<div class="col bs-switch-container">
+											<label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+											<button type="button" class="btn rounded-pill"
+											[ngClass]="trade.mainPosition['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
+											(click)="toggleCEPE(trade.mainPosition)">
+												{{ trade.mainPosition['CE/PE'] }}
+											</button>
+										</div>
+									</div>
+									<div class="col">
+										<div>
+											<label for="expiry" class="form-label">Expiry</label>
+											<select class="form-control bg-white border"
+											[(ngModel)]="trade.mainPosition.Expiry">
+												<option value="current week">current week</option>
+												<option value="Week+1">Week+1</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
 
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesHedge.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBullRow()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBullTradesHedge.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBullRow()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesHedge['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBullRow()">
-                      {{ strategyBullTradesHedge['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesHedge.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bear Trade -->
-          <div class="col-lg-6">
-            <h6 class="fw-bold mb-3">Bear Trades</h6>
-            <h6 class="fw-bold mb-3">Base Trade</h6>
-
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesMain['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBear()">
-                      {{ strategyBearTradesMain['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesMain.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBear()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBearTradesMain.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBear()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesMain['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBear()">
-                      {{ strategyBearTradesMain['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesMain.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesHedge['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBearRow()">
-                      {{ strategyBearTradesHedge['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesHedge.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBearRow()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBearTradesHedge.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBearRow()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesHedge['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBearRow()">
-                      {{ strategyBearTradesHedge['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesHedge.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <!-- Bull Trade -->
-          <div class="col-lg-6">
-            <h6 class="fw-bold mb-3">Trade 2</h6>
-
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesMain2['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBullTrade2()">
-                      {{ strategyBullTradesMain2['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesMain2.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBullTrade2()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBullTradesMain2.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBullTrade2()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesMain2['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBullTrade2()">
-                      {{ strategyBullTradesMain2['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesMain2.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesHedge2['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBullRowTrade2()">
-                      {{ strategyBullTradesHedge2['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesHedge2.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBullRowTrade2()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBullTradesHedge2.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBullRowTrade2()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesHedge2['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBullRowTrade2()">
-                      {{ strategyBullTradesHedge2['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesHedge2.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bear Trade -->
-          <div class="col-lg-6">
-            <h6 class="fw-bold mb-3">Trade 2</h6>
-
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesMain2['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBearTrade2()">
-                      {{ strategyBearTradesMain2['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesMain2.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBearTrade2()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBearTradesMain2.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBearTrade2()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesMain2['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBearTrade2()">
-                      {{ strategyBearTradesMain2['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesMain2.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesHedge2['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBearRowTrade2()">
-                      {{ strategyBearTradesHedge2['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesHedge2.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBearRowTrade2()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBearTradesHedge2.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBearRowTrade2()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesHedge2['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBearRowTrade2()">
-                      {{ strategyBearTradesHedge2['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesHedge2.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <!-- Bull Trade -->
-          <div class="col-lg-6">
-            <h6 class="fw-bold mb-3">Trade 3</h6>
-
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesMain3['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBullTrade3()">
-                      {{ strategyBullTradesMain3['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesMain3.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBullTrade3()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBullTradesMain3.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBullTrade3()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesMain3['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBullTrade3()">
-                      {{ strategyBullTradesMain3['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesMain3.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesHedge3['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBullRowTrade3()">
-                      {{ strategyBullTradesHedge3['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesHedge3.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBullRowTrade3()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBullTradesHedge3.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBullRowTrade3()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesHedge3['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBullRowTrade3()">
-                      {{ strategyBullTradesHedge3['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesHedge3.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bear Trade -->
-          <div class="col-lg-6">
-            <h6 class="fw-bold mb-3">Trade 3</h6>
-
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesMain3['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBearTrade3()">
-                      {{ strategyBearTradesMain3['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesMain3.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBearTrade3()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBearTradesMain3.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBearTrade3()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesMain3['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBearTrade3()">
-                      {{ strategyBearTradesMain3['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesMain3.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesHedge3['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBearRowTrade3()">
-                      {{ strategyBearTradesHedge3['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesHedge3.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBearRowTrade3()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBearTradesHedge3.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBearRowTrade3()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesHedge3['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBearRowTrade3()">
-                      {{ strategyBearTradesHedge3['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesHedge3.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <!-- Bull Trade -->
-          <div class="col-lg-6">
-            <h6 class="fw-bold mb-3">Trade 4</h6>
-
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesMain4['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBullTrade4()">
-                      {{ strategyBullTradesMain4['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesMain4.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBullTrade4()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBullTradesMain4.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBullTrade4()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesMain4['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBullTrade4()">
-                      {{ strategyBullTradesMain4['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesMain4.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesHedge4['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBullRowTrade4()">
-                      {{ strategyBullTradesHedge4['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesHedge4.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBullRowTrade4()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBullTradesHedge4.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBullRowTrade4()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBullTradesHedge4['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBullRowTrade4()">
-                      {{ strategyBullTradesHedge4['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBullTradesHedge4.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bear Trade -->
-          <div class="col-lg-6">
-            <h6 class="fw-bold mb-3">Trade 4</h6>
-
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesMain4['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBearTrade4()">
-                      {{ strategyBearTradesMain4['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesMain4.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBearTrade4()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBearTradesMain4.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBearTrade4()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesMain4['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBearTrade4()">
-                      {{ strategyBearTradesMain4['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesMain4.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="p-3 mb-3 border rounded bg-light">
-              <div class="row g-2 align-items-end">
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">B/S</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesHedge4['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleBearRowTrade4()">
-                      {{ strategyBearTradesHedge4['Buy/Sell'] }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <label class="text-muted fw-semibold">Strike</label>
-                  <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesHedge4.Strike">
-                    <option value="ITM+6">ITM +6</option>
-                    <option value="ITM+5">ITM +5</option>
-                    <option value="ITM+4">ITM +4</option>
-                    <option value="ITM+3">ITM +3</option>
-                    <option value="ITM+2">ITM +2</option>
-                    <option value="ITM+1">ITM +1</option>
-                    <option value="ATM">ATM 0</option>
-                    <option value="OTM+1">OTM +1</option>
-                    <option value="OTM+2">OTM +2</option>
-                    <option value="OTM+3">OTM +3</option>
-                    <option value="OTM+4">OTM +4</option>
-                    <option value="OTM+5">OTM +5</option>
-                    <option value="OTM+6">OTM +6</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label class="text-muted fw-semibold">Quantity</label>
-                  <div class="input-step">
-                    <button type="button" class="minus" (click)="decreaseBearRowTrade4()"> – </button>
-                    <input type="number" class="product-quantity" id="quantity1" min="0" [max]="max" readonly [(ngModel)]="strategyBearTradesHedge4.Qty"/>
-                    <button type="button" class="plus" (click)="increaseBearRowTrade4()"> + </button>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div class="col bs-switch-container">
-                    <label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
-                    <button type="button" class="btn rounded-pill" [ngClass]="strategyBearTradesHedge4['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
-                      (click)="toggleCEBearRowTrade4()">
-                      {{ strategyBearTradesHedge4['CE/PE'] }}
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <div>
-                    <label for="expiry" class="form-label">Expiry</label>
-                    <select class="form-control bg-white border" [(ngModel)]="strategyBearTradesHedge4.Expiry">
-                      <option>Expiry</option>
-                      <option value="current week">current week</option>
-                      <option value="Week+1">Week+1</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+							<!-- Hedge Position -->
+							 <div class="p-3 mb-3 border rounded bg-light">
+								<div class="row g-2 align-items-end">
+									<div class="col">
+										<div class="col bs-switch-container">
+											<label class="text-muted fw-semibold d-block mb-2">B/S</label>
+											<button type="button" class="btn rounded-pill"
+											[ngClass]="trade.hedgePosition['Buy/Sell'] === 'Buy' ? 'btn-primary' : 'btn-danger'"
+											(click)="toggleBuySell(trade.hedgePosition)">
+												{{ trade.hedgePosition['Buy/Sell'] }}
+											</button>
+										</div>
+									</div>
+									<div class="col">
+										<label class="text-muted fw-semibold">Strike</label>
+										<select class="form-control bg-white border"
+										[(ngModel)]="trade.hedgePosition.Strike">
+											<option value="ITM+6">ITM +6</option>
+											<option value="ITM+5">ITM +5</option>
+											<option value="ITM+4">ITM +4</option>
+											<option value="ITM+3">ITM +3</option>
+											<option value="ITM+2">ITM +2</option>
+											<option value="ITM+1">ITM +1</option>
+											<option value="ATM">ATM</option>
+											<option value="OTM+1">OTM +1</option>
+											<option value="OTM+2">OTM +2</option>
+											<option value="OTM+3">OTM +3</option>
+											<option value="OTM+4">OTM +4</option>
+											<option value="OTM+5">OTM +5</option>
+											<option value="OTM+6">OTM +6</option>
+										</select>
+									</div>
+									<div class="col">
+										<label class="text-muted fw-semibold">Quantity</label>
+										<div class="input-step">
+											<button type="button" class="minus" (click)="decreaseQty(trade.hedgePosition)">–</button>
+											<input type="number" class="product-quantity" min="0" [max]="max" readonly [(ngModel)]="trade.hedgePosition.Qty" />
+											<button type="button" class="plus" (click)="increaseQty(trade.hedgePosition)">+</button>
+										</div>
+									</div>
+									<div class="col">
+										<div class="col bs-switch-container">
+											<label class="text-muted fw-semibold d-block mb-2">CE/PE</label>
+											<button type="button" class="btn rounded-pill"
+											[ngClass]="trade.hedgePosition['CE/PE'] === 'CE' ? 'btn-primary' : 'btn-danger'"
+											(click)="toggleCEPE(trade.hedgePosition)">
+												{{ trade.hedgePosition['CE/PE'] }}
+											</button>
+										</div>
+									</div>
+									<div class="col">
+										<div>
+											<label for="expiry" class="form-label">Expiry</label>
+											<select class="form-control bg-white border"
+											[(ngModel)]="trade.hedgePosition.Expiry">
+												<option value="current week">current week</option>
+												<option value="Week+1">Week+1</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button class="btn btn-sm btn-success" (click)="addBearTrade()">+ Add Bear Trade</button>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
 </div>
