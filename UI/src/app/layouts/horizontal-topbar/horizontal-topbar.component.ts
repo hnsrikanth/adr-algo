@@ -32,7 +32,7 @@ export class HorizontalTopbarComponent {
 	successMessage: string | null = null;
 	errorMessage: string | null = null;
 
-  hasTodayToken: boolean = false; // ✅ flag to show tick or cross
+	hasTodayToken: boolean = false; // ✅ flag to show tick or cross
 
 	constructor(private router: Router, public translate: TranslateService, private authService: AuthenticationService, private http: HttpClient) {
 		translate.setDefaultLang('en');
@@ -53,7 +53,7 @@ export class HorizontalTopbarComponent {
 
 		// Check Kite callback on initialization
 		this.checkKiteCallback();
-    this.checkAccessTokenFromDB(); // ✅ check DB when component loads
+		this.checkAccessTokenFromDB(); // ✅ check DB when component loads
 	}
 
 	isAdmin(): boolean {
@@ -267,7 +267,7 @@ export class HorizontalTopbarComponent {
 	 * it retrieves the request token from the URL parameters and generates an access token.
 	 */
 
-  loginToKiteAccount() {
+	loginToKiteAccount() {
 		// Redirect to Kite login page through backend API
 		window.location.href = 'http://localhost:3000/api/login';
 	}
@@ -281,7 +281,7 @@ export class HorizontalTopbarComponent {
 
 		if (action === 'login' && type === 'login' && status === 'success' && requestToken) {
 			const broker = 'Zerodha'; // Adjust this value as needed
-      const user = 'Kite';
+			const user = 'Kite';
 			this.isLoading = true;
 			this.successMessage = null;
 			this.errorMessage = null;
@@ -289,7 +289,7 @@ export class HorizontalTopbarComponent {
 			// Call the API to generate the access token
 			this.http
 				.post('http://localhost:3000/api/master-broker-tokens', {
-          user,
+					user,
 					broker,
 					requestToken,
 				})
@@ -299,7 +299,7 @@ export class HorizontalTopbarComponent {
 						this.successMessage = 'Access token generated successfully!';
 						console.log('Access token response:', response);
 
-            this.checkAccessTokenFromDB(); // refresh token status after saving
+						this.checkAccessTokenFromDB(); // refresh token status after saving
 					},
 					error: (error) => {
 						this.isLoading = false;
@@ -310,31 +310,42 @@ export class HorizontalTopbarComponent {
 		}
 	}
 
-   checkAccessTokenFromDB() {
-    this.http.get<any[]>('http://localhost:3000/api/master-broker-tokens').subscribe({
-      next: (tokens) => {
-        if (tokens && tokens.length > 0) {
-          const latestToken = tokens[tokens.length - 1];
-          const tokenDate = new Date(latestToken.createdAt);
+	checkAccessTokenFromDB() {
+		this.http.get<any[]>('http://localhost:3000/api/master-broker-tokens').subscribe({
+			next: (tokens) => {
+				if (tokens && tokens.length > 0) {
+					const latestToken = tokens[tokens.length - 1];
+					const tokenDateUTC = new Date(latestToken.createdAt);
 
-          // Get today's date in UTC
-          const now = new Date();
-          const isSameUTCDate =
-            tokenDate.getUTCFullYear() === now.getUTCFullYear() &&
-            tokenDate.getUTCMonth() === now.getUTCMonth() &&
-            tokenDate.getUTCDate() === now.getUTCDate();
+					// Convert tokenDate to IST
+					const tokenDateIST = new Date(
+						tokenDateUTC.getTime() + (5.5 * 60 * 60 * 1000) // UTC → IST (5:30 hrs ahead)
+					);
 
-          this.hasTodayToken = isSameUTCDate;
-        } else {
-          this.hasTodayToken = false;
-        }
-      },
-      error: (error) => {
-        console.error('Error fetching tokens', error);
-        this.hasTodayToken = false;
-      },
-    });
-  }
+					// Current IST time
+					const nowUTC = new Date();
+					const nowIST = new Date(
+						nowUTC.getTime() + (5.5 * 60 * 60 * 1000)
+					);
+
+					// Compare IST date (YYYY-MM-DD)
+					const isSameISTDate =
+						tokenDateIST.getFullYear() === nowIST.getFullYear() &&
+						tokenDateIST.getMonth() === nowIST.getMonth() &&
+						tokenDateIST.getDate() === nowIST.getDate();
+
+					this.hasTodayToken = isSameISTDate;
+				} else {
+					this.hasTodayToken = false;
+				}
+			},
+			error: (error) => {
+				console.error('Error fetching tokens', error);
+				this.hasTodayToken = false;
+			},
+		});
+	}
+
 
 
 }
