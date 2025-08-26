@@ -314,25 +314,23 @@ export class HorizontalTopbarComponent {
 		this.http.get<any[]>('http://localhost:3000/api/master-broker-tokens').subscribe({
 			next: (tokens) => {
 				if (tokens && tokens.length > 0) {
-					const latestToken = tokens[tokens.length - 1];
-					const tokenDateUTC = new Date(latestToken.createdAt);
+					// Always take the latest by updatedAt
+					const latestToken = tokens.sort(
+						(a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+					)[0];
 
-					// Convert tokenDate to IST
-					const tokenDateIST = new Date(
-						tokenDateUTC.getTime() + (5.5 * 60 * 60 * 1000) // UTC → IST (5:30 hrs ahead)
-					);
+					const tokenDateUTC = new Date(latestToken.updatedAt); // ✅ use updatedAt
+					const tokenDateIST = new Date(tokenDateUTC.getTime() + (5.5 * 60 * 60 * 1000));
 
-					// Current IST time
 					const nowUTC = new Date();
-					const nowIST = new Date(
-						nowUTC.getTime() + (5.5 * 60 * 60 * 1000)
-					);
+					const nowIST = new Date(nowUTC.getTime() + (5.5 * 60 * 60 * 1000));
 
-					// Compare IST date (YYYY-MM-DD)
 					const isSameISTDate =
 						tokenDateIST.getFullYear() === nowIST.getFullYear() &&
 						tokenDateIST.getMonth() === nowIST.getMonth() &&
 						tokenDateIST.getDate() === nowIST.getDate();
+
+					console.log("Latest updatedAt (IST):", tokenDateIST, "Now IST:", nowIST, "Same Date?", isSameISTDate);
 
 					this.hasTodayToken = isSameISTDate;
 				} else {
@@ -345,7 +343,4 @@ export class HorizontalTopbarComponent {
 			},
 		});
 	}
-
-
-
 }

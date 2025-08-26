@@ -37,6 +37,8 @@ export class SettingsComponent implements OnInit {
 	ngOnInit(): void {
 		this.loadStrategy();
 
+		this.showMarketProtection = this.strategyData.orderType === 'Market Protection';
+
 		// Initialize with existing trades if required
 		this.bullTrades = [
 			{
@@ -77,6 +79,13 @@ export class SettingsComponent implements OnInit {
 		this.renameTrades(this.bearTrades);
 	}
 
+	confirmRemoveBearTrade(i: number) {
+		const confirmDelete = confirm(`Are you sure you want to remove ${this.bearTrades[i].name}?`);
+		if (confirmDelete) {
+			this.removeBearTrade(i);
+		}
+	}
+
 	// -----------------------
 	// Bull Trades
 	// -----------------------
@@ -92,6 +101,13 @@ export class SettingsComponent implements OnInit {
 	removeBullTrade(i: number) {
 		this.bullTrades.splice(i, 1);
 		this.renameTrades(this.bullTrades);
+	}
+
+	confirmRemoveBullTrade(i: number) {
+		const confirmDelete = confirm(`Are you sure you want to remove ${this.bullTrades[i].name}?`);
+		if (confirmDelete) {
+			this.removeBullTrade(i);
+		}
 	}
 
 	// -----------------------
@@ -161,6 +177,9 @@ export class SettingsComponent implements OnInit {
 					const session = res[0];
 					this.strategyData = session.data.globalSettings;
 
+					// Market Protection visibility reflects stored orderType
+					this.showMarketProtection = this.strategyData.orderType === 'Market Protection';
+
 					// Load dynamic Bear trades
 					this.bearTrades = Object.keys(session.data.strategies.BearCallSpread).map((k, idx) => ({
 						name: `Trade ${idx + 1}`,
@@ -179,6 +198,7 @@ export class SettingsComponent implements OnInit {
 			error: (err) => console.error('Error fetching strategy:', err)
 		});
 	}
+
 
 	private renameTrades(trades: any[]) {
 		trades.forEach((t, idx) => (t.name = `Trade ${idx + 1}`));
