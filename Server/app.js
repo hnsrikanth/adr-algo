@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const path = require('path');
 
 const registerRoutes = require('./commonRoutes');
+const marketStart = require('./marketData/marketStart');
 const { setupTicker } = require('./marketData/ticker');
 
 const app = express();
@@ -36,6 +37,10 @@ registerRoutes(app);
 
 // Setup ticker
 setupTicker(server);
+
+//ROHIT : marketStart will only run once. If the entry is already present in the DB, it won't add it again.
+// I have added this code as pseudo code, please re write properly.
+setupMarketStartTasks();
 
 const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {
