@@ -45,38 +45,6 @@
           "CE/PE": "CE",
           "Expiry": "current week"
         }
-      },
-      "trade3": {
-        "mainPosition": {
-          "Buy/Sell": "Buy",
-          "Strike": "OTM+5",
-          "Qty": 450,
-          "CE/PE": "CE",
-          "Expiry": "current week"
-        },
-        "hedgePosition": {
-          "Buy/Sell": "Sell",
-          "Strike": "OTM+4",
-          "Qty": 525,
-          "CE/PE": "PE",
-          "Expiry": "Week+1"
-        }
-      },
-      "trade4": {
-        "mainPosition": {
-          "Buy/Sell": "Sell",
-          "Strike": "OTM+3",
-          "Qty": 600,
-          "CE/PE": "PE",
-          "Expiry": "current week"
-        },
-        "hedgePosition": {
-          "Buy/Sell": "Buy",
-          "Strike": "OTM+2",
-          "Qty": 675,
-          "CE/PE": "CE",
-          "Expiry": "Week+1"
-        }
       }
     },
     "BullPutSpread": {
@@ -108,38 +76,6 @@
           "Buy/Sell": "Sell",
           "Strike": "OTM+1",
           "Qty": 600,
-          "CE/PE": "PE",
-          "Expiry": "current week"
-        }
-      },
-      "trade3": {
-        "mainPosition": {
-          "Buy/Sell": "Buy",
-          "Strike": "ITM+1",
-          "Qty": 75,
-          "CE/PE": "CE",
-          "Expiry": "current week"
-        },
-        "hedgePosition": {
-          "Buy/Sell": "Sell",
-          "Strike": "ITM+1",
-          "Qty": 75,
-          "CE/PE": "PE",
-          "Expiry": "current week"
-        }
-      },
-      "trade4": {
-        "mainPosition": {
-          "Buy/Sell": "Buy",
-          "Strike": "OTM+3",
-          "Qty": 75,
-          "CE/PE": "CE",
-          "Expiry": "current week"
-        },
-        "hedgePosition": {
-          "Buy/Sell": "Sell",
-          "Strike": "OTM+3",
-          "Qty": 75,
           "CE/PE": "PE",
           "Expiry": "current week"
         }
