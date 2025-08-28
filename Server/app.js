@@ -21,9 +21,9 @@ app.use(cors());
 
 // Enable CORS
 app.use(cors({
-	origin: 'http://localhost:4200',
-	methods: ['GET', 'POST', 'PUT', 'DELETE'],
-	allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: 'http://localhost:4200',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Middleware
@@ -35,9 +35,9 @@ app.use(express.urlencoded({ extended: true }));
 registerRoutes(app);
 
 // Setup ticker
-// setupTicker(server);
+setupTicker(server);
 
 const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {
-	server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });

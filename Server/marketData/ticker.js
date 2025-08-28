@@ -8,7 +8,7 @@ const instrumentTokens = [
     265, 256265, 260105
 ];
 
-const setupTicker = async (server) => {
+const setupTicker = async(server) => {
     const config = await kiteConfig.getConfig();
     const apiKey = config.apiKey;
     const accessToken = config.accessToken;

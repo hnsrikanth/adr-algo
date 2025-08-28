@@ -11,6 +11,8 @@ import { LanguageService } from '../../core/services/language.service';
 import { AuthenticationService } from '../../core/services/auth.service';
 
 import { HttpClient } from '@angular/common/http';
+import { WatchlistService } from '../../core/services/watchlist.service';
+import { TickService } from '../../core/services/tick.service';
 
 @Component({
 	selector: 'app-horizontal-topbar',
@@ -34,8 +36,18 @@ export class HorizontalTopbarComponent {
 
 	hasTodayToken: boolean = false; // ✅ flag to show tick or cross
 
-	constructor(private router: Router, public translate: TranslateService, private authService: AuthenticationService, private http: HttpClient) {
+	constructor(
+		private router: Router,
+		public translate: TranslateService,
+		private authService: AuthenticationService,
+		private http: HttpClient
+	) {
 		translate.setDefaultLang('en');
+	}
+
+	// Helper function to check NaN
+	isNaN(value: any): boolean {
+		return Number.isNaN(value);
 	}
 
 	ngOnInit(): void {

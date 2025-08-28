@@ -6,25 +6,24 @@
     <div class="navbar-brand-box">
         <a routerLink="/" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="../assets/images/logo-sm.png" alt="" height="26" />
-            </span>
+        <img src="../assets/images/logo-sm.png" alt="" height="26" />
+      </span>
             <span class="logo-lg">
-                <img src="../assets/images/logo-dark.png" alt="" height="26" />
-            </span>
+        <img src="../assets/images/logo-dark.png" alt="" height="26" />
+      </span>
         </a>
         <a routerLink="/" class="logo logo-light">
             <span class="logo-sm">
-                <img src="../assets/images/logo-sm.png" alt="" height="24" />
-            </span>
+        <img src="../assets/images/logo-sm.png" alt="" height="24" />
+      </span>
             <span class="logo-lg">
-                <img src="../assets/images/logo-light.png" alt="" height="24" />
-            </span>
+        <img src="../assets/images/logo-light.png" alt="" height="24" />
+      </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
-            <i class="ri-record-circle-line"></i>
-        </button>
+      <i class="ri-record-circle-line"></i>
+    </button>
     </div>
-
 
     <div id="scrollbar">
         <div class="container-fluid">
@@ -34,36 +33,40 @@
                 @for (item of menuItems; track $index) {
                 <ng-container>
                     @if(item.isTitle){
-                    <li class="menu-title" *ngIf="isAdmin()"><span data-key="t-menu">{{ item.label | translate
-                            }}</span></li>
+                    <li class="menu-title" *ngIf="isAdmin()">
+                        <span data-key="t-menu">{{ item.label | translate }}</span>
+                    </li>
                     } @if(!item.isTitle && !item.isLayout){
                     <li class="nav-item">
                         @if(hasItems(item)){
-                        <a href="javascript:void(0);" class="is-parent nav-link menu-link" [ngClass]="{'has-arrow': !item.badge, 'has-dropdown': item.badge}" data-bs-toggle="collapse" aria-expanded="false" (click)="toggleItem($event)">
+                        <a href="javascript:void(0);" class="is-parent nav-link menu-link" [ngClass]="{
+                                'has-arrow': !item.badge,
+                                'has-dropdown': item.badge
+                            }" data-bs-toggle="collapse" aria-expanded="false" (click)="toggleItem($event)">
                             <i class="{{ item.icon }} icon nav-icon" class=""></i>
                             <span class=""> {{ item.label | translate }}</span> @if(item.badge){
-                            <span class="badge badge-pill {{item.badge.variant}}">{{item.badge.text |
-                                translate}}</span> }
+                            <span class="badge badge-pill {{ item.badge.variant }}">{{
+                                item.badge.text | translate
+                            }}</span> }
                         </a>
                         <div class="collapse menu-dropdown" id="sidebarDashboards">
                             <ul class="nav nav-sm flex-column" aria-expanded="false">
                                 @for (subitem of item.subItems; track $index) {
                                 <li class="nav-item">
-
                                     @if(hasItems(subitem)){
                                     <a class="nav-link" href="javascript:void(0);" [attr.data-parent]="subitem.parentId" data-bs-toggle="collapse" aria-expanded="false" (click)="toggleSubItem($event)">
                                         @if(subitem.icon){
-                                        <i class="{{ subitem.icon }} icon nav-icon" class=""></i>}{{ subitem.label |
-                                        translate}}
+                                        <i class="{{ subitem.icon }} icon nav-icon" class=""></i>}{{
+                                        subitem.label | translate
+                                        }}
                                     </a>
                                     <div class="collapse menu-dropdown">
                                         <ul class="nav nav-sm flex-column" aria-expanded="false">
                                             @for (subSubitem of subitem.subItems; track $index) {
                                             <li class="nav-item">
-
                                                 @if(subSubitem.childItem){
                                                 <a [attr.data-parent]="subSubitem.parentId" [routerLink]="subSubitem.link" data-bs-toggle="collapse" aria-expanded="false" class="nav-link" (click)="updateActive($event)">
-                                                    {{ subSubitem.label | translate }}
+                                                {{ subSubitem.label | translate }}
                                                 </a>
 
                                                 <div class="collapse menu-dropdown">
@@ -78,54 +81,59 @@
                                                                     @for (subChildren of subChilditem.childItem; track $index) {
                                                                     <li class="nav-item">
                                                                         <a [attr.data-parent]="subSubitem.parentId" [routerLink]="subChildren.link" class="nav-link" (click)="updateActive($event)">
-                                                                            {{ subChildren.label | translate }}
+                                                                        {{ subChildren.label | translate }}
                                                                         </a>
                                                                     </li>
                                                                     }
                                                                 </ul>
                                                             </div>
-
-
                                                         </li>
                                                         }
                                                     </ul>
                                                 </div>
                                                 }@else {
                                                 <a [attr.data-parent]="subSubitem.parentId" [routerLink]="subSubitem.link" class="nav-link" (click)="updateActive($event)">
-                                                    {{ subSubitem.label | translate }}
+                                                {{ subSubitem.label | translate }}
                                                 </a> }
                                             </li>
                                             }
                                         </ul>
-                                    </div>}@else {
+                                    </div>
+                                    }@else {
                                     <a [routerLink]="subitem.link" class="nav-link" [attr.data-parent]="subitem.parentId" (click)="updateActive($event)">
                                         @if(subitem.icon){
-                                        <i class="{{ subitem.icon }} icon nav-icon" class=""></i>}{{ subitem.label |
-                                        translate}}
+                                        <i class="{{ subitem.icon }} icon nav-icon" class=""></i>}{{
+                                        subitem.label | translate
+                                        }}
                                     </a> }
                                 </li>
                                 }
                             </ul>
                         </div>
                         }@else{
-                        <a [routerLink]="item.link" class="side-nav-link-ref nav-link menu-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                        <a [routerLink]="item.link" class="side-nav-link-ref nav-link menu-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">
                             @if(item.icon){
                             <i class="{{ item.icon }} icon nav-icon" class=""></i>
                             }
                             <span class=""> {{ item.label | translate }}</span>
                             @if(item.badge){
-                            <span class="badge {{item.badge.variant}} float-end">{{item.badge.text |
-                                translate}}</span>
+                            <span class="badge {{ item.badge.variant }} float-end">{{
+                                item.badge.text | translate
+                            }}</span>
                             }
                         </a> }
                     </li>
                     }
-
-
                 </ng-container>
                 }
 
                 <div class="d-flex align-items-center gap-2 ms-auto">
+                    <a type="button" class="btn btn-ghost-primary">
+                        Start Bear Call Spread
+                    </a>
+                    <a type="button" class="btn btn-ghost-danger">
+                        Start Bull Put Spread
+                    </a>
                     <!-- Refresh Token Button -->
                     <a type="button" class="btn btn-ghost-success" (click)="loginToKiteAccount()">
                         Refresh Token
@@ -139,7 +147,6 @@
         </div>
         <!-- Sidebar -->
     </div>
-
 
     <div class="sidebar-background"></div>
 </div>
