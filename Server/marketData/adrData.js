@@ -1,21 +1,5 @@
 const { getLast14WorkingDaysData } = require("./kite-historic-data");
-
-let refreshDate = null;
-let adrValues = {
-    refreshDate: null,
-    marketOpen: 0,
-    adrHigh: 0,
-    adrLow: 0,
-    adrRange: 0,
-    adrPlus_25: 0,
-    adrPlus_50: 0,
-    adrPlus_75: 0,
-    adrPlus_1: 0,
-    adrMinus_25: 0,
-    adrMinus_50: 0,
-    adrMinus_75: 0,
-    adrMinus_1: 0
-};
+const AdrData = require("../models/adrData");
 
 // Calculate ADR from last 14 candles
 async function calculateAdrFromHistoric() {
@@ -32,33 +16,35 @@ async function calculateAdrFromHistoric() {
     const avgLow = lows.reduce((a, b) => a + b, 0) / lows.length;
     const adrRange = avgHigh - avgLow;
 
-    // Take today’s open (last candle’s open)
+    // Today’s open = last candle’s open
     const marketOpen = candles[candles.length - 1][1];
+    const today = new Date().toISOString().slice(0, 10);
 
     // ADR levels
     const step = adrRange / 4;
 
-    adrValues = {
-        refreshDate: new Date().toISOString().slice(0, 10),
-        marketOpen,
-        adrHigh: avgHigh,
-        adrLow: avgLow,
-        adrRange,
-        adrPlus_25: step,
-        adrPlus_50: step * 2,
-        adrPlus_75: step * 3,
-        adrPlus_1: step * 4,
-        adrMinus_25: step,
-        adrMinus_50: step * 2,
-        adrMinus_75: step * 3,
-        adrMinus_1: step * 4
+    const adrValues = {
+        date: today,
+        market_open: marketOpen,
+        adr_high: avgHigh,
+        adr_low: avgLow,
+        adr_range: adrRange,
+        positive_0_25: marketOpen + step * 1,
+        positive_0_50: marketOpen + step * 2,
+        positive_0_75: marketOpen + step * 3,
+        positive_1_00: marketOpen + step * 4,
+        nagative_0_25: marketOpen - step * 1,
+        nagative_0_50: marketOpen - step * 2,
+        nagative_0_75: marketOpen - step * 3,
+        nagative_1_00: marketOpen - step * 4
     };
 
+    await AdrData.upsert(adrValues); // ✅ insert or replace
     return adrValues;
 }
 
-function getAdrValues() {
-    return adrValues;
+async function getAdrFromDb(today) {
+    return AdrData.findByPk(today);
 }
 
-module.exports = { calculateAdrFromHistoric, getAdrValues };
+module.exports = { calculateAdrFromHistoric, getAdrFromDb };

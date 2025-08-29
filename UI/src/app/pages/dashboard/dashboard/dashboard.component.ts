@@ -44,9 +44,61 @@ export class DashboardComponent implements OnInit {
 		this.loadNiftyCandlesTwoDayData();
 	}
 
+	// loadAdrData() {
+	// 	this.adrService.getAdrData().subscribe({
+	// 		next: (data) => {
+	// 			this.adrHigh = data.adrHigh;
+	// 			this.adrLow = data.adrLow;
+	// 			this.adrRange = data.adrRange;
+
+	// 			// ✅ Now update chart annotations
+	// 			this.basicCandlestickChart.annotations = {
+	// 				yaxis: [
+	// 					{
+	// 						y: this.adrHigh,
+	// 						borderColor: "#000",
+	// 						strokeDashArray: 0,
+	// 						borderWidth: 2,
+	// 						label: {
+	// 							borderColor: "#000",
+	// 							style: { color: "#fff", background: "#000" },
+	// 							text: `ADR High (${this.adrHigh.toFixed(2)})`
+	// 						}
+	// 					},
+	// 					{
+	// 						y: this.adrLow,
+	// 						borderColor: "#000",
+	// 						strokeDashArray: 0,
+	// 						borderWidth: 2,
+	// 						label: {
+	// 							borderColor: "#000",
+	// 							style: { color: "#fff", background: "#000" },
+	// 							text: `ADR Low (${this.adrLow.toFixed(2)})`
+	// 						}
+	// 					}
+	// 				]
+	// 			};
+
+	// 			// ✅ Push annotations into chart
+	// 			if (this.chart) {
+	// 				this.chart.updateOptions({
+	// 					annotations: this.basicCandlestickChart.annotations
+	// 				});
+	// 			}
+	// 		},
+	// 		error: (err) => {
+	// 			console.error('Error fetching ADR data:', err);
+	// 		}
+	// 	});
+	// }
+
 	loadAdrData() {
 		this.adrService.getAdrData().subscribe({
 			next: (data) => {
+				// Map snake_case → camelCase
+				// this.adrHigh = data.adr_high;
+				// this.adrLow = data.adr_low;
+				// this.adrRange = data.adr_range;
 				this.adrHigh = data.adrHigh;
 				this.adrLow = data.adrLow;
 				this.adrRange = data.adrRange;
@@ -79,7 +131,6 @@ export class DashboardComponent implements OnInit {
 					]
 				};
 
-				// ✅ Push annotations into chart
 				if (this.chart) {
 					this.chart.updateOptions({
 						annotations: this.basicCandlestickChart.annotations
@@ -91,6 +142,7 @@ export class DashboardComponent implements OnInit {
 			}
 		});
 	}
+
 
 	/** Initialize empty chart config */
 	private _basicCandlestickChart() {
@@ -142,95 +194,6 @@ export class DashboardComponent implements OnInit {
 	}
 
 	/** Fetch API data and update chart */
-	// private loadNiftyCandles() {
-	// 	this.http.get<any>('http://localhost:3000/api/kite-historic-data')
-	// 		.subscribe({
-	// 			next: (res) => {
-	// 				if (res?.status === 'success' && Array.isArray(res.data?.candles)) {
-	// 					const candlesRaw: [string, number, number, number, number, number][] = res.data.candles;
-
-	// 					// Transform into ApexCharts format
-	// 					const candleData = candlesRaw
-	// 						.filter(c => c && c.length >= 5)
-	// 						.map(c => ({
-	// 							x: new Date(c[0]).toLocaleDateString('en-GB', {
-	// 								day: '2-digit',
-	// 								month: 'short'
-	// 							}),
-	// 							y: [c[1], c[2], c[3], c[4]] // Open, High, Low, Close
-	// 						}));
-
-	// 					// Get the last 14 candles
-	// 					const last14 = candleData.slice(-14);
-
-	// 					// Highs are at index 1, Lows at index 2 in OHLC
-	// 					const highAdr = last14.map((c) => c.y[1]);
-	// 					const lowAdr = last14.map((c) => c.y[2]);
-
-	// 					// Calculate averages
-	// 					let sumHigh = 0;
-	// 					let sumLow = 0;
-
-	// 					for (let i = 0; i < highAdr.length; i++) {
-	// 						sumHigh += highAdr[i];
-	// 						sumLow += lowAdr[i];
-	// 					}
-
-	// 					const avgHigh = sumHigh / 14; // or highAdr.length if dynamic
-	// 					const avgLow = sumLow / 14;
-
-
-	// 					// Assign to variables for HTML display
-	// 					this.adrHigh = avgHigh;
-	// 					this.adrLow = avgLow;
-	// 					this.adrRange = avgHigh - avgLow;
-
-	// 					// Update candlestick chart with ADR lines
-	// 					this.basicCandlestickChart.series = [
-	// 						{ data: last14 }
-	// 					];
-
-	// 					// After calculating avgHigh and avgLow
-	// 					// Update ADR annotation lines
-	// 					this.basicCandlestickChart.annotations = {
-	// 						yaxis: [
-	// 							{
-	// 								y: avgHigh,
-	// 								borderColor: "#060606dd",
-	// 								strokeDashArray: 0,
-	// 								borderWidth: 2,
-	// 								label: {
-	// 									borderColor: "#060606dd",
-	// 									style: { color: "#fff", background: "#060606dd" },
-	// 									text: `ADR High (${avgHigh.toFixed(2)})`
-	// 								}
-	// 							},
-	// 							{
-	// 								y: avgLow,
-	// 								borderColor: "#060606dd",
-	// 								strokeDashArray: 0,
-	// 								borderWidth: 2,
-	// 								label: {
-	// 									borderColor: "#060606dd",
-	// 									style: { color: "#fff", background: "#060606dd" },
-	// 									text: `ADR Low (${avgLow.toFixed(2)})`
-	// 								}
-	// 							}
-	// 						]
-	// 					};
-
-	// 					// Actually update the chart
-	// 					this.chart.updateOptions({
-	// 						series: this.basicCandlestickChart.series,
-	// 						annotations: this.basicCandlestickChart.annotations
-	// 					});
-	// 				}
-	// 			},
-	// 			error: (err) => {
-	// 				console.error('Error fetching NIFTY candle data:', err);
-	// 			}
-	// 		});
-	// }
 	private loadNiftyCandles() {
 		this.http.get<any>('http://localhost:3000/api/kite-historic-data')
 			.subscribe({
