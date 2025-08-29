@@ -33,14 +33,6 @@
                     </span>
                 </button>
 
-
-                <div *ngFor="let stock of stocks" [class.positive]="stock.change > 0" [class.negative]="stock.change < 0" class="d-flex align-items-center ms-2">
-                    <p class="mb-0 me-3">{{ stock.symbol }}</p>
-                    <p class="mb-0 me-3">{{ isNaN(stock.change) ? "--" : stock.change.toFixed(2) + "%" }}</p>
-                    <p class="mb-0">{{ isNaN(stock.price) ? "--" : (stock.price | number : "1.2-2") }}</p>
-                    <span class="mx-1 border-end" style="height: 40px; display: inline-block"></span>
-                </div>
-
             </div>
 
             <div class="d-flex align-items-center">

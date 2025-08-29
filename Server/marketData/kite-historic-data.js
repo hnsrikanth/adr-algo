@@ -21,7 +21,7 @@ async function getLast14WorkingDaysData() {
   let workingDays = [];
   let date = moment().subtract(1, "day");
 
-  while (workingDays.length < 14) {
+  while (workingDays.length < 15) {
     if (date.isBusinessDay()) {
       workingDays.unshift(date.format("YYYY-MM-DD"));
     }

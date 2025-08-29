@@ -1,80 +1,100 @@
 <div class="row">
-    <div class="col-xl-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title mb-0">
-                    14 Days ADR
-                    <span class="mx-1 border-end" style="height: 30px; display: inline-block"></span>
+	<div class="col-xl-6">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title mb-0">
+					14 Days ADR
+					<span class="mx-1 border-end" style="height: 30px; display: inline-block"></span>
 
-                    <small class="fw-bold text-primary">
-            ADR High: {{ adrHigh | number : "1.2-2" }}
-          </small>
+					<small class="fw-bold text-primary">
+						ADR High: {{ adrHigh | number : "1.2-2" }}
+					</small>
 
-                    <small class="fw-bold text-danger ms-2">
-            ADR Low: {{ adrLow | number : "1.2-2" }}
-          </small>
+					<small class="fw-bold text-danger ms-2">
+						ADR Low: {{ adrLow | number : "1.2-2" }}
+					</small>
 
-                    <small class="fw-bold text-secondary ms-2">
-            (Range: {{ adrRange | number : "1.2-2" }})
-          </small>
-                </h4>
-            </div>
+					<small class="fw-bold text-secondary ms-2">
+						(Range: {{ adrRange | number : "1.2-2" }})
+					</small>
+				</h4>
+			</div>
 
-            <div class="card-body">
-                <apx-chart [series]="basicCandlestickChart.series" [chart]="basicCandlestickChart.chart" [xaxis]="basicCandlestickChart.xaxis" [yaxis]="basicCandlestickChart.yaxis" [title]="basicCandlestickChart.title" [plotOptions]="basicCandlestickChart.plotOptions"
-                    [annotations]="basicCandlestickChart.annotations" [stroke]="basicCandlestickChart.stroke" [fill]="basicCandlestickChart.fill" dir="ltr">
-                </apx-chart>
-            </div>
-        </div>
-    </div>
+			<div class="card-body">
+				<apx-chart
+				[series]="basicCandlestickChart.series"
+				[chart]="basicCandlestickChart.chart"
+				[xaxis]="basicCandlestickChart.xaxis"
+				[yaxis]="basicCandlestickChart.yaxis"
+				[title]="basicCandlestickChart.title"
+				[plotOptions]="basicCandlestickChart.plotOptions"
+				[annotations]="basicCandlestickChart.annotations"
+				[stroke]="basicCandlestickChart.stroke"
+				[fill]="basicCandlestickChart.fill"
+				dir="ltr"
+				>
+				</apx-chart>
+			</div>
+		</div>
+	</div>
 
-    <div class="col-xl-6">
-        <div class="card">
-            <div class="card-header border-0 align-items-center d-flex">
-                <div class="col-lg-6">
-                    <div class="mb-3">
-                        <label for="Positions">Positions</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="col-xl-6">
+		<div class="card">
+			<div class="card-header border-0 align-items-center d-flex">
+				<div class="col-lg-6">
+					<div class="mb-3">
+						<label for="Positions">Positions</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="row">
-    <div class="col-xl-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title mb-0">2 Days ADR</h4>
-            </div>
+	<div class="col-xl-6">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title mb-0">2 Days ADR</h4>
+			</div>
 
-            <div class="card-body">
-                <!-- <apx-chart
-          [series]="basicCandlestickChartTwoDayChart.series"
-          [chart]="basicCandlestickChartTwoDayChart.chart"
-          [xaxis]="basicCandlestickChartTwoDayChart.xaxis"
-          [yaxis]="basicCandlestickChartTwoDayChart.yaxis"
-          [title]="basicCandlestickChartTwoDayChart.title"
-          [plotOptions]="basicCandlestickChartTwoDayChart.plotOptions"
-          [annotations]="basicCandlestickChartTwoDayChart.annotations"
-          [stroke]="basicCandlestickChartTwoDayChart.stroke"
-          [fill]="basicCandlestickChartTwoDayChart.fill"
-          dir="ltr"
-        >
-        </apx-chart> -->
+			<div class="card-body">
+				<!-- <apx-chart
+				[series]="basicCandlestickChartTwoDayChart.series"
+				[chart]="basicCandlestickChartTwoDayChart.chart"
+				[xaxis]="basicCandlestickChartTwoDayChart.xaxis"
+				[yaxis]="basicCandlestickChartTwoDayChart.yaxis"
+				[title]="basicCandlestickChartTwoDayChart.title"
+				[plotOptions]="basicCandlestickChartTwoDayChart.plotOptions"
+				[annotations]="basicCandlestickChartTwoDayChart.annotations"
+				[stroke]="basicCandlestickChartTwoDayChart.stroke"
+				[fill]="basicCandlestickChartTwoDayChart.fill"
+				dir="ltr"
+				>
+				</apx-chart> -->
 
-                <apx-chart #chartTwoDay [series]="basicCandlestickChartTwoDayChart.series" [chart]="basicCandlestickChartTwoDayChart.chart" [xaxis]="basicCandlestickChartTwoDayChart.xaxis" [yaxis]="basicCandlestickChartTwoDayChart.yaxis" [annotations]="basicCandlestickChartTwoDayChart.annotations"
-                    [plotOptions]="basicCandlestickChartTwoDayChart.plotOptions" [stroke]="basicCandlestickChartTwoDayChart.stroke" [fill]="basicCandlestickChartTwoDayChart.fill" [title]="basicCandlestickChartTwoDayChart.title"></apx-chart>
-            </div>
-        </div>
-    </div>
+				<apx-chart
+				#chartTwoDay
+				[series]="basicCandlestickChartTwoDayChart.series"
+				[chart]="basicCandlestickChartTwoDayChart.chart"
+				[xaxis]="basicCandlestickChartTwoDayChart.xaxis"
+				[yaxis]="basicCandlestickChartTwoDayChart.yaxis"
+				[annotations]="basicCandlestickChartTwoDayChart.annotations"
+				[plotOptions]="basicCandlestickChartTwoDayChart.plotOptions"
+				[stroke]="basicCandlestickChartTwoDayChart.stroke"
+				[fill]="basicCandlestickChartTwoDayChart.fill"
+				[title]="basicCandlestickChartTwoDayChart.title"
+				></apx-chart>
+			</div>
+		</div>
+	</div>
 
-    <div class="col-xl-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title mb-0">Order History</h4>
-            </div>
-            <div class="card-body"></div>
-        </div>
-    </div>
+	<div class="col-xl-6">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title mb-0">Order History</h4>
+			</div>
+			<div class="card-body"></div>
+		</div>
+	</div>
 </div>

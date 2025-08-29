@@ -11,10 +11,6 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 
-import { HttpClient } from '@angular/common/http';
-import { WatchlistService } from '../../core/services/watchlist.service';
-import { TickService } from '../../core/services/tick.service';
-
 @Component({
 	selector: 'app-topbar',
 	standalone: true,
@@ -52,25 +48,13 @@ export class TopbarComponent {
 		{ text: 'Arabic', flag: 'assets/images/flags/ae.svg', lang: 'ar' },
 	];
 
-	// Ticks Data - Watchlist
-	ticks: any[] = [];
-	stocks: any[] = [];
-
-	// Helper function to check NaN
-	isNaN(value: any): boolean {
-		return Number.isNaN(value);
-	}
-
 	constructor(private store: Store,
 		private authService: AuthenticationService,
 		private router: Router,
 		@Inject(DOCUMENT) private document: any,
 		@Inject(PLATFORM_ID) private platformId: object,
 		public languageService: LanguageService,
-		public _cookiesService: CookieService,
-		private http: HttpClient,
-		private watchlistService: WatchlistService,
-		private tickService: TickService,
+		public _cookiesService: CookieService
 	) {
 		this.element = document.documentElement;
 
@@ -100,44 +84,6 @@ export class TopbarComponent {
 		if (isPlatformBrowser(this.platformId)) {
 			this.checkLoginState();
 		}
-
-		// Fetch the watchlist
-		this.watchlistService.getWatchlist().subscribe((watchlist) => {
-			console.log("✅ Watchlist fetched:", watchlist);
-			// Populate the stocks array
-			this.stocks = watchlist.map((item: any) => ({
-				id: item.id,
-				name: item.name,
-				symbol: item.symbol,
-				instrumentToken: item.instrumentToken,
-				price: NaN,
-				change: NaN,
-			}));
-
-			console.log("✅ Stocks initialized:", this.stocks);
-			// Now subscribe to live tick data
-			this.tickService.getTicks().subscribe((ticks) => {
-				console.log("📡 Tick data received:", ticks);
-				this.updateStockPrices(ticks);
-			});
-		});
-	}
-
-	// Watchlist
-	updateStockPrices(ticks: any[]): void {
-		console.log("🔄 Updating stock prices with ticks:", ticks);
-		ticks.forEach((tick) => {
-			// Ensure the instrument tokens are of the same type for comparison
-			const stock = this.stocks.find(
-				(s) => String(s.instrumentToken) === String(tick.instrument_token)
-			);
-
-			if (stock) {
-				console.log('binding stock:', stock);
-				stock.price = tick.last_price || 'NA';
-				stock.change = tick.change * 100 || 'NA'; // Convert to percentage if needed
-			}
-		});
 	}
 
 	checkLoginState(): void {

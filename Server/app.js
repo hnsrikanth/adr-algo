@@ -13,6 +13,8 @@ const { setupTicker } = require('./marketData/ticker');
 const app = express();
 const server = http.createServer(app);
 
+// const { calculateAdrFromHistoric, getAdrValues } = require('./marketData/adrData');
+
 // Serve static files from the 'public' directory
 // app.use(express.static('public'));
 app.use('/charts', express.static(path.join(__dirname, 'charts')));
@@ -40,7 +42,7 @@ setupTicker(server);
 
 //ROHIT : marketStart will only run once. If the entry is already present in the DB, it won't add it again.
 // I have added this code as pseudo code, please re write properly.
-setupMarketStartTasks();
+// setupMarketStartTasks();
 
 const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {

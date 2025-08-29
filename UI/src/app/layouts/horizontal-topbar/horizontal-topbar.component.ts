@@ -36,18 +36,24 @@ export class HorizontalTopbarComponent {
 
 	hasTodayToken: boolean = false; // ✅ flag to show tick or cross
 
-	constructor(
-		private router: Router,
-		public translate: TranslateService,
-		private authService: AuthenticationService,
-		private http: HttpClient
-	) {
-		translate.setDefaultLang('en');
-	}
+	// Ticks Data - Watchlist
+	ticks: any[] = [];
+	stocks: any[] = [];
 
 	// Helper function to check NaN
 	isNaN(value: any): boolean {
 		return Number.isNaN(value);
+	}
+
+	constructor(
+		private router: Router,
+		public translate: TranslateService,
+		private authService: AuthenticationService,
+		private http: HttpClient,
+		private watchlistService: WatchlistService,
+		private tickService: TickService,
+	) {
+		translate.setDefaultLang('en');
 	}
 
 	ngOnInit(): void {
@@ -66,6 +72,44 @@ export class HorizontalTopbarComponent {
 		// Check Kite callback on initialization
 		this.checkKiteCallback();
 		this.checkAccessTokenFromDB(); // ✅ check DB when component loads
+
+		// Fetch the watchlist
+		this.watchlistService.getWatchlist().subscribe((watchlist) => {
+			console.log("✅ Watchlist fetched:", watchlist);
+			// Populate the stocks array
+			this.stocks = watchlist.map((item: any) => ({
+				id: item.id,
+				name: item.name,
+				symbol: item.symbol,
+				instrumentToken: item.instrumentToken,
+				price: NaN,
+				change: NaN,
+			}));
+
+			console.log("✅ Stocks initialized:", this.stocks);
+			// Now subscribe to live tick data
+			this.tickService.getTicks().subscribe((ticks) => {
+				console.log("📡 Tick data received:", ticks);
+				this.updateStockPrices(ticks);
+			});
+		});
+	}
+
+	// Watchlist
+	updateStockPrices(ticks: any[]): void {
+		console.log("🔄 Updating stock prices with ticks:", ticks);
+		ticks.forEach((tick) => {
+			// Ensure the instrument tokens are of the same type for comparison
+			const stock = this.stocks.find(
+				(s) => String(s.instrumentToken) === String(tick.instrument_token)
+			);
+
+			if (stock) {
+				console.log('binding stock:', stock);
+				stock.price = tick.last_price || 'NA';
+				stock.change = tick.change * 100 || 'NA'; // Convert to percentage if needed
+			}
+		});
 	}
 
 	isAdmin(): boolean {
