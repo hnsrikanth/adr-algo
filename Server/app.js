@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 registerRoutes(app);
 
 // Setup ticker
-setupTicker(server);
+//setupTicker(server);
 
 //ROHIT : marketStart will only run once. If the entry is already present in the DB, it won't add it again.
 // I have added this code as pseudo code, please re write properly.
