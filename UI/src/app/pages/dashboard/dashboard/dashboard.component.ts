@@ -3,7 +3,6 @@ import { NgApexchartsModule, ChartComponent } from 'ng-apexcharts';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AdrService, AdrData } from '../../../core/services/adr.service';
 
 @Component({
 	selector: 'app-dashboard',
@@ -15,11 +14,12 @@ import { AdrService, AdrData } from '../../../core/services/adr.service';
 
 export class DashboardComponent implements OnInit {
 
+	private adrSocket!: WebSocket;
+
 	basicCandlestickChart: any;
 	@ViewChild("basicCandlestickChart") chart!: ChartComponent;
 
 	basicCandlestickChartTwoDayChart: any;
-	// @ViewChild("basicCandlestickChartTwoDayChart") chartData!: ChartComponent;
 	@ViewChild("chartTwoDay") chartTwoDay!: ChartComponent;
 
 	// ADR High and Low values for HTML binding
@@ -27,122 +27,92 @@ export class DashboardComponent implements OnInit {
 	adrLow: number = 0;
 	adrRange: number = 0;
 
-	adrData: AdrData | null = null;
+	// adrData: AdrData | null = null;
 
 	constructor(
 		private http: HttpClient,
-		private adrService: AdrService
+		// private adrService: AdrService
 	) { }
 
 	ngOnInit(): void {
 		this._basicCandlestickChart();
 		this.loadNiftyCandles();
 
-		this.loadAdrData();
+		// this.loadAdrData();
+		// ⬇️ Instead of REST call, use WebSocket
+		this.connectAdrSocket();
 
 		this._basicCandlestickTwoDayChart();
 		this.loadNiftyCandlesTwoDayData();
 	}
 
-	// loadAdrData() {
-	// 	this.adrService.getAdrData().subscribe({
-	// 		next: (data) => {
-	// 			this.adrHigh = data.adrHigh;
-	// 			this.adrLow = data.adrLow;
-	// 			this.adrRange = data.adrRange;
+	/** Connect to ADR WebSocket (no API call needed) */
+	private connectAdrSocket() {
+		this.adrSocket = new WebSocket("ws://localhost:3000/ws/adr");
 
-	// 			// ✅ Now update chart annotations
-	// 			this.basicCandlestickChart.annotations = {
-	// 				yaxis: [
-	// 					{
-	// 						y: this.adrHigh,
-	// 						borderColor: "#000",
-	// 						strokeDashArray: 0,
-	// 						borderWidth: 2,
-	// 						label: {
-	// 							borderColor: "#000",
-	// 							style: { color: "#fff", background: "#000" },
-	// 							text: `ADR High (${this.adrHigh.toFixed(2)})`
-	// 						}
-	// 					},
-	// 					{
-	// 						y: this.adrLow,
-	// 						borderColor: "#000",
-	// 						strokeDashArray: 0,
-	// 						borderWidth: 2,
-	// 						label: {
-	// 							borderColor: "#000",
-	// 							style: { color: "#fff", background: "#000" },
-	// 							text: `ADR Low (${this.adrLow.toFixed(2)})`
-	// 						}
-	// 					}
-	// 				]
-	// 			};
+		this.adrSocket.onopen = () => {
+			console.log("✅ ADR WebSocket connected");
+		};
 
-	// 			// ✅ Push annotations into chart
-	// 			if (this.chart) {
-	// 				this.chart.updateOptions({
-	// 					annotations: this.basicCandlestickChart.annotations
-	// 				});
-	// 			}
-	// 		},
-	// 		error: (err) => {
-	// 			console.error('Error fetching ADR data:', err);
-	// 		}
-	// 	});
-	// }
+		this.adrSocket.onmessage = (event) => {
+			const data = JSON.parse(event.data);
 
-	loadAdrData() {
-		this.adrService.getAdrData().subscribe({
-			next: (data) => {
-				// Map snake_case → camelCase
-				// this.adrHigh = data.adr_high;
-				// this.adrLow = data.adr_low;
-				// this.adrRange = data.adr_range;
-				this.adrHigh = data.adrHigh;
-				this.adrLow = data.adrLow;
-				this.adrRange = data.adrRange;
-
-				// ✅ Now update chart annotations
-				this.basicCandlestickChart.annotations = {
-					yaxis: [
-						{
-							y: this.adrHigh,
-							borderColor: "#000",
-							strokeDashArray: 0,
-							borderWidth: 2,
-							label: {
-								borderColor: "#000",
-								style: { color: "#fff", background: "#000" },
-								text: `ADR High (${this.adrHigh.toFixed(2)})`
-							}
-						},
-						{
-							y: this.adrLow,
-							borderColor: "#000",
-							strokeDashArray: 0,
-							borderWidth: 2,
-							label: {
-								borderColor: "#000",
-								style: { color: "#fff", background: "#000" },
-								text: `ADR Low (${this.adrLow.toFixed(2)})`
-							}
-						}
-					]
-				};
-
-				if (this.chart) {
-					this.chart.updateOptions({
-						annotations: this.basicCandlestickChart.annotations
-					});
-				}
-			},
-			error: (err) => {
-				console.error('Error fetching ADR data:', err);
+			if (data.error) {
+				console.error("❌ ADR error:", data.error);
+				return;
 			}
-		});
-	}
 
+			// map DB fields to camelCase
+			this.adrHigh = data.adr_high ?? data.adrHigh;
+			this.adrLow = data.adr_low ?? data.adrLow;
+			this.adrRange = data.adr_range ?? data.adrRange;
+
+			console.log("📥 ADR received:", this.adrHigh, this.adrLow, this.adrRange);
+
+			// ✅ Update annotations on main chart
+			this.basicCandlestickChart.annotations = {
+				yaxis: [
+					{
+						y: this.adrHigh,
+						borderColor: "#000",
+						strokeDashArray: 0,
+						borderWidth: 2,
+						label: {
+							borderColor: "#000",
+							style: { color: "#fff", background: "#000" },
+							text: `ADR High (${this.adrHigh.toFixed(2)})`
+						}
+					},
+					{
+						y: this.adrLow,
+						borderColor: "#000",
+						strokeDashArray: 0,
+						borderWidth: 2,
+						label: {
+							borderColor: "#000",
+							style: { color: "#fff", background: "#000" },
+							text: `ADR Low (${this.adrLow.toFixed(2)})`
+						}
+					}
+				]
+			};
+
+			if (this.chart) {
+				this.chart.updateOptions({
+					annotations: this.basicCandlestickChart.annotations
+				});
+			}
+		};
+
+		this.adrSocket.onerror = (err) => {
+			console.error("❌ ADR socket error", err);
+		};
+
+		this.adrSocket.onclose = () => {
+			console.warn("⚠️ ADR WebSocket closed. Retrying in 5s...");
+			setTimeout(() => this.connectAdrSocket(), 5000); // auto-reconnect
+		};
+	}
 
 	/** Initialize empty chart config */
 	private _basicCandlestickChart() {
@@ -218,7 +188,7 @@ export class DashboardComponent implements OnInit {
 							series: this.basicCandlestickChart.series
 						});
 						// Now load ADR data from backend and update annotations
-						this.loadAdrData();
+						this.connectAdrSocket();
 					}
 				},
 				error: (err) => {
@@ -291,12 +261,6 @@ export class DashboardComponent implements OnInit {
 					if (res?.status === 'success' && Array.isArray(res.data?.candles)) {
 						const candlesRaw: [string, number, number, number, number, number][] = res.data.candles;
 
-						// // ✅ Convert to Apex-friendly format with IST timestamps
-						// const candleData = candlesRaw.map(c => ({
-						// 	x: this.toIST(new Date(c[0]).getTime()), // ensure IST
-						// 	y: [c[1], c[2], c[3], c[4]]
-						// }));
-
 						// ✅ Convert candles to Apex-friendly format using index (no gaps)
 						const candleData = candlesRaw.map((c, i) => ({
 							x: i, // category index instead of datetime
@@ -312,47 +276,6 @@ export class DashboardComponent implements OnInit {
 						const sessionDates = [...new Set(candlesRaw.map(c => c[0].substring(0, 10)))];
 						const latestSession = sessionDates.sort().pop(); // get most recent date string "YYYY-MM-DD"
 						const sessionCandles = candlesRaw.filter(c => c[0].startsWith(latestSession!));
-
-						// if (sessionCandles.length > 0 && this.adrRange) {
-						// 	const sessionOpen = sessionCandles[0][1];
-						// 	const step = this.adrRange / 4;
-
-						// 	const levels: { value: number; label: string }[] = [
-						// 		{ value: sessionOpen, label: `Open ${sessionOpen.toFixed(2)}` }
-						// 	];
-
-						// 	for (let i = 1; i <= 4; i++) {
-						// 		levels.push({
-						// 			value: sessionOpen + i * step,
-						// 			label: `Positive ${i} (${(sessionOpen + i * step).toFixed(2)})`
-						// 		});
-						// 		levels.push({
-						// 			value: sessionOpen - i * step,
-						// 			label: `Negative ${i} (${(sessionOpen - i * step).toFixed(2)})`
-						// 		});
-						// 	}
-
-						// 	levels.sort((a, b) => a.value - b.value);
-
-						// 	const annotations = levels.map((lvl) => ({
-						// 		y: lvl.value,
-						// 		borderColor: "#ff9800",
-						// 		strokeDashArray: 3,
-						// 		label: {
-						// 			borderColor: "#ff9800",
-						// 			style: { color: "#000", background: "#ffeb3b" },
-						// 			text: lvl.label
-						// 		}
-						// 	}));
-
-						// 	this.basicCandlestickChartTwoDayChart.annotations = { yaxis: annotations };
-
-						// 	if (this.chartTwoDay) {
-						// 		this.chartTwoDay.updateOptions({
-						// 			annotations: this.basicCandlestickChartTwoDayChart.annotations
-						// 		});
-						// 	}
-						// }
 
 						if (sessionCandles.length > 0 && this.adrRange) {
 							const sessionOpen = sessionCandles[0][1];
@@ -427,28 +350,6 @@ export class DashboardComponent implements OnInit {
 							annotations: this.basicCandlestickChartTwoDayChart.annotations,
 							xaxis: this.basicCandlestickChartTwoDayChart.xaxis
 						});
-
-
-						// const min = candleData[0]?.x;
-						// const max = candleData[candleData.length - 1]?.x;
-
-						// this.basicCandlestickChartTwoDayChart.xaxis = {
-						// 	type: "datetime",
-						// 	min,
-						// 	max,
-						// 	labels: {
-						// 		datetimeUTC: false,
-						// 		datetimeFormatter: { hour: "HH:mm" },
-						// 		rotate: -45
-						// 	}
-						// };
-
-						// // 🔄 Update chart fully
-						// this.chartTwoDay.updateOptions({
-						// 	series: this.basicCandlestickChartTwoDayChart.series,
-						// 	annotations: this.basicCandlestickChartTwoDayChart.annotations,
-						// 	xaxis: this.basicCandlestickChartTwoDayChart.xaxis
-						// });
 					}
 				},
 				error: (err) => {

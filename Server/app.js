@@ -9,14 +9,13 @@ const path = require('path');
 const registerRoutes = require('./commonRoutes');
 const marketStart = require('./marketData/marketStart');
 const { setupTicker } = require('./marketData/ticker');
+const { setupAdrSocket } = require("./socket/adrSocket");
 
 const app = express();
 const server = http.createServer(app);
 
 // const { calculateAdrFromHistoric, getAdrValues } = require('./marketData/adrData');
 
-// Serve static files from the 'public' directory
-// app.use(express.static('public'));
 app.use('/charts', express.static(path.join(__dirname, 'charts')));
 
 // Enable CORS for all routes
@@ -38,11 +37,10 @@ app.use(express.urlencoded({ extended: true }));
 registerRoutes(app);
 
 // Setup ticker
-//setupTicker(server);
+// setupTicker(server);
 
-//ROHIT : marketStart will only run once. If the entry is already present in the DB, it won't add it again.
-// I have added this code as pseudo code, please re write properly.
-// setupMarketStartTasks();
+// Setup ADR WebSocket
+setupAdrSocket(server);
 
 const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {
