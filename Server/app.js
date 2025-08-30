@@ -7,9 +7,10 @@ const bodyParser = require("body-parser");
 const path = require('path');
 
 const registerRoutes = require('./commonRoutes');
-const marketStart = require('./marketData/marketStart');
 const { setupTicker } = require('./marketData/ticker');
 const { setupAdrSocket } = require("./socket/adrSocket");
+const WebSocket = require("ws");
+
 
 const app = express();
 const server = http.createServer(app);
@@ -37,10 +38,10 @@ app.use(express.urlencoded({ extended: true }));
 registerRoutes(app);
 
 // Setup ticker
-// setupTicker(server);
+setupTicker(server);
 
 // Setup ADR WebSocket
-setupAdrSocket(server);
+// setupAdrSocket(server);
 
 const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {

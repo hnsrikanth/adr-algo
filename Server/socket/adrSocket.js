@@ -5,6 +5,7 @@ const { calculateAdrFromHistoric, getAdrFromDb } = require("../marketData/adrDat
 const setupAdrSocket = (server) => {
     // WebSocket server for ADR data
     const wss = new WebSocket.Server({ server, path: "/ws/adr" });
+    // const wss = new WebSocket.Server({ server });
 
     wss.on("connection", async (ws) => {
         console.log("📡 Angular connected to ADR socket");

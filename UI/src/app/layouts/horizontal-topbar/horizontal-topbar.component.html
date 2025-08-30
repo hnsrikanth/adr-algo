@@ -150,7 +150,8 @@
                     </a>
 
                     <!-- Refresh Token Button -->
-                    <a type="button" class="btn btn-ghost-success" (click)="loginToKiteAccount()">
+                    <a type="button" class="btn btn-ghost-success" (click)="loginToKiteAccount()" 
+                     [class.disabled]="hasTodayToken" [attr.disabled]="hasTodayToken ? true : null">
                         Refresh Token
                     </a>
 

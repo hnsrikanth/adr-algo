@@ -27,11 +27,8 @@ export class DashboardComponent implements OnInit {
 	adrLow: number = 0;
 	adrRange: number = 0;
 
-	// adrData: AdrData | null = null;
-
 	constructor(
 		private http: HttpClient,
-		// private adrService: AdrService
 	) { }
 
 	ngOnInit(): void {

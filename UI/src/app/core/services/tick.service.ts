@@ -9,7 +9,8 @@ export class TickService {
 
   constructor() { }
 
-  private tickSocket = webSocket('ws://localhost:3000'); // WebSocket URL
+  // private tickSocket = webSocket('ws://localhost:3000'); // WebSocket URL
+  private tickSocket = webSocket('ws://localhost:3000/ws/ticker'); // WebSocket URL
 
 	getTicks(): Observable<any> {
 		return this.tickSocket.asObservable();

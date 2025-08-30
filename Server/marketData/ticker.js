@@ -8,10 +8,23 @@ const instrumentTokens = [
     265, 256265, 260105
 ];
 
-const setupTicker = async(server) => {
+const setupTicker = async (server) => {
     const config = await kiteConfig.getConfig();
     const apiKey = config.apiKey;
     const accessToken = config.accessToken;
+
+    // ✅ Check if token is missing
+    if (!apiKey || !accessToken) {
+        console.warn("❌ Ticker cannot start: Access token not generated yet");
+
+        // still start WS for Angular so frontend gets a message
+        const wss = new WebSocket.Server({ server, path: "/ws/ticker" });
+        wss.on("connection", (ws) => {
+            ws.send(JSON.stringify({ error: "Access token not generated" }));
+        });
+
+        return; // stop here, don’t try to connect to Kite
+    }
 
     const ticker = new KiteTicker({
         api_key: apiKey,
@@ -19,7 +32,9 @@ const setupTicker = async(server) => {
     });
 
     // Start WebSocket server for Angular
-    const wss = new WebSocket.Server({ server });
+    // const wss = new WebSocket.Server({ server });
+
+    const wss = new WebSocket.Server({ server, path: "/ws/ticker" });
 
     wss.on("connection", (ws) => {
         console.log("Angular client connected");
