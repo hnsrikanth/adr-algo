@@ -38,12 +38,12 @@ app.use(express.urlencoded({ extended: true }));
 registerRoutes(app);
 
 // Setup ticker
-// setupTicker(server);
+//setupTicker(server);
 
 // Setup ADR WebSocket
-// setupAdrSocket(server);
+//setupAdrSocket(server);
 
-setupSockets(server);
+//setupSockets(server);
 
 const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {
