@@ -21,7 +21,7 @@ async function getLast2DaysData() {
     let days = [];
     let checkDay = moment().subtract(1, "day"); // start with yesterday
 
-    while (days.length < 2) {
+    while (days.length < 1) {
         if (checkDay.isBusinessDay()) {
             days.unshift(checkDay.clone()); // add to beginning
         }

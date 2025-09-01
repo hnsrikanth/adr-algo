@@ -8,9 +8,6 @@ const path = require('path');
 
 const registerRoutes = require('./commonRoutes');
 const { setupTicker } = require('./marketData/ticker');
-const { setupAdrSocket } = require("./socket/adrSocket");
-const { setupSockets } = require("./socket/webSocketManner");
-
 
 const app = express();
 const server = http.createServer(app);
@@ -38,12 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 registerRoutes(app);
 
 // Setup ticker
-//setupTicker(server);
-
-// Setup ADR WebSocket
-//setupAdrSocket(server);
-
-//setupSockets(server);
+setupTicker(server);
 
 const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {

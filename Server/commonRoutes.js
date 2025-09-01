@@ -7,6 +7,7 @@ const watchlistRoutes = require('./routes/watchlistRoutes');
 const adrLogsRoutes = require('./routes/adrLogsRoutes');
 const sessionRoutes = require('./routes/settingRoutes');
 const twoDaysHistoricData = require("./routes/twoDaysDataRoutes");
+const adrRoutes = require("./routes/adrRoutes");
 
 const registerRoutes = (app) => {
     app.use('/api', kiteConnectRoutes);
@@ -17,6 +18,7 @@ const registerRoutes = (app) => {
     app.use('/api', adrLogsRoutes);
     app.use('/api', sessionRoutes);
     app.use('/api', twoDaysHistoricData);
+    app.use('/api', adrRoutes);
 };
 
 module.exports = registerRoutes;

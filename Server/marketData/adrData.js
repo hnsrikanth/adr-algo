@@ -39,7 +39,15 @@ async function calculateAdrFromHistoric() {
         nagative_1_00: marketOpen - step * 4
     };
 
-    await AdrData.upsert(adrValues); // ✅ insert or replace
+    const existing = await AdrData.findByPk(today);
+
+    if (existing) {
+        await AdrData.update(adrValues, { where: { date: today } });
+    } else {
+        await AdrData.create(adrValues);
+    }
+
+    // await AdrData.upsert(adrValues); // ✅ insert or replace
     return adrValues;
 }
 

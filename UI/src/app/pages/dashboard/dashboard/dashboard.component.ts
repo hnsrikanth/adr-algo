@@ -3,6 +3,7 @@ import { NgApexchartsModule, ChartComponent } from 'ng-apexcharts';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AdrService, AdrData } from '../../../core/services/adr.service';
 
 @Component({
 	selector: 'app-dashboard',
@@ -13,8 +14,6 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class DashboardComponent implements OnInit {
-
-	private adrSocket!: WebSocket;
 
 	basicCandlestickChart: any;
 	@ViewChild("basicCandlestickChart") chart!: ChartComponent;
@@ -27,88 +26,63 @@ export class DashboardComponent implements OnInit {
 	adrLow: number = 0;
 	adrRange: number = 0;
 
+	adrData: AdrData | null = null;
+
 	constructor(
 		private http: HttpClient,
+		private adrService: AdrService
 	) { }
 
 	ngOnInit(): void {
 		this._basicCandlestickChart();
 		this.loadNiftyCandles();
 
-		// this.loadAdrData();
-		// ⬇️ Instead of REST call, use WebSocket
-		this.connectAdrSocket();
+		this.loadAdrData();
 
 		this._basicCandlestickTwoDayChart();
 		this.loadNiftyCandlesTwoDayData();
 	}
 
-	/** Connect to ADR WebSocket (no API call needed) */
-	private connectAdrSocket() {
-		this.adrSocket = new WebSocket("ws://localhost:3000/ws/adr");
+	loadAdrData() {
+		this.adrService.getAdrData().subscribe({
+			next: (data) => {
+				this.adrHigh = data.adr_high;
+				this.adrLow = data.adr_low;
+				this.adrRange = data.adr_range;
 
-		this.adrSocket.onopen = () => {
-			console.log("✅ ADR WebSocket connected");
-		};
-
-		this.adrSocket.onmessage = (event) => {
-			const data = JSON.parse(event.data);
-
-			if (data.error) {
-				console.error("❌ ADR error:", data.error);
-				return;
-			}
-
-			// map DB fields to camelCase
-			this.adrHigh = data.adr_high ?? data.adrHigh;
-			this.adrLow = data.adr_low ?? data.adrLow;
-			this.adrRange = data.adr_range ?? data.adrRange;
-
-			console.log("📥 ADR received:", this.adrHigh, this.adrLow, this.adrRange);
-
-			// ✅ Update annotations on main chart
-			this.basicCandlestickChart.annotations = {
-				yaxis: [
-					{
-						y: this.adrHigh,
-						borderColor: "#000",
-						strokeDashArray: 0,
-						borderWidth: 2,
-						label: {
+				this.basicCandlestickChart.annotations = {
+					yaxis: [
+						{
+							y: this.adrHigh,
 							borderColor: "#000",
-							style: { color: "#fff", background: "#000" },
-							text: `ADR High (${this.adrHigh.toFixed(2)})`
-						}
-					},
-					{
-						y: this.adrLow,
-						borderColor: "#000",
-						strokeDashArray: 0,
-						borderWidth: 2,
-						label: {
+							borderWidth: 2,
+							label: {
+								borderColor: "#000",
+								style: { color: "#fff", background: "#000" },
+								text: `ADR High (${this.adrHigh.toFixed(2)})`
+							}
+						},
+						{
+							y: this.adrLow,
 							borderColor: "#000",
-							style: { color: "#fff", background: "#000" },
-							text: `ADR Low (${this.adrLow.toFixed(2)})`
+							borderWidth: 2,
+							label: {
+								borderColor: "#000",
+								style: { color: "#fff", background: "#000" },
+								text: `ADR Low (${this.adrLow.toFixed(2)})`
+							}
 						}
-					}
-				]
-			};
+					]
+				};
 
-			if (this.chart) {
-				this.chart.updateOptions({
-					annotations: this.basicCandlestickChart.annotations
-				});
-			}
-		};
-
-		this.adrSocket.onerror = (err) => {
-			console.error("❌ ADR socket error", err);
-		};
-
-		this.adrSocket.onclose = () => {
-			console.warn("⚠️ ADR WebSocket closed. Retrying in 5s...");
-			setTimeout(() => this.connectAdrSocket(), 5000); // auto-reconnect
-		};
+				if (this.chart) {
+					this.chart.updateOptions({
+						annotations: this.basicCandlestickChart.annotations
+					});
+				}
+			},
+			error: (err) => console.error("Error fetching ADR via WS:", err)
+		});
 	}
 
 	/** Initialize empty chart config */
@@ -185,7 +159,7 @@ export class DashboardComponent implements OnInit {
 							series: this.basicCandlestickChart.series
 						});
 						// Now load ADR data from backend and update annotations
-						this.connectAdrSocket();
+						this.loadAdrData();
 					}
 				},
 				error: (err) => {
