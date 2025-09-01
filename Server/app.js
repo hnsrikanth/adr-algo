@@ -9,7 +9,7 @@ const path = require('path');
 const registerRoutes = require('./commonRoutes');
 const { setupTicker } = require('./marketData/ticker');
 const { setupAdrSocket } = require("./socket/adrSocket");
-const { setupSockets } = require("./socket/socketManager");
+const { setupSockets } = require("./socket/webSocketManner");
 
 
 const app = express();
