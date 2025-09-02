@@ -1,46 +1,55 @@
-const config = require("../config/kiteConfig");
-const axios = require('axios');
+const axios = require("axios");
 
-const kiteConnectProxy = {
-	// Function to fetch historical data using REST API
-	fetchHistoricalData: async function (symbol, from, to) {
-		const kiteConfig = await config.getConfig();
-		const apiKey = kiteConfig.apiKey;
-		const accessToken = kiteConfig.accessToken;
+const KITE_PROXY_URL = "http://localhost:8080/api/orders";
 
-		// Default to last 20 minutes if not provided
-		const now = new Date();
-		const istOffset = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds
-		const nowIST = new Date(now.getTime() + istOffset);
+/** Place a single order via proxy */
+async function placeOrder(order) {
+    try {
+        const response = await axios.post(KITE_PROXY_URL, order);
+        if (response.data.status === "success") {
+            console.log(`✅ Order placed: ${order.symbol} (${order.transactionType})`);
+            return response.data.order_id;
+        } else {
+            throw new Error(`Order failed: ${JSON.stringify(response.data)}`);
+        }
+    } catch (err) {
+        console.error("❌ Order placement error:", err.message);
+        return null;
+    }
+}
 
-		const defaultTo = nowIST.toISOString().slice(0, 19);
-		const defaultFrom = new Date(now.getTime() - 20 * 60000 + istOffset).toISOString().slice(0, 19);
+/** Place hedge order first, then main order */
+async function placeTradeWithHedge(tradeSettings) {
+    const hedge = tradeSettings.hedgePosition;
+    const main = tradeSettings.mainPosition;
 
-		const formattedFrom = (from || defaultFrom).replace('T', '+');
-		const formattedTo = (to || defaultTo).replace('T', '+');
+    // Prepare order payloads
+    const hedgeOrder = {
+        symbol: buildSymbol(hedge),             // convert ITM+4 etc. → actual symbol
+        transactionType: hedge["Buy/Sell"].toUpperCase(),
+        quantity: hedge.Qty,
+        product: "MIS",                         // from globalSettings
+        orderType: "MARKET"
+    };
 
-		const url = `https://api.kite.trade/instruments/historical/${symbol}/minute?from=${formattedFrom}&to=${formattedTo}`;
+    const mainOrder = {
+        symbol: buildSymbol(main),
+        transactionType: main["Buy/Sell"].toUpperCase(),
+        quantity: main.Qty,
+        product: "MIS",
+        orderType: "MARKET"
+    };
 
-		const headers = {
-			'X-Kite-Version': '3',
-			'Authorization': `token ${apiKey}:${accessToken}`
-		};
+    console.log("📌 Placing Hedge Order first...");
+    const hedgeOrderId = await placeOrder(hedgeOrder);
 
-		try {
-			const response = await axios.get(url, { headers });
-			return response.data.data.candles.map(candle => ({
-				time: new Date(candle[0]).getTime(),
-				open: candle[1],
-				high: candle[2],
-				low: candle[3],
-				close: candle[4]
-			}));
-		} catch (error) {
-			console.error('Error fetching historical data:', error.message);
-			throw error;
-		}
-	}
+    if (!hedgeOrderId) {
+        console.log("❌ Hedge order failed. Skipping main order.");
+        return { hedge: null, main: null };
+    }
 
-};
+    console.log("📌 Hedge placed. Placing Main Order...");
+    const mainOrderId = await placeOrder(mainOrder);
 
-module.exports = kiteConnectProxy;
+    return { hedge: hedgeOrderId, main: mainOrderId };
+}
