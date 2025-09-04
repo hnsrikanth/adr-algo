@@ -5,55 +5,82 @@ const moment = require("moment-business-days");
 
 // Configure NSE holidays (update yearly)
 const NSE_HOLIDAYS = [
-  "2025-01-26", "2025-03-14", "2025-03-31", "2025-04-14", "2025-05-01",
-  "2025-08-15", "2025-10-02", "2025-11-04", "2025-12-25"
+	"2025-01-26", "2025-03-14", "2025-03-31", "2025-04-14", "2025-05-01",
+	"2025-08-15", "2025-10-02", "2025-11-04", "2025-12-25"
 ];
 
 moment.updateLocale("en", {
-  holidays: NSE_HOLIDAYS,
-  holidayFormat: "YYYY-MM-DD",
+	holidays: NSE_HOLIDAYS,
+	holidayFormat: "YYYY-MM-DD",
 });
 
 async function getLast14WorkingDaysData() {
-  const config = await kiteConfig.getConfig();
+	const config = await kiteConfig.getConfig();
 
-  // Find the last 14 working days (excluding weekends & holidays)
-  let workingDays = [];
-  let date = moment().subtract(1, "day");
+	// Find the last 14 working days (excluding weekends & holidays)
+	let workingDays = [];
+	let date = moment().subtract(1, "day");
 
-  while (workingDays.length < 15) {
-    if (date.isBusinessDay()) {
-      workingDays.unshift(date.format("YYYY-MM-DD"));
-    }
-    date = date.subtract(1, "days");
-  }
+	while (workingDays.length < 15) {
+		if (date.isBusinessDay()) {
+			workingDays.unshift(date.format("YYYY-MM-DD"));
+		}
+		date = date.subtract(1, "days");
+	}
 
-  const fromDate = `${workingDays[0]}+09:15:00`;
-  const toDate = `${workingDays[workingDays.length - 1]}+15:30:00`;
+	const fromDate = `${workingDays[0]}+09:15:00`;
+	const toDate = `${workingDays[workingDays.length - 1]}+15:30:00`;
 
-  // Replace with your actual instrument token
-  const instrumentToken = "256265"; // example token
+	// Replace with your actual instrument token
+	const instrumentToken = "256265"; // example token
 
-  // Build URL exactly like Postman test
-  const url = `https://api.kite.trade/instruments/historical/${instrumentToken}/day?from=${fromDate}&to=${toDate}`;
+	// Build URL exactly like Postman test
+	const url = `https://api.kite.trade/instruments/historical/${instrumentToken}/day?from=${fromDate}&to=${toDate}`;
 
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        "X-Kite-Version": "3",
-        "Authorization": `token ${config.apiKey}:${config.accessToken}`
-      }
-    });
+	try {
+		const response = await axios.get(url, {
+			headers: {
+				"X-Kite-Version": "3",
+				"Authorization": `token ${config.apiKey}:${config.accessToken}`
+			}
+		});
 
-    return {
-      status: "success",
-      data: {
-        candles: response.data.data.candles
-      }
-    };
-  } catch (err) {
-    throw new Error(`Error fetching historical data: ${err.response?.data?.message || err.message}`);
-  }
+		return {
+			status: "success",
+			data: {
+				candles: response.data.data.candles
+			}
+		};
+	} catch (err) {
+		throw new Error(`Error fetching historical data: ${err.response?.data?.message || err.message}`);
+	}
 }
 
-module.exports = { getLast14WorkingDaysData };
+async function getTodayOpen(instrumentToken) {
+	const config = await kiteConfig.getConfig();
+	const today = new Date().toISOString().slice(0, 10);
+
+	const from = `${today}+09:15:00`;
+	const to = `${today}+09:16:00`;
+
+	const url = `https://api.kite.trade/instruments/historical/${instrumentToken}/minute?from=${from}&to=${to}`;
+
+	try {
+		const response = await axios.get(url, {
+			headers: {
+				"X-Kite-Version": "3",
+				"Authorization": `token ${config.apiKey}:${config.accessToken}`
+			}
+		});
+
+		const candles = response.data.data.candles;
+		if (candles.length > 0) {
+			return candles[0][1]; // Open price
+		}
+		return null;
+	} catch (err) {
+		throw new Error(`Error fetching today's open: ${err.response?.data?.message || err.message}`);
+	}
+}
+
+module.exports = { getLast14WorkingDaysData, getTodayOpen };

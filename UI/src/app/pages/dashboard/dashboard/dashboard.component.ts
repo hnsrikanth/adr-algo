@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
 	adrHigh: number = 0;
 	adrLow: number = 0;
 	adrRange: number = 0;
+	todayOpen: number = 0;
 
 	adrData: AdrData | null = null;
 
@@ -49,6 +50,7 @@ export class DashboardComponent implements OnInit {
 				this.adrHigh = data.adr_high;
 				this.adrLow = data.adr_low;
 				this.adrRange = data.adr_range;
+				this.todayOpen = data.market_open;
 
 				this.basicCandlestickChart.annotations = {
 					yaxis: [
@@ -78,6 +80,39 @@ export class DashboardComponent implements OnInit {
 				if (this.chart) {
 					this.chart.updateOptions({
 						annotations: this.basicCandlestickChart.annotations
+					});
+				}
+
+				// ✅ Build levels array from backend response
+				const levels = [
+					{ value: this.todayOpen, label: `Open (${this.todayOpen.toFixed(2)})` },
+					{ value: data.positive_0_25, label: `Positive 0.25 (${data.positive_0_25.toFixed(2)})` },
+					{ value: data.positive_0_50, label: `Positive 0.50 (${data.positive_0_50.toFixed(2)})` },
+					{ value: data.positive_0_75, label: `Positive 0.75 (${data.positive_0_75.toFixed(2)})` },
+					{ value: data.positive_1_00, label: `Positive 1.00 (${data.positive_1_00.toFixed(2)})` },
+					{ value: data.nagative_0_25, label: `Negative 0.25 (${data.nagative_0_25.toFixed(2)})` },
+					{ value: data.nagative_0_50, label: `Negative 0.50 (${data.nagative_0_50.toFixed(2)})` },
+					{ value: data.nagative_0_75, label: `Negative 0.75 (${data.nagative_0_75.toFixed(2)})` },
+					{ value: data.nagative_1_00, label: `Negative 1.00 (${data.nagative_1_00.toFixed(2)})` }
+				].sort((a, b) => a.value - b.value);
+
+				// ✅ Annotations for 2-day chart
+				const annotations2Day = levels.map(lvl => ({
+					y: lvl.value,
+					borderColor: "#ff9800",
+					strokeDashArray: 3,
+					label: {
+						borderColor: "#ff9800",
+						style: { color: "#000", background: "#ffeb3b" },
+						text: lvl.label
+					}
+				}));
+
+				this.basicCandlestickChartTwoDayChart.annotations = { yaxis: annotations2Day };
+
+				if (this.chartTwoDay) {
+					this.chartTwoDay.updateOptions({
+						annotations: this.basicCandlestickChartTwoDayChart.annotations
 					});
 				}
 			},

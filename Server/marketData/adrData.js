@@ -1,4 +1,4 @@
-const { getLast14WorkingDaysData } = require("./kite-historic-data");
+const { getLast14WorkingDaysData, getTodayOpen } = require("./kite-historic-data");
 const AdrData = require("../models/adrData");
 
 // Calculate ADR from last 14 candles
@@ -17,7 +17,14 @@ async function calculateAdrFromHistoric() {
     const adrRange = avgHigh - avgLow;
 
     // Today’s open = last candle’s open
-    const marketOpen = candles[candles.length - 1][1];
+    // const marketOpen = candles[candles.length - 1][1];
+    
+    const instrumentToken = "256265"; // NIFTY token
+    const todayOpen = await getTodayOpen(instrumentToken);
+    if (!todayOpen) {
+        throw new Error("Could not fetch today's open price");
+    }
+    
     const today = new Date().toISOString().slice(0, 10);
 
     // ADR levels
@@ -25,18 +32,19 @@ async function calculateAdrFromHistoric() {
 
     const adrValues = {
         date: today,
-        market_open: marketOpen,
+        // market_open: marketOpen,
+        market_open: todayOpen,
         adr_high: avgHigh,
         adr_low: avgLow,
         adr_range: adrRange,
-        positive_0_25: marketOpen + step * 1,
-        positive_0_50: marketOpen + step * 2,
-        positive_0_75: marketOpen + step * 3,
-        positive_1_00: marketOpen + step * 4,
-        nagative_0_25: marketOpen - step * 1,
-        nagative_0_50: marketOpen - step * 2,
-        nagative_0_75: marketOpen - step * 3,
-        nagative_1_00: marketOpen - step * 4
+        positive_0_25: todayOpen + step * 1,
+        positive_0_50: todayOpen + step * 2,
+        positive_0_75: todayOpen + step * 3,
+        positive_1_00: todayOpen + step * 4,
+        nagative_0_25: todayOpen - step * 1,
+        nagative_0_50: todayOpen - step * 2,
+        nagative_0_75: todayOpen - step * 3,
+        nagative_1_00: todayOpen - step * 4
     };
 
     const existing = await AdrData.findByPk(today);

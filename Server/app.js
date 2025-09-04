@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 registerRoutes(app);
 
 // Setup ticker
-// setupTicker(server);
+setupTicker(server);
 
 const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {

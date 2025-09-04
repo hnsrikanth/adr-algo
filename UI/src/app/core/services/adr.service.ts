@@ -23,16 +23,6 @@ export interface AdrData {
 	providedIn: 'root'
 })
 
-// export class AdrService {
-// 	private apiUrl = 'http://localhost:3000/api/adr';
-
-// 	constructor(private http: HttpClient) { }
-
-// 	getAdrData(): Observable<AdrData> {
-// 		return this.http.get<AdrData>(this.apiUrl);
-// 	}
-// }
-
 export class AdrService {
 	private apiUrl = 'http://localhost:3000/api/adr';
 
