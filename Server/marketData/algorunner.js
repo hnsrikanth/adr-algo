@@ -23,13 +23,7 @@ async function start() {
         console.log("High:", adrData.adr_high);
         console.log("Low:", adrData.adr_low);
         console.log("Range:", adrData.adr_range);
-
-        // Example: Use values in your algo
-        if (adrData.adr_range > 20) {
-            console.log("ADR range > 20 → possible breakout strategy trigger");
-        } else {
-            console.log("ADR range small → avoid trade");
-        }
+        
 
         //Step 1 : Get setting data from config. For Trade 1, Both main and hedge trade.
         const strategyConfig = loadStrategyConfig();
