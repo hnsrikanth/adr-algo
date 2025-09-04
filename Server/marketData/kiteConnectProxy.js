@@ -18,6 +18,19 @@ async function placeOrder(order) {
     }
 }
 
+/**
+ * TEMP resolution: build a symbolic "tradingsymbol" string from specs.
+ * Later, replace with real resolver that converts ITM/OTM + expiry to actual NFO tradingsymbol.
+ */
+function buildSymbol(position, globalSettings = {}) {
+  const instrument = globalSettings.instrument || "NIFTY";   // e.g., NIFTY/BANKNIFTY/FINNIFTY
+  const optionType = position["CE/PE"];                      // "CE" | "PE"
+  const strikeSpec = String(position.Strike).replace(/\s+/g, ""); // e.g., "ITM+4"
+  const expirySpec = String(position.Expiry).replace(/\s+/g, ""); // e.g., "currentweek", "Week+1"
+  // Example: NIFTY:ITM+4:PE:Week+1 -> your proxy should accept this or you swap later with a real symbol
+  return `${instrument}:${strikeSpec}:${optionType}:${expirySpec}`;
+}
+
 /** Place hedge order first, then main order */
 async function placeTradeWithHedge(tradeSettings) {
     const hedge = tradeSettings.hedgePosition;
@@ -53,3 +66,5 @@ async function placeTradeWithHedge(tradeSettings) {
 
     return { hedge: hedgeOrderId, main: mainOrderId };
 }
+
+module.exports = { placeOrder, placeTradeWithHedge, buildSymbol };

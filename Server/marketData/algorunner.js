@@ -59,7 +59,7 @@ async function start() {
 
 /** Load strategy.json */
 function loadStrategyConfig() {
-    const strategyPath = path.join(__dirname, "strategy.json");
+    const strategyPath = path.join(__dirname, "../strategy.json");
     const rawData = fs.readFileSync(strategyPath);
     return JSON.parse(rawData);
 }
