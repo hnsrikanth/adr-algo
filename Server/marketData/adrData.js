@@ -18,13 +18,13 @@ async function calculateAdrFromHistoric() {
 
     // Today’s open = last candle’s open
     // const marketOpen = candles[candles.length - 1][1];
-    
+
     const instrumentToken = "256265"; // NIFTY token
     const todayOpen = await getTodayOpen(instrumentToken);
     if (!todayOpen) {
         throw new Error("Could not fetch today's open price");
     }
-    
+
     const today = new Date().toISOString().slice(0, 10);
 
     // ADR levels
@@ -47,15 +47,39 @@ async function calculateAdrFromHistoric() {
         nagative_1_00: todayOpen - step * 4
     };
 
-    const existing = await AdrData.findByPk(today);
+    // // Find the latest record (ordered by date desc)
+    // const lastRecord = await AdrData.findOne({ order: [["date", "DESC"]] });
 
-    if (existing) {
-        await AdrData.update(adrValues, { where: { date: today } });
+    // if (lastRecord) {
+    //     // Update that row, including setting date = today
+    //     await lastRecord.update({ ...adrValues, date: today });
+    //     console.log(`✅ Updated row from ${lastRecord.date} → ${today}`);
+    // } else {
+    //     if (lastRecord) {
+    //         await lastRecord.destroy();      // remove old date row
+    //     }
+    //     // Insert if nothing exists
+    //     await AdrData.create(adrValues);
+    //     console.log(`✅ Inserted new row for ${today}`);
+    // }
+
+    // // await AdrData.upsert(adrValues); // ✅ insert or replace
+    // return adrValues;
+
+
+    // Find the latest record
+    const lastRecord = await AdrData.findOne({ order: [["date", "DESC"]] });
+
+    if (lastRecord) {
+        // ✅ Update existing record (including date)
+        await lastRecord.update(adrValues);
+        console.log(`✅ Updated row ID ${lastRecord.id} → date ${today}`);
     } else {
+        // ✅ Insert if nothing exists
         await AdrData.create(adrValues);
+        console.log(`✅ Inserted new row for ${today}`);
     }
 
-    // await AdrData.upsert(adrValues); // ✅ insert or replace
     return adrValues;
 }
 

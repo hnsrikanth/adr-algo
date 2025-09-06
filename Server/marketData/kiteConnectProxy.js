@@ -23,12 +23,12 @@ async function placeOrder(order) {
  * Later, replace with real resolver that converts ITM/OTM + expiry to actual NFO tradingsymbol.
  */
 function buildSymbol(position, globalSettings = {}) {
-  const instrument = globalSettings.instrument || "NIFTY";   // e.g., NIFTY/BANKNIFTY/FINNIFTY
-  const optionType = position["CE/PE"];                      // "CE" | "PE"
-  const strikeSpec = String(position.Strike).replace(/\s+/g, ""); // e.g., "ITM+4"
-  const expirySpec = String(position.Expiry).replace(/\s+/g, ""); // e.g., "currentweek", "Week+1"
-  // Example: NIFTY:ITM+4:PE:Week+1 -> your proxy should accept this or you swap later with a real symbol
-  return `${instrument}:${strikeSpec}:${optionType}:${expirySpec}`;
+    const instrument = globalSettings.instrument || "NIFTY";   // e.g., NIFTY/BANKNIFTY/FINNIFTY
+    const optionType = position["CE/PE"];                      // "CE" | "PE"
+    const strikeSpec = String(position.Strike).replace(/\s+/g, ""); // e.g., "ITM+4"
+    const expirySpec = String(position.Expiry).replace(/\s+/g, ""); // e.g., "currentweek", "Week+1"
+    // Example: NIFTY:ITM+4:PE:Week+1 -> your proxy should accept this or you swap later with a real symbol
+    return `${instrument}:${strikeSpec}:${optionType}:${expirySpec}`;
 }
 
 /** Place hedge order first, then main order */
@@ -67,4 +67,32 @@ async function placeTradeWithHedge(tradeSettings) {
     return { hedge: hedgeOrderId, main: mainOrderId };
 }
 
-module.exports = { placeOrder, placeTradeWithHedge, buildSymbol };
+/** Get current positions */
+async function getPositions() {
+    try {
+        const response = await axios.get("http://localhost:8080/api/positions");
+        return response.data || [];
+    } catch (err) {
+        console.error("❌ Error fetching positions:", err.message);
+        return [];
+    }
+}
+
+/** Square off order (simple market exit) */
+async function squareOffOrder(position) {
+    try {
+        const exitOrder = {
+            symbol: position.tradingsymbol,
+            transactionType: position.transaction_type === "BUY" ? "SELL" : "BUY",
+            quantity: Math.abs(position.quantity),
+            product: position.product,
+            orderType: "MARKET"
+        };
+        return await placeOrder(exitOrder);
+    } catch (err) {
+        console.error("❌ Error squaring off:", err.message);
+    }
+}
+
+
+module.exports = { placeOrder, placeTradeWithHedge, buildSymbol, getPositions, squareOffOrder };

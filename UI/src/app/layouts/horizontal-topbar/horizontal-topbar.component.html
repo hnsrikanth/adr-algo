@@ -135,18 +135,24 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-2 ms-auto">
-                    <!-- <a type="button" class="btn btn-primary">
-                        Start Bear Call Spread
-                    </a>
-                    <a type="button" class="btn btn-danger">
-                        Start Bull Put Spread
-                    </a> -->
-                    <a type="button" class="btn btn-primary" [class.disabled]="!hasTodayToken" [attr.disabled]="!hasTodayToken ? true : null">
+                    <!-- <a type="button" class="btn btn-primary" [class.disabled]="!hasTodayToken" [attr.disabled]="!hasTodayToken ? true : null">
                         Start Bear Call Spread
                     </a>
 
                     <a type="button" class="btn btn-danger" [class.disabled]="!hasTodayToken" [attr.disabled]="!hasTodayToken ? true : null">
                         Start Bull Put Spread
+                    </a> -->
+
+                    <a type="button" class="btn btn-primary" [class.disabled]="!hasTodayToken" [attr.disabled]="!hasTodayToken ? true : null" (click)="startBearCall()">
+                        Start Bear Call Spread
+                    </a>
+
+                    <a type="button" class="btn btn-danger" [class.disabled]="!hasTodayToken" [attr.disabled]="!hasTodayToken ? true : null" (click)="startBullPut()">
+                        Start Bull Put Spread
+                    </a>
+
+                    <a type="button" class="btn btn-warning" (click)="exitAllTrades()">
+                        Exit All
                     </a>
 
                     <!-- Refresh Token Button -->

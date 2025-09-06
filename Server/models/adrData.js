@@ -2,10 +2,11 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const AdrData = sequelize.define("adr_data", {
-    date: {
-        type: DataTypes.STRING,
+    id: {
+        type: DataTypes.INTEGER,
         primaryKey: true
     },
+    date: { type: DataTypes.STRING, allowNull: true },
     market_open: { type: DataTypes.FLOAT, allowNull: true },
     adr_high: { type: DataTypes.FLOAT, allowNull: true },
     adr_low: { type: DataTypes.FLOAT, allowNull: true },

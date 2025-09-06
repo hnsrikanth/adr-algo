@@ -14,8 +14,35 @@ moment.updateLocale("en", {
 	holidayFormat: "YYYY-MM-DD",
 });
 
+// // Fetch holidays dynamically from NSE
+// async function loadNseHolidays() {
+// 	try {
+// 		const response = await axios.get(
+// 			"https://www.nseindia.com/api/holiday-master?type=trading" // NSE holiday API
+// 		);
+
+// 		// Parse holidays (NSE returns an array of objects with date fields)
+// 		const holidays = response.data?.CM || []; // CM = Capital Market
+// 		const holidayDates = holidays.map(h => h.tradingDate); // format: "2025-01-26"
+
+// 		moment.updateLocale("en", {
+// 			holidays: holidayDates,
+// 			holidayFormat: "YYYY-MM-DD"
+// 		});
+
+// 		console.log("✅ NSE Holidays loaded:", holidayDates);
+// 		return holidayDates;
+// 	} catch (err) {
+// 		console.error("❌ Failed to fetch NSE holidays:", err.message);
+// 		return [];
+// 	}
+// }
+
 async function getLast14WorkingDaysData() {
 	const config = await kiteConfig.getConfig();
+
+	// // 🔄 Load holidays dynamically
+  	// await loadNseHolidays();
 
 	// Find the last 14 working days (excluding weekends & holidays)
 	let workingDays = [];

@@ -402,4 +402,27 @@ export class HorizontalTopbarComponent {
 		});
 	}
 
+	startBearCall() {
+		this.http.post("http://localhost:3000/api/adr/start", { strategy: "BearCallSpread" })
+			.subscribe({
+				next: (res) => console.log("✅ BearCall started", res),
+				error: (err) => console.error("❌ BearCall error", err),
+			});
+	}
+
+	startBullPut() {
+		this.http.post("http://localhost:3000/api/adr/start", { strategy: "BullPutSpread" })
+			.subscribe({
+				next: (res) => console.log("✅ BullPut started", res),
+				error: (err) => console.error("❌ BullPut error", err),
+			});
+	}
+
+	exitAllTrades() {
+		this.http.post("http://localhost:3000/api/adr/exitAll", {})
+			.subscribe({
+				next: (res) => console.log("✅ Exited all trades", res),
+				error: (err) => console.error("❌ Exit error", err),
+			});
+	}
 }
