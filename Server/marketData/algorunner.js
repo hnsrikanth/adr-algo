@@ -115,29 +115,29 @@ async function monitorTrades(orderResult, adrData) {
     }
 }
 
-// // algorunner.js
-// async function startAlgo(selectedStrategy) {
-//     const today = new Date().toISOString().slice(0, 10);
-//     let adrData = await getAdrFromDb(today);
-//     if (!adrData) adrData = await calculateAdrFromHistoric();
+// algorunner.js
+async function startAlgo(selectedStrategy) {
+    const today = new Date().toISOString().slice(0, 10);
+    let adrData = await getAdrFromDb(today);
+    if (!adrData) adrData = await calculateAdrFromHistoric();
 
-//     const strategyConfig = loadStrategyConfig();
-//     const trade1 = strategyConfig.strategies[selectedStrategy].trade1;
+    const strategyConfig = loadStrategyConfig();
+    const trade1 = strategyConfig.strategies[selectedStrategy].trade1;
 
-//     const orderResult = await placeTradeWithHedge(trade1);
-//     return { adrData, orderResult };
-// }
+    const orderResult = await placeTradeWithHedge(trade1);
+    return { adrData, orderResult };
+}
 
-// async function exitAllAlgo() {
-//     // simple square-off all positions
-//     const { getPositions, squareOffOrder } = require("./kiteConnectProxy");
-//     const positions = await getPositions();
-//     const exits = [];
-//     for (const pos of positions.filter(p => p.quantity !== 0)) {
-//         exits.push(await squareOffOrder(pos));
-//     }
-//     return exits;
-// }
+async function exitAllAlgo() {
+    // simple square-off all positions
+    const { getPositions, squareOffOrder } = require("./kiteConnectProxy");
+    const positions = await getPositions();
+    const exits = [];
+    for (const pos of positions.filter(p => p.quantity !== 0)) {
+        exits.push(await squareOffOrder(pos));
+    }
+    return exits;
+}
 
 // Run
 start();

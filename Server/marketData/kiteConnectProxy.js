@@ -1,4 +1,17 @@
 const axios = require("axios");
+const { buildNiftyWeeklySymbol } = require("../utils/symbolHelper");
+
+function buildSymbol(position, globalSettings = {}) {
+    const strike = position.Strike;
+    const optionType = position["CE/PE"]; // CE or PE
+    const nth = parseInt(position.Expiry.replace(/[^0-9]/g, ""), 10); // e.g. "9th w" → 9
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = 8; // Sept = 8 (0-based index)
+
+    return buildNiftyWeeklySymbol(strike, optionType, year, month, nth);
+}
 
 const KITE_PROXY_URL = "http://localhost:8080/api/orders";
 
@@ -49,9 +62,10 @@ async function placeTradeWithHedge(tradeSettings) {
         symbol: buildSymbol(main),
         transactionType: main["Buy/Sell"].toUpperCase(),
         quantity: main.Qty,
-        product: "MIS",
-        orderType: "MARKET"
+        product: "MIS",          // ✅ Use MIS not CNC
+        orderType: "MARKET"      // ✅ Use Market
     };
+
 
     console.log("📌 Placing Hedge Order first...");
     const hedgeOrderId = await placeOrder(hedgeOrder);
@@ -94,5 +108,11 @@ async function squareOffOrder(position) {
     }
 }
 
+async function getInstrumentToken(kc, tradingsymbol) {
+  const instruments = await kc.getInstruments("NFO"); // all F&O instruments
+  const inst = instruments.find(i => i.tradingsymbol === tradingsymbol);
+  if (!inst) throw new Error(`Instrument not found for ${tradingsymbol}`);
+  return inst.instrument_token;
+}
 
-module.exports = { placeOrder, placeTradeWithHedge, buildSymbol, getPositions, squareOffOrder };
+module.exports = { placeOrder, placeTradeWithHedge, buildSymbol, getPositions, squareOffOrder, getInstrumentToken };
