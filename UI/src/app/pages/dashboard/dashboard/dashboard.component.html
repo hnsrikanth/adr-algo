@@ -22,17 +22,16 @@
 
 			<div class="card-body">
 				<apx-chart
+        #chart
 				[series]="basicCandlestickChart.series"
 				[chart]="basicCandlestickChart.chart"
 				[xaxis]="basicCandlestickChart.xaxis"
 				[yaxis]="basicCandlestickChart.yaxis"
-				[title]="basicCandlestickChart.title"
-				[plotOptions]="basicCandlestickChart.plotOptions"
 				[annotations]="basicCandlestickChart.annotations"
+				[plotOptions]="basicCandlestickChart.plotOptions"
 				[stroke]="basicCandlestickChart.stroke"
 				[fill]="basicCandlestickChart.fill"
-				dir="ltr"
-				>
+				[title]="basicCandlestickChart.title">
 				</apx-chart>
 			</div>
 		</div>
@@ -59,20 +58,6 @@
 			</div>
 
 			<div class="card-body">
-				<!-- <apx-chart
-				[series]="basicCandlestickChartTwoDayChart.series"
-				[chart]="basicCandlestickChartTwoDayChart.chart"
-				[xaxis]="basicCandlestickChartTwoDayChart.xaxis"
-				[yaxis]="basicCandlestickChartTwoDayChart.yaxis"
-				[title]="basicCandlestickChartTwoDayChart.title"
-				[plotOptions]="basicCandlestickChartTwoDayChart.plotOptions"
-				[annotations]="basicCandlestickChartTwoDayChart.annotations"
-				[stroke]="basicCandlestickChartTwoDayChart.stroke"
-				[fill]="basicCandlestickChartTwoDayChart.fill"
-				dir="ltr"
-				>
-				</apx-chart> -->
-
 				<apx-chart
 				#chartTwoDay
 				[series]="basicCandlestickChartTwoDayChart.series"

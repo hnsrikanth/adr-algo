@@ -5,7 +5,7 @@ const { calculateAdrFromHistoric, getAdrFromDb } = require("../marketData/adrDat
 const { placeTradeWithHedge } = require("./kiteConnectProxy");
 
 const { getPositions, squareOffOrder } = require("./kiteConnectProxy");
-const { subscribeTicks } = require("../marketData/ticker"); // new helper for ticks
+const { onTicks } = require("../marketData/ticker"); // new helper for ticks
 
 async function start() {
     try {
@@ -78,29 +78,15 @@ async function monitorTrades(orderResult, adrData) {
     const targetPoints = adrData.adr_range * 0.5;  // Example: target = 50% ADR range
     const stopLossPoints = adrData.adr_range * 0.25;
 
-    // Keep running until both trades closed
-    let running = true;
-    while (running) {
-        await new Promise(r => setTimeout(r, 3000)); // poll every 3s
+    onTicks((ticks) => {
+        ticks.forEach(async (tick) => {
+            const ltp = tick.last_price;
+            const token = tick.instrument_token;
 
-        const positions = await getPositions();
-        const openPositions = positions.filter(p => p.quantity !== 0);
+            // find open position for this token
+            const pos = (await getPositions()).find(p => p.instrument_token === token && p.quantity !== 0);
+            if (!pos) return;
 
-        if (openPositions.length === 0) {
-            console.log("✅ All positions closed. Exiting loop.");
-            running = false;
-            break;
-        }
-
-        // Check ticks for current price
-        const ticks = await subscribeTicks(openPositions.map(p => p.instrument_token));
-
-        for (const pos of openPositions) {
-            const ltp = ticks[pos.instrument_token]?.last_price;
-
-            if (!ltp) continue;
-
-            // Example condition: place target / SL
             const entry = pos.average_price;
             if (pos.transaction_type === "SELL") {
                 if (ltp <= entry - targetPoints) {
@@ -111,8 +97,8 @@ async function monitorTrades(orderResult, adrData) {
                     await squareOffOrder(pos);
                 }
             }
-        }
-    }
+        });
+    });
 }
 
 // algorunner.js

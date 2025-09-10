@@ -8,6 +8,7 @@ const adrLogsRoutes = require('./routes/adrLogsRoutes');
 const sessionRoutes = require('./routes/settingRoutes');
 const twoDaysHistoricData = require("./routes/twoDaysDataRoutes");
 const adrRoutes = require("./routes/adrRoutes");
+const adrBearBullRoutes = require("./routes/adrBearBullRoutes");
 
 const registerRoutes = (app) => {
     app.use('/api', kiteConnectRoutes);
@@ -19,6 +20,7 @@ const registerRoutes = (app) => {
     app.use('/api', sessionRoutes);
     app.use('/api', twoDaysHistoricData);
     app.use('/api', adrRoutes);
+    app.use('/api', adrBearBullRoutes);
 };
 
 module.exports = registerRoutes;

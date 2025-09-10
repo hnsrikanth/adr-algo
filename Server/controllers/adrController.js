@@ -1,5 +1,5 @@
 // adrController.js
-const { startAlgo, exitAllAlgo } = require("../algo/algorunner");
+const { startAlgo, exitAllAlgo } = require("../marketData/algorunner");
 
 //Start Bull / Bear run
 exports.start = async (req, res) => {

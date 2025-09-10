@@ -75,7 +75,7 @@ export class HorizontalTopbarComponent {
 
 		// Fetch the watchlist
 		this.watchlistService.getWatchlist().subscribe((watchlist) => {
-			console.log("✅ Watchlist fetched:", watchlist);
+			// console.log("✅ Watchlist fetched:", watchlist);
 			// Populate the stocks array
 			this.stocks = watchlist.map((item: any) => ({
 				id: item.id,
@@ -86,10 +86,10 @@ export class HorizontalTopbarComponent {
 				change: NaN,
 			}));
 
-			console.log("✅ Stocks initialized:", this.stocks);
+			// console.log("✅ Stocks initialized:", this.stocks);
 			// Now subscribe to live tick data
 			this.tickService.getTicks().subscribe((ticks) => {
-				console.log("📡 Tick data received:", ticks);
+				// console.log("📡 Tick data received:", ticks);
 				this.updateStockPrices(ticks);
 			});
 		});
@@ -97,7 +97,7 @@ export class HorizontalTopbarComponent {
 
 	// Watchlist
 	updateStockPrices(ticks: any[]): void {
-		console.log("🔄 Updating stock prices with ticks:", ticks);
+		// console.log("🔄 Updating stock prices with ticks:", ticks);
 		ticks.forEach((tick) => {
 			// Ensure the instrument tokens are of the same type for comparison
 			const stock = this.stocks.find(
@@ -105,7 +105,7 @@ export class HorizontalTopbarComponent {
 			);
 
 			if (stock) {
-				console.log('binding stock:', stock);
+				// console.log('binding stock:', stock);
 				stock.price = tick.last_price || 'NA';
 				stock.change = tick.change * 100 || 'NA'; // Convert to percentage if needed
 			}
@@ -353,7 +353,7 @@ export class HorizontalTopbarComponent {
 					next: (response: any) => {
 						this.isLoading = false;
 						this.successMessage = 'Access token generated successfully!';
-						console.log('Access token response:', response);
+						// console.log('Access token response:', response);
 
 						this.checkAccessTokenFromDB(); // refresh token status after saving
 					},
@@ -388,7 +388,7 @@ export class HorizontalTopbarComponent {
 						tokenDateIST.getMonth() === nowIST.getMonth() &&
 						tokenDateIST.getDate() === nowIST.getDate();
 
-					console.log("✅ Token IST:", tokenDateIST, "Now IST:", nowIST, "Same Date?", isSameISTDate);
+					// console.log("✅ Token IST:", tokenDateIST, "Now IST:", nowIST, "Same Date?", isSameISTDate);
 
 					this.hasTodayToken = isSameISTDate;
 				} else {
