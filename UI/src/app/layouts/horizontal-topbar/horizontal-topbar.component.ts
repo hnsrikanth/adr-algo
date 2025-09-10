@@ -13,6 +13,7 @@ import { AuthenticationService } from '../../core/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { WatchlistService } from '../../core/services/watchlist.service';
 import { TickService } from '../../core/services/tick.service';
+import { AdrCallService } from '../../core/services/adr-call.service';
 
 @Component({
 	selector: 'app-horizontal-topbar',
@@ -52,6 +53,7 @@ export class HorizontalTopbarComponent {
 		private http: HttpClient,
 		private watchlistService: WatchlistService,
 		private tickService: TickService,
+    private adrService: AdrCallService
 	) {
 		translate.setDefaultLang('en');
 	}
@@ -403,24 +405,21 @@ export class HorizontalTopbarComponent {
 	}
 
 	startBearCall() {
-		this.http.post("http://localhost:3000/api/adr/start", { strategy: "BearCallSpread" })
-			.subscribe({
+		this.adrService.startBearCall().subscribe({
 				next: (res) => console.log("✅ BearCall started", res),
 				error: (err) => console.error("❌ BearCall error", err),
 			});
 	}
 
 	startBullPut() {
-		this.http.post("http://localhost:3000/api/adr/start", { strategy: "BullPutSpread" })
-			.subscribe({
+		this.adrService.startBullPut().subscribe({
 				next: (res) => console.log("✅ BullPut started", res),
 				error: (err) => console.error("❌ BullPut error", err),
 			});
 	}
 
 	exitAllTrades() {
-		this.http.post("http://localhost:3000/api/adr/exitAll", {})
-			.subscribe({
+		this.adrService.exitAllTrades().subscribe({
 				next: (res) => console.log("✅ Exited all trades", res),
 				error: (err) => console.error("❌ Exit error", err),
 			});

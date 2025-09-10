@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdrService, AdrData } from '../../../core/services/adr.service';
+import { KiteHistoricDataService } from '../../../core/services/kite-historic-data.service';
+import { HistoricTwoDayDataService } from '../../../core/services/historic-two-day-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +33,9 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private adrService: AdrService
+    private adrService: AdrService,
+    private historicService: KiteHistoricDataService,
+    private historicTwoDayDataService: HistoricTwoDayDataService
   ) { }
 
   ngOnInit(): void {
@@ -185,36 +189,35 @@ export class DashboardComponent implements OnInit {
 
   /** Fetch API data and update chart */
   private loadNiftyCandles() {
-    this.http.get<any>('http://localhost:3000/api/kite-historic-data')
-      .subscribe({
-        next: (res) => {
-          if (res?.status === 'success' && Array.isArray(res.data?.candles)) {
-            const candlesRaw: [string, number, number, number, number, number][] = res.data.candles;
-            const candleData = candlesRaw
-              .filter(c => c && c.length >= 5)
-              .map(c => ({
-                x: new Date(c[0]).toLocaleDateString('en-GB', {
-                  day: '2-digit',
-                  month: 'short'
-                }),
-                y: [c[1], c[2], c[3], c[4]] // Open, High, Low, Close
-              }));
-            const last14 = candleData.slice(-14);
-            this.basicCandlestickChart.series = [
-              { data: last14 }
-            ];
-            // Update chart series first
-            this.chart.updateOptions({
-              series: this.basicCandlestickChart.series
-            });
-            // Now load ADR data from backend and update annotations
-            this.loadAdrData();
-          }
-        },
-        error: (err) => {
-          console.error('Error fetching NIFTY candle data:', err);
+    this.historicService.getNiftyHistoricData().subscribe({
+      next: (res) => {
+        if (res?.status === 'success' && Array.isArray(res.data?.candles)) {
+          const candlesRaw: [string, number, number, number, number, number][] = res.data.candles;
+          const candleData = candlesRaw
+            .filter(c => c && c.length >= 5)
+            .map(c => ({
+              x: new Date(c[0]).toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short'
+              }),
+              y: [c[1], c[2], c[3], c[4]] // Open, High, Low, Close
+            }));
+          const last14 = candleData.slice(-14);
+          this.basicCandlestickChart.series = [
+            { data: last14 }
+          ];
+          // Update chart series first
+          this.chart.updateOptions({
+            series: this.basicCandlestickChart.series
+          });
+          // Now load ADR data from backend and update annotations
+          this.loadAdrData();
         }
-      });
+      },
+      error: (err) => {
+        console.error('Error fetching NIFTY candle data:', err);
+      }
+    });
   }
 
 
@@ -275,8 +278,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadNiftyCandlesTwoDayData() {
-    this.http.get<any>('http://localhost:3000/api/two-days-historic-data')
-      .subscribe({
+    this.historicTwoDayDataService.getTwoDayHistoricData().subscribe({
         next: (res) => {
           if (res?.status === 'success' && Array.isArray(res.data?.candles)) {
             const candlesRaw: [string, number, number, number, number, number][] = res.data.candles;
