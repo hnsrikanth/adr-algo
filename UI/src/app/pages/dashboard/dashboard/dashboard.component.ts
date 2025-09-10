@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgModule } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgApexchartsModule, ChartComponent } from 'ng-apexcharts';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';

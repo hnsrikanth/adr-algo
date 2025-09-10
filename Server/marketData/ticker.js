@@ -29,6 +29,8 @@ const setupTicker = async (server) => {
             access_token: accessToken,
         });
 
+        let errorShown = false;
+
         wss.on("connection", (ws) => {
             console.log("✅ Angular ticker client connected");
         });
@@ -50,12 +52,35 @@ const setupTicker = async (server) => {
         });
 
         ticker.on("close", () => {
-            console.log("Ticker connection closed. Will retry...");
-            setTimeout(() => ticker.connect(), 5000); // small delay to avoid crash loops
+            console.log("Ticker connection closed.");
+            if (!errorShown) {
+                console.log("Retrying in 10s...");
+                setTimeout(() => ticker.connect(), 10000); // small delay to avoid crash loops
+            }
         });
 
+        // ticker.on("error", (err) => {
+        //     console.error("Ticker error:", err.message || err);
+        // });
         ticker.on("error", (err) => {
-            console.error("Ticker error:", err.message || err);
+            const msg = err.message || err.toString();
+            console.error("Ticker error:", msg);
+
+            // Stop retry loop if access is forbidden
+            if (msg.includes("403")) {
+                if (!errorShown) {
+                    console.error("Invalid/Expired access token. Stopping ticker retries.");
+                    errorShown = true;
+
+                    // Notify Angular clients once
+                    wss.clients.forEach((client) => {
+                        if (client.readyState === WebSocket.OPEN) {
+                            client.send(JSON.stringify({ error: "Invalid or expired access token" }));
+                        }
+                    });
+                }
+                ticker.disconnect(); // stop ticker completely
+            }
         });
     } catch (err) {
         console.error("setupTicker failed:", err.message || err);
@@ -64,53 +89,3 @@ const setupTicker = async (server) => {
 };
 
 module.exports = { setupTicker };
-
-
-
-// const setupTicker = async (server) => {
-//     const config = await kiteConfig.getConfig();
-//     const apiKey = config.apiKey;
-//     const accessToken = config.accessToken;
-
-//     const ticker = new KiteTicker({
-//         api_key: apiKey,
-//         access_token: accessToken,
-//     });
-
-//     // Start WebSocket server for Angular
-//     // const wss = new WebSocket.Server({ server });
-
-//     const wss = new WebSocket.Server({ server, path: "/ws/ticker" });
-
-//     wss.on("connection", (ws) => {
-//         console.log("Angular client connected");
-//     });
-
-//     ticker.connect();
-
-//     ticker.on("connect", () => {
-//         console.log("Ticker connected. Subscribing to instruments...");
-//         ticker.subscribe(instrumentTokens);
-//         ticker.setMode(ticker.modeFull, instrumentTokens); // Mode: Full, Quote, or LTP
-//     });
-
-//     ticker.on("ticks", (ticks) => {
-//         // console.log("Ticks Data", ticks);
-//         wss.clients.forEach((client) => {
-//             if (client.readyState === WebSocket.OPEN) {
-//                 client.send(JSON.stringify(ticks));
-//             }
-//         });
-//     });
-
-//     ticker.on("close", () => {
-//         console.log("Ticker connection closed. Reconnecting...");
-//         ticker.connect();
-//     });
-
-//     ticker.on("error", (err) => {
-//         console.error("Error in ticker:", err);
-//     });
-// };
-
-// module.exports = { setupTicker };
