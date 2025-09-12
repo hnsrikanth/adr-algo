@@ -13,36 +13,36 @@ function loadStrategyConfig() {
 }
 
 /** Place one order (dry-run for now) */
-// async function placeSingleOrder(position, kc, globalSettings = {}, ltp) {
-//     const symbol = buildHumanReadableSymbol(position, ltp);
-
-//     const order = await kc.placeOrder(kc.VARIETY_REGULAR, {
-//         exchange: kc.EXCHANGE_NFO,
-//         tradingsymbol: symbol,
-//         transaction_type: position["Buy/Sell"].toUpperCase(),
-//         quantity: position.Qty,
-//         product: kc.PRODUCT_MIS,
-//         order_type: kc.ORDER_TYPE_MARKET,
-//     });
-
-//     console.log(`✅ Order Placed: ${symbol} (${position["Buy/Sell"]})`, order);
-//     return order.order_id;
-// }
-async function placeSingleOrder(position, ltp) {
+async function placeSingleOrder(position, kc, globalSettings = {}, ltp) {
     const symbol = buildHumanReadableSymbol(position, ltp);
 
-    const order = await placeOrder({
-        exchange: "NFO",
+    const order = await kc.placeOrder(kc.VARIETY_REGULAR, {
+        exchange: kc.EXCHANGE_NFO,
         tradingsymbol: symbol,
         transaction_type: position["Buy/Sell"].toUpperCase(),
         quantity: position.Qty,
-        product: "MIS",
-        order_type: "MARKET",
+        product: kc.PRODUCT_MIS,
+        order_type: kc.ORDER_TYPE_MARKET,
     });
 
     console.log(`✅ Order Placed: ${symbol} (${position["Buy/Sell"]})`, order);
-    return order.order_id || "TEST_ORDER_ID";
+    return order.order_id;
 }
+// async function placeSingleOrder(position, ltp) {
+//     const symbol = buildHumanReadableSymbol(position, ltp);
+
+//     const order = await placeOrder({
+//         exchange: "NFO",
+//         tradingsymbol: symbol,
+//         transaction_type: position["Buy/Sell"].toUpperCase(),
+//         quantity: position.Qty,
+//         product: "MIS",
+//         order_type: "MARKET",
+//     });
+
+//     console.log(`✅ Order Placed: ${symbol} (${position["Buy/Sell"]})`, order);
+//     return order.order_id || "TEST_ORDER_ID";
+// }
 
 
 /** Place Hedge first, then Main */
